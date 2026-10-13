@@ -199,10 +199,10 @@ ALWAYS_INLINE void processUnit(CPlatformUnit* pUnit, CPlatformUnit* pCaller, u64
 /**
  * @brief Construct the emulator and all of its units.
  */
-CHvc::CHvc() : CPlatformHvcUnit(3, 0, 0) {
-    std::strncpy(mDescriptor.mName, "HVC            ", sizeof(mDescriptor.mName) - 1);
-    mDescriptor.mIndex = 0;
-    mDescriptor.mFlags = 1;
+CHvc::CHvc() : CPlatformHvcUnit() {
+    std::strncpy(mName, "HVC            ", sizeof(mName) - 1);
+    _18 = 0;
+    mScale = 1;
     std::memset(&mEntityData, 0, sizeof(mEntityData));
 }
 
@@ -230,7 +230,7 @@ int CHvc::Commence(void* pImage, void* pDiskImage, void* p3, void* p4, u64 title
         element.mDiskImage = pDiskImage;
         element._10 = p3;
         element.mDiskSystem = g_pDiskSystem;
-        element._20 = p4;
+        element._compat20 = p4;
         element._28 = 0;
         element.mTitleId = titleId;
         element._38 = p6;
@@ -248,20 +248,20 @@ int CHvc::Commence(void* pImage, void* pDiskImage, void* p3, void* p4, u64 title
         }
     } else {
         _SCycleController& rCycle = mEntityData.mCycleController;
-        rCycle.mFrameClock = 0;
-        rCycle._08 = 0;
-        rCycle.mScanlineClock = 0;
-        rCycle._18 = 0;
-        rCycle._20 = 0;
-        rCycle._28 = 0;
-        rCycle._30 = 0;
+        rCycle.lineCycle = 0;
+        rCycle.frameCycle = 0;
+        rCycle.line = 0;
+        rCycle.frame = 0;
+        rCycle.sequenceMode = 0;
+        rCycle.sequenceIndex = 0;
+        rCycle.sequenceCycle = 0;
         rCycle._38 = 0;
 
         _SOrderController& rOrder = mEntityData.mOrderController;
-        rOrder.mResetRequest = 0x3e;
-        rOrder.mInterruptRequest = 0;
-        rOrder._08 = 0;
-        rOrder._0c = 0;
+        rOrder.words[0] = 0x3e;
+        rOrder.words[2] = 0;
+        rOrder.words[4] = 0;
+        rOrder.words[6] = 0;
 
         mEntityData.mCycleRemain = 0;
         mEntityData.mCycleDebt = 0;
@@ -378,7 +378,7 @@ void CHvc::PatchVideoSignal() {
     }
 
     u64* pFrame = reinterpret_cast<u64*>(mEntityData.mFrameBuffer);
-    u8* pMemory = mEntity->mMemory;
+    u8* pMemory = mpEntity->mMemory;
     u8* pBackup = GetMemory() + cMemory_PatchBackup;
 
     bool isTitle = true;
@@ -486,16 +486,25 @@ void CHvc::TakeAudioSample(s16*& rpSample, u64& rSampleNum) {
  * @param mask The content blocks to save (one bit per content number).
  * @return The size in bytes.
  */
-u64 CHvc::ContentSize(u64 mask) {
-    u64 total = 0;
-    for (u64 i = 0; i < cContent_Num; i++) {
-        u64 size = 0;
-        if ((1 << i) & mask) {
-            inferContentSize(mUnit, i, size);
+unsigned long CHvc::ContentSize(unsigned long mask) {
+    unsigned long i = 0;
+    unsigned long total = 0;
+    for (; i < 25; ++i) {
+        unsigned long size = 0;
+        if (mask & static_cast<long>(1 << i)) {
+            if (i == 8) {
+                size = (static_cast<unsigned long>(g_nDiskSideMax) << 14) + 16;
+            } else if (i == 24) {
+                size = 0x8010;
+            } else if (i >= 6 && i <= 24) {
+                size = (static_cast<unsigned int>(c_aSerializeInformationTable[i].mSize) +
+                        static_cast<unsigned int>(c_aSerializeInformationTable[i].mExtraSize) + 31) & ~15U;
+            } else {
+                mUnit[c_aSerializeInformationTable[i].mUnit]->InferContentSize(size);
+            }
             total += size;
         }
     }
-
     return total;
 }
 
@@ -736,26 +745,20 @@ void CHvc::AdjustCustomParameter() {
  * @brief Dump the memories of the machine.
  * @param flags Dump even when the debug button is not held if nonzero.
  */
-void CHvc::Debug(u64 flags) {
-    if (flags != 0 || (m_inputdevice_controller.mTrigger & 8)) {
-        DebugDumpMemory(GetMemory() + cMemory_WorkRam, 0x800, 0x10,
-                        reinterpret_cast<const u8*>("WRam"));
-        DebugDumpMemory(GetMemory() + cMemory_BackupRam, 0x2000, 0x10,
-                        reinterpret_cast<const u8*>("SRam"));
-        DebugDumpMemory(GetMemory() + cMemory_Oam, 0x100, 0x10,
-                        reinterpret_cast<const u8*>("Oam "));
-        DebugDumpMemory(GetMemory() + cMemory_Palette, 0x20, 0x10,
-                        reinterpret_cast<const u8*>("Cgm "));
-        DebugDumpMemory(GetMemory() + cMemory_VideoRam, 0x800, 0x20,
-                        reinterpret_cast<const u8*>("VRam"));
-    }
+void CHvc::Debug(unsigned long mode) {
+    if (mode || !(reinterpret_cast<unsigned char*>(&m_inputdevice_controller)[0x82] & 8)) return;
+    Vessel::DebugDumpMemory(mEntityData.pMemory + 0x300000, 0x800, 16, reinterpret_cast<const unsigned char*>("WRam"));
+    Vessel::DebugDumpMemory(mEntityData.pMemory + 0x300800, 0x2000, 16, reinterpret_cast<const unsigned char*>("SRam"));
+    Vessel::DebugDumpMemory(mEntityData.pMemory + 0x304410, 0x100, 16, reinterpret_cast<const unsigned char*>("Oam "));
+    Vessel::DebugDumpMemory(mEntityData.pMemory + 0x304510, 0x20, 16, reinterpret_cast<const unsigned char*>("Cgm "));
+    Vessel::DebugDumpMemory(mEntityData.pMemory + 0x302800, 0x800, 32, reinterpret_cast<const unsigned char*>("VRam"));
 }
 
 /**
  * @brief Initialize every unit.
  * @return 0.
  */
-int CHvc::_Prologue() {
+unsigned int CHvc::_Prologue() {
     mUnit[cUnit_Cpu] = &mCpu;
     mUnit[cUnit_Ppu] = &mPpu;
     mUnit[cUnit_Spu] = &mSpu;
@@ -792,7 +795,7 @@ int CHvc::_Prologue() {
     std::memset(mDirectColor, 0, sizeof(mDirectColor));
     std::memset(&mBackup, 0, sizeof(mBackup));
     CHvcPatch::GetInstance().Reset(this);
-    mIsActive = true;
+    mInitialized = true;
     return 0;
 }
 
@@ -800,7 +803,7 @@ int CHvc::_Prologue() {
  * @brief Finalize every unit.
  * @return 0.
  */
-int CHvc::_Epilogue() {
+unsigned int CHvc::_Epilogue() {
     CHvcPatch::GetInstance();
 
     finalizeUnit(&mDisk);
@@ -828,7 +831,7 @@ int CHvc::_Epilogue() {
         }
     }
 
-    mIsActive = false;
+    mInitialized = false;
     return 0;
 }
 
@@ -841,7 +844,7 @@ int CHvc::_Epilogue() {
  * title and mRaw[3] receives the machine state.
  * @return 0.
  */
-int CHvc::System(CPlatformUnit* pUnit, u64 channel, u64 operation, UArgument* pArgument) {
+unsigned int CHvc::System(CPlatformUnit* pUnit, u64 channel, u64 operation, UArgument* pArgument) {
     if (operation == 0) {
         std::memset(&mMachine, 0, sizeof(mMachine));
 
@@ -850,7 +853,7 @@ int CHvc::System(CPlatformUnit* pUnit, u64 channel, u64 operation, UArgument* pA
             reinterpret_cast<const _STitleElement*>(pArgument->mRaw[0])->mDiskImage;
         mTitleElement._10 = reinterpret_cast<const _STitleElement*>(pArgument->mRaw[0])->_10;
         mTitleElement.mDiskSystem = g_pDiskSystem;
-        mTitleElement._20 = reinterpret_cast<const _STitleElement*>(pArgument->mRaw[0])->_20;
+        mTitleElement._compat20 = reinterpret_cast<const _STitleElement*>(pArgument->mRaw[0])->_compat20;
         mTitleElement.mTitleId =
             reinterpret_cast<const _STitleElement*>(pArgument->mRaw[0])->mTitleId;
         mTitleElement._38 = reinterpret_cast<const _STitleElement*>(pArgument->mRaw[0])->_38;
@@ -954,7 +957,7 @@ int CHvc::System(CPlatformUnit* pUnit, u64 channel, u64 operation, UArgument* pA
 
         mEntityData.mCycleRemain = 0;
         mEntityData.mCycleDebt = 0;
-        mEntity = &mEntityData;
+        mpEntity = &mEntityData;
         pArgument->mRaw[3] = reinterpret_cast<u64>(&mEntityData);
 
         CHvcPatch::GetInstance().Configure();
@@ -963,7 +966,7 @@ int CHvc::System(CPlatformUnit* pUnit, u64 channel, u64 operation, UArgument* pA
         CHvcPatch::GetInstance().Detach();
     }
 
-    switch (mEntity->mMapper) {
+    switch (mpEntity->mMapper) {
     case 1:
         mUnit[cUnit_Mapper] = &mMmc1;
         break;
@@ -1039,14 +1042,17 @@ int CHvc::System(CPlatformUnit* pUnit, u64 channel, u64 operation, UArgument* pA
  * @param pArgument The bus transfer.
  * @return The result of the owning unit.
  */
-int CHvc::Access(CPlatformUnit* pUnit, u64 channel, u64 operation, UArgument* pArgument) {
-    u8 owner;
-    UArgument argument;
-    argument.mRaw[0] = operation;
-    argument.mRaw[2] = pArgument->mAccess.mAddress;
-    argument.mRaw[4] = reinterpret_cast<u64>(&owner);
-    mUnit[cUnit_Mapper]->System(pUnit, 0, 2, &argument);
-    return mUnit[owner]->Access(pUnit, channel, operation, pArgument);
+unsigned int CHvc::Access(CPlatformUnit* sender, unsigned long category,
+                         unsigned long operation, UArgument* arguments) {
+    unsigned long address = arguments->values[2];
+    CPlatformUnit* mapper = mUnit[1];
+    unsigned char unit;
+    UArgument query;
+    query.values[0] = operation;
+    query.values[2] = address;
+    query.pointers[4] = &unit;
+    mapper->System(sender, 0, 2, &query);
+    return mUnit[unit]->Access(sender, category, operation, arguments);
 }
 
 /**
@@ -1057,80 +1063,82 @@ int CHvc::Access(CPlatformUnit* pUnit, u64 channel, u64 operation, UArgument* pA
  * @param pArgument The argument; mProcess.mInput points to the state of the controllers.
  * @return 0.
  */
-int CHvc::Process(CPlatformUnit* pUnit, u64 channel, u64 operation, UArgument* pArgument) {
-    UArgument gioArgument;
-    UArgument mapperArgument;
-    UArgument cpuArgument;
-    UArgument ppuArgument;
-    UArgument spuArgument;
-    SGioInput input;
-    if (pArgument != nullptr && pArgument->mProcess.mInput != nullptr) {
-        const u64* pSource = static_cast<const u64*>(pArgument->mProcess.mInput);
-        input.mButton[0] = static_cast<u8>(pSource[0]);
-        input.mButton[1] = static_cast<u8>(pSource[1]);
-        input.mButton[2] = static_cast<u8>(pSource[2]);
-        input.mButton[3] = static_cast<u8>(pSource[3]);
-        input.mMicrophone = pSource[4];
-        input.mExpansion = static_cast<u8>(pSource[5]);
+unsigned int CHvc::Process(CPlatformUnit*, unsigned long category,
+                          unsigned long operation, UArgument* arguments) {
+    UArgument gio, mapper, cpu, video, audio;
+    unsigned long input[12];
+    if (arguments && arguments->pointers[4]) {
+        unsigned char* source = static_cast<unsigned char*>(arguments->pointers[4]);
+        input[0] = source[0];
+        input[1] = source[8];
+        input[2] = source[16];
+        input[3] = source[24];
+        input[7] = *reinterpret_cast<unsigned long*>(source + 32);
+        input[8] = source[40];
     }
-
-    u64 events;
+    unsigned short& cycleRemainder = *reinterpret_cast<unsigned short*>(mEntityData._408 + 0x800);
+    unsigned short& cpuDelay = *reinterpret_cast<unsigned short*>(mEntityData._408 + 0x802);
+    unsigned long events;
     do {
-        u64 cpuCycles = 0;
-        u64 gioCycles = 0;
-        u64 mapperCycles = 0;
-        u64 cpuRest = 0;
-        u64 ppuCycles = 0;
-        u64 spuCycles = 0;
-
-        if (mEntityData.mCycleDebt >= 4) {
-            cpuCycles = 0x400;
-            cpuRest = 0x400;
+        unsigned long stepCycles = 0, inputCycles = 0, mapperCycles = 0;
+        unsigned long cpuCycles = 0, videoCycles = 0, audioCycles = 0;
+        if (cpuDelay >= 4) {
+            cpuCycles = stepCycles = 0x400;
         } else {
-            s32 bit = 1 << mDescriptor.mIndex;
-            _SOrderController& rOrder = mEntityData.mOrderController;
-            if (rOrder.mInterruptRequest & bit) {
-                rOrder.mInterruptRequest = (rOrder.mInterruptRequest | 8) & ~bit;
-            }
-
-            if (rOrder._08 & bit) {
-                rOrder._08 = (rOrder._08 | 8) & ~bit;
-            }
-
-            if (rOrder._0c & bit) {
-                rOrder._0c = (rOrder._0c | 8) & ~bit;
-            }
-
-            processUnit(mUnit[cUnit_Cpu], this, channel, 3, cpuArgument, 0, 0, &cpuCycles, nullptr);
+            unsigned int unitId = _18;
+            unsigned short pending = mEntityData.order.words[2];
+            unsigned int mask = 1U << unitId;
+            if (pending & mask) mEntityData.order.words[2] = (pending | 8) & ~mask;
+            if (mEntityData.order.words[4] & mask) mEntityData.order.words[4] = (mEntityData.order.words[4] | 8) & ~mask;
+            if (mEntityData.order.words[6] & mask) mEntityData.order.words[6] = (mEntityData.order.words[6] | 8) & ~mask;
+            CPlatformUnit* cpuUnit = mUnit[3];
+            cpu.values[0] = 0;
+            cpu.values[1] = 0;
+            cpu.pointers[2] = &stepCycles;
+            cpu.pointers[4] = nullptr;
+            cpuUnit->Process(this, category, 3, &cpu);
         }
-
-        events = mEntityData.mCycleController.Progress(cpuCycles + mEntityData.mCycleRemain);
-
-        processUnit(mUnit[cUnit_Mapper], this, channel, operation, mapperArgument, events,
-                    cpuCycles + mEntityData.mCycleRemain, &mapperCycles, nullptr);
-
-        processUnit(mUnit[cUnit_Gio], this, channel, operation, gioArgument, events,
-                    cpuCycles + mEntityData.mCycleRemain, &gioCycles, &input);
-
-        processUnit(mUnit[cUnit_Ppu], this, channel, operation, ppuArgument, events,
-                    cpuCycles + mEntityData.mCycleRemain, &ppuCycles, nullptr);
-
-        processUnit(mUnit[cUnit_Spu], this, channel, operation, spuArgument, events,
-                    cpuCycles + mEntityData.mCycleRemain, &spuCycles, nullptr);
-
-        u16 debt;
-        if (cpuCycles > static_cast<u64>(mEntityData.mCycleDebt) << 8) {
-            processUnit(mUnit[cUnit_Cpu], this, channel, operation, cpuArgument, events, cpuCycles,
-                        &cpuRest, nullptr);
-            debt = 0;
+        events = mEntityData.cycle.Progress(stepCycles + cycleRemainder);
+        CPlatformUnit* mapperUnit = mUnit[1];
+        mapper.values[0] = events;
+        mapper.values[1] = stepCycles + cycleRemainder;
+        mapper.pointers[2] = &mapperCycles;
+        mapper.pointers[4] = nullptr;
+        mapperUnit->Process(this, category, operation, &mapper);
+        CPlatformUnit* gioUnit = mUnit[2];
+        gio.values[0] = events;
+        gio.values[1] = stepCycles + cycleRemainder;
+        gio.pointers[2] = &inputCycles;
+        gio.pointers[4] = input;
+        gioUnit->Process(this, category, operation, &gio);
+        CPlatformUnit* videoUnit = mUnit[4];
+        video.values[0] = events;
+        video.values[1] = stepCycles + cycleRemainder;
+        video.pointers[2] = &videoCycles;
+        video.pointers[4] = nullptr;
+        videoUnit->Process(this, category, operation, &video);
+        CPlatformUnit* audioUnit = mUnit[5];
+        audio.values[0] = events;
+        audio.values[1] = stepCycles + cycleRemainder;
+        audio.pointers[2] = &audioCycles;
+        audio.pointers[4] = nullptr;
+        audioUnit->Process(this, category, operation, &audio);
+        unsigned int remainingDelay;
+        if (stepCycles > (static_cast<unsigned long>(cpuDelay) << 8)) {
+            CPlatformUnit* cpuUnit = mUnit[3];
+            cpu.values[0] = events;
+            cpu.values[1] = stepCycles;
+            cpu.pointers[2] = &cpuCycles;
+            cpu.pointers[4] = nullptr;
+            cpuUnit->Process(this, category, operation, &cpu);
+            remainingDelay = 0;
         } else {
-            debt = mEntityData.mCycleDebt - (cpuCycles >> 8);
+            remainingDelay = cpuDelay - (stepCycles >> 8);
         }
-
-        mEntityData.mCycleDebt = debt + ((ppuCycles + spuCycles) >> 8);
-        mEntityData.mCycleRemain = cpuRest - cpuCycles;
-    } while ((operation == 1 || operation == 2) && !(events & operation));
-
+        cpuDelay = remainingDelay + ((static_cast<unsigned int>(videoCycles) + static_cast<unsigned int>(audioCycles)) >> 8);
+        cycleRemainder = cpuCycles - stepCycles;
+        if (operation - 1 > 1) break;
+    } while (!(events & operation));
     return 0;
 }
 
@@ -1140,73 +1148,61 @@ int CHvc::Process(CPlatformUnit* pUnit, u64 channel, u64 operation, UArgument* p
  * @param isImport Whether the state is read from the buffer.
  * @return The size of the serialized state.
  */
-u64 CHvc::_SerializeCore(void* pBuffer, bool isImport) {
-    Serializer serializer(pBuffer, isImport);
-    _SEntity& rEntity = mEntityData;
-    serializer.Entry(rEntity.mMapper);
-    serializer.Entry(rEntity._01);
-    serializer.Entry(rEntity._02);
-    serializer.Entry(rEntity._03);
-
-    for (s32 i = 0; i < 16; i++) {
-        _SPage& rPage = rEntity.mCpuPages[i];
-        serializer.Entry(rPage.mType);
-        serializer.Entry(rPage.mLimit);
-        serializer.Entry(rPage._02);
-        serializer.Entry(rPage.mOffset);
-        serializer.Entry(rPage._10);
-        serializer.Entry(rPage.mLine);
-        serializer.Entry(rPage._12);
-        serializer.Entry(rPage._18);
+unsigned long CHvc::_SerializeCore(void* buffer, bool reading) {
+    Common::Serialize::LittleEndian stream(static_cast<unsigned char*>(buffer), reading);
+    stream.Entry(mEntityData.mapper);
+    stream.Entry(mEntityData.flags);
+    stream.Entry(mEntityData.prgBankCount);
+    stream.Entry(mEntityData.chrBankCount);
+    for (unsigned long i = 0; i < 16; ++i) {
+        stream.Entry(mEntityData.cpuBanks[i].readType);
+        stream.Entry(mEntityData.cpuBanks[i]._01);
+        stream.Entry(mEntityData.cpuBanks[i].readMask);
+        stream.Entry(mEntityData.cpuBanks[i].readOffset);
+        stream.Entry(mEntityData.cpuBanks[i].writeType);
+        stream.Entry(mEntityData.cpuBanks[i]._11);
+        stream.Entry(mEntityData.cpuBanks[i].writeMask);
+        stream.Entry(mEntityData.cpuBanks[i].writeOffset);
     }
-
-    for (s32 i = 0; i < 16; i++) {
-        _SPage& rPage = rEntity.mPpuPages[i];
-        serializer.Entry(rPage.mType);
-        serializer.Entry(rPage.mLimit);
-        serializer.Entry(rPage._02);
-        serializer.Entry(rPage.mOffset);
-        serializer.Entry(rPage._10);
-        serializer.Entry(rPage.mLine);
-        serializer.Entry(rPage._12);
-        serializer.Entry(rPage._18);
+    for (unsigned long i = 0; i < 16; ++i) {
+        stream.Entry(mEntityData.ppuBanks[i].readType);
+        stream.Entry(mEntityData.ppuBanks[i]._01);
+        stream.Entry(mEntityData.ppuBanks[i].readMask);
+        stream.Entry(mEntityData.ppuBanks[i].readOffset);
+        stream.Entry(mEntityData.ppuBanks[i].writeType);
+        stream.Entry(mEntityData.ppuBanks[i]._11);
+        stream.Entry(mEntityData.ppuBanks[i].writeMask);
+        stream.Entry(mEntityData.ppuBanks[i].writeOffset);
     }
-
-    for (s32 i = 16; i < 80; i++) {
-        _SPage& rPage = rEntity.mPpuPages[i];
-        serializer.Entry(rPage.mType);
-        serializer.Entry(rPage.mLimit);
-        serializer.Entry(rPage._02);
-        serializer.Entry(rPage.mOffset);
-        serializer.Entry(rPage._10);
-        serializer.Entry(rPage.mLine);
-        serializer.Entry(rPage._12);
-        serializer.Entry(rPage._18);
+    for (unsigned long i = 0; i < 64; ++i) {
+        stream.Entry(mEntityData.chrHistory[i].readType);
+        stream.Entry(mEntityData.chrHistory[i]._01);
+        stream.Entry(mEntityData.chrHistory[i].readMask);
+        stream.Entry(mEntityData.chrHistory[i].readOffset);
+        stream.Entry(mEntityData.chrHistory[i].writeType);
+        stream.Entry(mEntityData.chrHistory[i]._11);
+        stream.Entry(mEntityData.chrHistory[i].writeMask);
+        stream.Entry(mEntityData.chrHistory[i].writeOffset);
     }
-
-    serializer.Entry(rEntity.mCycleRemain);
-    serializer.Entry(rEntity.mCycleDebt);
-
-    _SCycleController& rCycle = rEntity.mCycleController;
-    serializer.Entry(rCycle.mFrameClock);
-    serializer.Entry(rCycle._08);
-    serializer.Entry(rCycle.mScanlineClock);
-    serializer.Entry(rCycle._18);
-    serializer.Entry(rCycle._20);
-    serializer.Entry(rCycle._28);
-    serializer.Entry(rCycle._30);
-    serializer.Entry(rCycle._38);
-
-    _SOrderController& rOrder = rEntity.mOrderController;
-    serializer.Entry(rOrder.mResetRequest);
-    serializer.Entry(rOrder._02);
-    serializer.Entry(rOrder.mInterruptRequest);
-    serializer.Entry(rOrder._06);
-    serializer.Entry(rOrder._08);
-    serializer.Entry(rOrder._0a);
-    serializer.Entry(rOrder._0c);
-    serializer.Entry(rOrder._0e);
-    return serializer.GetOffset();
+    stream.Entry(*reinterpret_cast<unsigned short*>(mEntityData._408 + 0x800));
+    stream.Entry(*reinterpret_cast<unsigned short*>(mEntityData._408 + 0x802));
+    stream.Entry(mEntityData.cycle.lineCycle);
+    stream.Entry(mEntityData.cycle.frameCycle);
+    stream.Entry(mEntityData.cycle.line);
+    stream.Entry(mEntityData.cycle.frame);
+    stream.Entry(mEntityData.cycle.sequenceMode);
+    stream.Entry(mEntityData.cycle.sequenceIndex);
+    stream.Entry(mEntityData.cycle.sequenceCycle);
+    stream.Entry(reinterpret_cast<long&>(mEntityData.cycle._38));
+    stream.Entry(mEntityData.order.words[0]);
+    stream.Entry(mEntityData.order.words[1]);
+    stream.Entry(mEntityData.order.words[2]);
+    stream.Entry(mEntityData.order.words[3]);
+    stream.Entry(mEntityData.order.words[4]);
+    stream.Entry(mEntityData.order.words[5]);
+    stream.Entry(mEntityData.order.words[6]);
+    stream.Entry(mEntityData.order.words[7]);
+    return stream.GetSize();
 }
 
 /**

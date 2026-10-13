@@ -586,105 +586,68 @@ inline void CHvcPatch::_PatchPostCommence_Kirby() {
 /**
  * @brief Soften the screen flashes of Kirby's Adventure after a frame.
  */
-inline void CHvcPatch::_PatchPostProgress_Kirby() {
-    u8* pMemory = mHvc->GetMemory();
-    u8* pSkip = pMemory + 0x304622;
-    if (*pSkip == 0) {
-        u8* pFrame = mHvc->mEntityData.mFrameBuffer;
-        const u8* pPalette = pMemory + cMemory_Palette;
-        const u64* pOutput = reinterpret_cast<const u64*>(pMemory + cMemory_OutputPalette);
-        u8* pFade = pMemory + 0x3046a1;
-        u8* pFlashColor = pMemory + 0x3046a2;
-        const u8 cFlashPalette[6][16] = {
-            {0x0c, 0x11, 0x21, 0x31, 0x0c, 0x1c, 0x2c, 0x0c, 0x0c, 0x38, 0x01, 0x12, 0x0c, 0x37,
-             0x27, 0x07},
-            {0x0f, 0x04, 0x14, 0x33, 0x0f, 0x1c, 0x2c, 0x0c, 0x0f, 0x38, 0x01, 0x12, 0x0f, 0x37,
-             0x27, 0x07},
-            {0x1c, 0x11, 0x21, 0x31, 0x1c, 0x1c, 0x2c, 0x1c, 0x1c, 0x38, 0x11, 0x12, 0x1c, 0x37,
-             0x27, 0x07},
-            {0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x37,
-             0x27, 0x07},
-            {0x2c, 0x21, 0x21, 0x31, 0x2c, 0x2c, 0x2c, 0x2c, 0x2c, 0x38, 0x21, 0x22, 0x2c, 0x37,
-             0x27, 0x07},
-            {0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x38, 0x21, 0x22, 0x30, 0x37,
-             0x27, 0x07},
-        };
-
-        u8 color;
-        if (std::memcmp(cFlashPalette[0], pPalette, 16) == 0) {
-            color = 0x0c;
-        } else if (std::memcmp(cFlashPalette[1], pPalette, 16) == 0) {
-            color = 0x0f;
-        } else if (std::memcmp(cFlashPalette[2], pPalette, 16) == 0) {
-            color = 0x1c;
-        } else if (std::memcmp(cFlashPalette[3], pPalette, 16) == 0) {
-            color = 0x20;
-        } else if (std::memcmp(cFlashPalette[4], pPalette, 16) == 0) {
-            color = 0x2c;
-        } else if (std::memcmp(cFlashPalette[5], pPalette, 16) == 0) {
-            color = 0x30;
-        } else {
-            color = 0;
-        }
-
-        if (color != 0) {
-            *pFlashColor = color;
-            const u8* pTarget = reinterpret_cast<const u8*>(&pOutput[color]);
-            u8* pFlash = pMemory + 0x3045a0;
-            pFlash[0] = approachChannel(pFlash[0], pTarget[0]);
-            pFlash[1] = approachChannel(pFlash[1], pTarget[1]);
-            pFlash[2] = approachChannel(pFlash[2], pTarget[2]);
-            pFlash[3] = 0xff;
-            for (u32 i = 0; i < CHvc::cScreenWidth * CHvc::cScreenHeight * 4; i += 4) {
-                if (pFrame[i] < 64 && (pFrame[i + 2] & 3) == 0) {
-                    pFrame[i] = 0x0e;
-                }
-            }
-        } else {
-            *pFlashColor = 0;
-            *reinterpret_cast<u64*>(pMemory + 0x3045a0) = 0xff;
-        }
-
-        u8 background = pPalette[0];
-        s32 differentNum = 0;
-        for (s32 i = 1; i < 16; i++) {
-            if (pPalette[i] != background) {
-                differentNum++;
-            }
-        }
-
-        bool isFading;
-        if (differentNum == 0) {
-            *pFade = 15;
-            isFading = true;
-        } else {
-            isFading = *pFade != 0 && --*pFade != 0;
-        }
-
-        if (isFading) {
-            for (s32 i = 0; i < 16; i++) {
-                const u8* pTarget =
-                    reinterpret_cast<const u8*>(&pOutput[i == 0 ? background : pPalette[i]]);
-                u8* pColor = reinterpret_cast<u8*>(&mHvc->mSpecialColor[i]);
-                pColor[0] = approachChannel(pColor[0], pTarget[0]);
-                pColor[1] = approachChannel(pColor[1], pTarget[1]);
-                pColor[3] = 0xff;
-                pColor[2] = approachChannel(pColor[2], pTarget[2]);
-            }
-
-            for (u32 i = 0; i < CHvc::cScreenWidth * CHvc::cScreenHeight * 4; i += 4) {
-                if (pFrame[i] < 64 && pFrame[i + 2] < 16) {
-                    pFrame[i] ^= 0x80;
-                }
-            }
-        } else {
-            for (s32 i = 0; i < 32; i++) {
-                mHvc->mSpecialColor[i] = pOutput[pPalette[i]];
-            }
-        }
+inline __attribute__((used)) void CHvcPatch::_PatchPostProgress_Kirby() {
+    unsigned char* memory = mHvc->mEntityData.pMemory;
+    if (memory[0x304622]) {
+        memory[0x304622] = 0;
+        return;
     }
-
-    *pSkip = 0;
+    unsigned char* video = mHvc->mEntityData.pVideo;
+    unsigned char* palette = memory + 0x304510;
+    unsigned long* directColors = reinterpret_cast<unsigned long*>(memory + 0x304530);
+    unsigned int selected;
+    if (!memcmp("\x0c\x11\x21\x31\x0c\x1c\x2c\x0c\x0c\x38\x01\x12\x0c\x37\x27\x07", palette, 16)) selected = 12;
+    else if (!memcmp("\x0f\x04\x14\x33\x0f\x1c\x2c\x0c\x0f\x38\x01\x12\x0f\x37\x27\x07", palette, 16)) selected = 15;
+    else if (!memcmp("\x1c\x11\x21\x31\x1c\x1c\x2c\x1c\x1c\x38\x11\x12\x1c\x37\x27\x07", palette, 16)) selected = 28;
+    else if (!memcmp("\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x37\x27\x07", palette, 16)) selected = 32;
+    else if (!memcmp("\x2c\x21\x21\x31\x2c\x2c\x2c\x2c\x2c\x38\x21\x22\x2c\x37\x27\x07", palette, 16)) selected = 44;
+    else if (!memcmp("\x30\x30\x30\x30\x30\x30\x30\x30\x30\x38\x21\x22\x30\x37\x27\x07", palette, 16)) selected = 48;
+    else selected = 0;
+    memory[0x3046a2] = selected;
+    if (selected) {
+        unsigned char* target = reinterpret_cast<unsigned char*>(directColors + selected);
+        for (unsigned int component = 0; component < 3; ++component) {
+            unsigned int previous = memory[0x3045a0 + component];
+            unsigned int next = target[component];
+            if (previous < next) {
+                if (previous + 8 < next) next = previous + 8;
+            } else if (next + 8 < previous) next = previous - 8;
+            memory[0x3045a0 + component] = next;
+        }
+        memory[0x3045a3] = 255;
+        for (unsigned long offset = 0; offset < 256 * 240 * 4; offset += 4) {
+            if (video[offset] < 64 && !(video[offset + 2] & 3)) video[offset] = 14;
+        }
+    } else {
+        *reinterpret_cast<unsigned long*>(memory + 0x3045a0) = 255;
+    }
+    unsigned int different = 0;
+    for (unsigned int i = 1; i < 16; ++i) {
+        if (palette[0] != palette[i]) ++different;
+    }
+    if (!different) memory[0x3046a1] = 15;
+    else if (memory[0x3046a1]) --memory[0x3046a1];
+    if (memory[0x3046a1]) {
+        for (unsigned int i = 0; i < 16; ++i) {
+            unsigned char* history = reinterpret_cast<unsigned char*>(mHvc->mSpecialColor + i);
+            unsigned char* target = reinterpret_cast<unsigned char*>(directColors + palette[i]);
+            for (unsigned int component = 0; component < 3; ++component) {
+                unsigned int previous = history[component];
+                unsigned int next = target[component];
+                if (previous < next) {
+                    if (previous + 8 < next) next = previous + 8;
+                } else if (next + 8 < previous) next = previous - 8;
+                history[component] = next;
+            }
+            history[3] = 255;
+        }
+        for (unsigned long offset = 0; offset < 256 * 240 * 4; offset += 4) {
+            if (video[offset] < 64 && video[offset + 2] < 16) video[offset] = video[offset + 2] ^ 0x80;
+        }
+    } else {
+        for (unsigned int i = 0; i < 32; ++i) mHvc->mSpecialColor[i] = directColors[palette[i]];
+    }
+    memory[0x304622] = 0;
 }
 
 /**
@@ -730,41 +693,43 @@ inline void CHvcPatch::_PatchAnteProgress_SuperMarioUSA() {
 /**
  * @brief Fix the scrolling and colors of Super Mario USA after a frame.
  */
-inline void CHvcPatch::_PatchPostProgress_SuperMarioUSA() {
-    CHvc* pHvc = mHvc;
-    u64 titleId = pHvc->mTitleElement.mTitleId;
-    if (titleId == 156) {
-        const u8* pMemory = pHvc->GetMemory();
-        if (pMemory[0x304510] != 0x0f || pMemory[0x304511] != 0x30 || pMemory[0x304512] != 0x0d ||
-            pMemory[0x304513] != 0x01) {
-            return;
-        }
-
-        u8* pLine = pHvc->mEntityData.mFrameBuffer + 8 * CHvc::cScreenWidth * 4;
-        for (s32 y = 8; y < CHvc::cScreenHeight; y++) {
-            for (s32 x = 0; x < CHvc::cScreenWidth * 4; x += 4) {
-                u8* pPixel = pLine + x;
-                if (pPixel[0] < 64 && pPixel[2] == 0 && pPixel[2 - CHvc::cScreenWidth * 4] == 1) {
-                    pPixel[0] = 0x80;
-                }
+inline __attribute__((used)) void CHvcPatch::_PatchPostProgress_SuperMarioUSA() {
+    CHvc* hvc = mHvc;
+    if (hvc->mTitleElement.mTitleId == 0x9c) {
+        unsigned char* memory = hvc->mEntityData.pMemory;
+        if (memory[0x304510] != 0x0f || memory[0x304511] != 0x30 ||
+            memory[0x304512] != 0x0d || memory[0x304513] != 1) return;
+        unsigned char* video = hvc->mEntityData.pVideo;
+        for (unsigned long y = 8; y < 240; ++y) {
+            for (unsigned long x = 0; x < 256; ++x) {
+                unsigned char* pixel = video + y * 1024 + x * 4;
+                if (pixel[0] < 64 && pixel[2] == 0 && pixel[2 - 1024] == 1) pixel[0] = 0x80;
             }
-
-            pLine += CHvc::cScreenWidth * 4;
         }
-
-        mHvc->mSpecialColor[0] = 0x666699ff;
-    } else if (titleId == 155) {
-        const u8* pMemory = pHvc->GetMemory();
-        if (pMemory[0x302888] == 0x5a && pMemory[0x302889] == 0x9a && pMemory[0x302896] == 0x9a &&
-            pMemory[0x302897] == 0x5c && pMemory[0x302908] == 0x5b && pMemory[0x302909] == 0x9a &&
-            pMemory[0x302916] == 0x9a && pMemory[0x302917] == 0x5d && pMemory[0x302a2b] == 0x51 &&
-            pMemory[0x302a2c] == 0x53 && pMemory[0x302a33] == 0x51 && pMemory[0x302a34] == 0x53 &&
-            pMemory[0x302aac] == 0x3c && pMemory[0x302aad] == 0x3d && pMemory[0x302ab2] == 0x3c &&
-            pMemory[0x302ab3] == 0x3d) {
-            pHvc->mCustomParameter.mLineScroll[191].mX = 0;
+        *reinterpret_cast<unsigned long*>(reinterpret_cast<unsigned char*>(mHvc) + 0x1d88) = 0x666699ff;
+    } else if (hvc->mTitleElement.mTitleId == 0x9b) {
+        unsigned char* memory = hvc->mEntityData.pMemory;
+        if (memory[0x302888] == 0x5a &&
+            memory[0x302889] == 0x9a &&
+            memory[0x302896] == 0x9a &&
+            memory[0x302897] == 0x5c &&
+            memory[0x302908] == 0x5b &&
+            memory[0x302909] == 0x9a &&
+            memory[0x302916] == 0x9a &&
+            memory[0x302917] == 0x5d &&
+            memory[0x302a2b] == 0x51 &&
+            memory[0x302a2c] == 0x53 &&
+            memory[0x302a33] == 0x51 &&
+            memory[0x302a34] == 0x53 &&
+            memory[0x302aac] == 0x3c &&
+            memory[0x302aad] == 0x3d &&
+            memory[0x302ab2] == 0x3c &&
+            memory[0x302ab3] == 0x3d) {
+            *reinterpret_cast<unsigned short*>(reinterpret_cast<unsigned char*>(hvc) + 0x1b2a) = 0;
         } else {
-            pHvc->mCustomParameter.mLineScroll[191].mX = 0x200;
+            *reinterpret_cast<unsigned short*>(reinterpret_cast<unsigned char*>(hvc) + 0x1b2a) = 0x200;
         }
+
     }
 }
 
@@ -877,57 +842,41 @@ inline void CHvcPatch::_PatchAttach_Mother() {}
 /**
  * @brief Fix three texts of MOTHER before a frame.
  */
-inline void CHvcPatch::_PatchAnteProgress_Mother() {
-    static const u8 text_table[3][16] = {
-        {0x90, 0xdb, 0xee, 0x8f, 0xa3, 0xb4, 0xbb, 0x93, 0xc0, 0xc0, 0xc0, 0xc0, 0xc0, 0xc0, 0xc0,
-         0xc0},
-        {0xc0, 0xa0, 0xa0, 0x96, 0xba, 0xa1, 0xaf, 0x8f, 0xa0, 0xc0, 0xc0, 0xc0, 0xc0, 0xc0, 0xc0,
-         0xc0},
-        {0x90, 0x95, 0xaf, 0xbc, 0xb8, 0x9b, 0xbd, 0xa6, 0xc0, 0x91, 0x8f, 0xa3, 0xb3, 0x9c, 0xb7,
-         0xbd},
+inline __attribute__((used)) void CHvcPatch::_PatchAnteProgress_Mother() {
+    static const unsigned char text_table[3][16] = {
+        {0x90, 0xdb, 0xee, 0x8f, 0xa3, 0xb4, 0xbb, 0x93, 0xc0, 0xc0, 0xc0, 0xc0, 0xc0, 0xc0, 0xc0, 0xc0},
+        {0xc0, 0xa0, 0xa0, 0x96, 0xba, 0xa1, 0xaf, 0x8f, 0xa0, 0xc0, 0xc0, 0xc0, 0xc0, 0xc0, 0xc0, 0xc0},
+        {0x90, 0x95, 0xaf, 0xbc, 0xb8, 0x9b, 0xbd, 0xa6, 0xc0, 0x91, 0x8f, 0xa3, 0xb3, 0x9c, 0xb7, 0xbd},
     };
-    static const u8 eTable[3] = {0x08, 0x09, 0x10};
-
-    u8* pWorkRam = getMemory() + 0x300000;
-    u8* pText = pWorkRam + 0x442;
-    u8 first = pText[0];
-    for (u64 i = 0; i < 3; i++) {
-        u32 position = first == 5 ? 4 : 0;
-        bool isMatch = true;
-        for (s32 j = 0; j < 16; j++) {
-            if (pText[position] != text_table[i][j]) {
-                isMatch = false;
-                break;
-            }
-
-            position += pText[position + 1] == 5 ? 5 : 1;
+    static const unsigned char eTable[3] = {8, 9, 16};
+    unsigned char* memory = mHvc->mEntityData.pMemory;
+    unsigned long row;
+    for (row = 0; row < 3; ++row) {
+        unsigned int offset = memory[0x300442] == 5 ? 4 : 0;
+        unsigned int column;
+        for (column = 0; column < 16; ++column) {
+            if ((memory + 0x300000)[0x442 + offset] != text_table[row][column]) break;
+            offset += (memory + 0x300000)[0x443 + offset] == 5 ? 5 : 1;
         }
-
-        if (!isMatch) {
-            continue;
-        }
-
-        u8* pName = pWorkRam + 0x428;
-        u32 end = pName[0] == 5 ? 4 : 0;
-        for (u32 j = 0; j < eTable[i]; j++) {
-            end += pName[end + 1] == 5 ? 5 : 1;
-        }
-
-        u32 target = first == 5 ? end + 4 : end;
-        switch (i) {
-        case 0:
-            pWorkRam[0x43e + target] = 0xa4;
-            break;
-        case 1:
-            pWorkRam[0x43e + target] = 0xff;
-            break;
-        case 2:
-            pName[end] = 0xff;
-            *reinterpret_cast<u16*>(pWorkRam + 0x43e + target) = 0xb8ac;
-            break;
-        }
-
-        return;
+        if (column == 16) break;
+    }
+    if (row == 3) return;
+    unsigned int offset = memory[0x300428] == 5 ? 4 : 0;
+    for (unsigned int i = 0; i < eTable[row]; ++i) {
+        offset += (memory + 0x300000 + offset)[0x429] == 5 ? 5 : 1;
+    }
+    unsigned int patchOffset = offset + (memory[0x300442] == 5 ? 4 : 0);
+    switch (row) {
+    case 0:
+        (memory + 0x300000 + patchOffset)[0x43e] = 0xa4;
+        break;
+    case 1:
+        (memory + 0x300000 + patchOffset)[0x43e] = 0xff;
+        break;
+    case 2:
+        (memory + 0x300000 + offset)[0x428] = 0xff;
+        *reinterpret_cast<unsigned short*>(memory + 0x30043e + patchOffset) = 0xb8ac;
+        break;
     }
 }
 

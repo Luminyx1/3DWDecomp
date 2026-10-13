@@ -1,2034 +1,1394 @@
 #include "LuigiBros/Emulator/HvcSpu.hpp"
 #include "LuigiBros/Emulator/Hvc.hpp"
-#include "LuigiBros/Utility/Serialize.hpp"
 #include <cstring>
-
-/**
- * @brief The Luigi Bros. emulator front end.
- */
-struct HVCEmu {
-    u8 _00[0x58];
-    u8* mDiskImage;
-    u8 _60[0x1a];
-    u16 mTitleType;
-    u8 _7c[0x1c];
-};
-
-extern HVCEmu m_HVCEmu;
-
-namespace Vessel::Emulator::Virtual::PlatformHvc {
-
-namespace {
-
-/// Offset of the disk image inside the machine memory.
-constexpr u64 cMemory_DiskImage = 0x100000;
-
-/// Offset of the expansion sound registers ($5000-) read by the CPU.
-constexpr u64 cMemory_ExRegister = 0x303c10;
-
-/// Offset of the last values written to the expansion sound registers ($5000-).
-constexpr u64 cMemory_ExShadow = 0x304010;
-
-/// Size of the tag in front of a serialized state.
-constexpr u64 cSerializeTagSize = 0x10;
-
-/// Size reserved for the disk drive in a serialized state.
-constexpr u64 cSerializeDiskSize = 0x40;
-
-/// Mapper number of the Famicom Disk System.
-constexpr u8 cMapper_Disk = 0xff;
-
-/// Mapper number of MMC5.
-constexpr u8 cMapper_Mmc5 = 5;
-
-/// Mapper number of VRC6.
-constexpr u8 cMapper_Vrc6 = 24;
-
-/// Square duty cycles, one bit per step.
-const u16 cDutyTable[4] = {0x000c, 0x003c, 0x03fc, 0xffc3};
-
-/// Length counter loads, halved.
-const u8 cLengthTable[32] = {5,  127, 10, 1,  20, 2,  40, 3,  80, 4,  30, 5,  7,  6,  13, 7,
-                             6,  8,   12, 9,  24, 10, 48, 11, 96, 12, 36, 13, 8,  14, 16, 15};
-
-/// Largest square period kept by an upward sweep, for each sweep shift.
-const s16 cSweepPeriodMax[8] = {0x3ff, 0x555, 0x666, 0x71c, 0x787, 0x7c1, 0x7e0, 0x7f0};
-
-/// Triangle wave steps.
-const s8 cTriangleTable[32] = {0,  1,  2,  3,  4,  5,  6,  7,  8,  9,  10, 11, 12, 13, 14, 15,
-                               15, 14, 13, 12, 11, 10, 9,  8,  7,  6,  5,  4,  3,  2,  1,  0};
-
-/// Noise periods.
-const u16 cNoisePeriodTable[16] = {4,   8,   16,  32,  64,  96,   128,  160,
-                                   202, 254, 380, 508, 762, 1016, 2034, 4068};
-
-/// Delta modulation periods.
-const u16 cDeltaPeriodTable[16] = {428, 380, 340, 320, 286, 254, 226, 214,
-                                   190, 160, 142, 128, 106, 84,  72,  54};
-
-/// Modulator steps of the disk system sound (0x7f resets the counter).
-const s8 cModStepTable[8] = {0, 1, 2, 4, 0x7f, -4, -2, -1};
-
-/// Wave phase advance per sample, rate and frequency unit.
-constexpr f64 cWavePhaseScale = 0x1.006d1204b83b1p-26;
-
-/// Modulator phase advance per sample, rate and frequency unit.
-constexpr f64 cModPhaseScale = 0x1.006d1204b83b1p-16;
-
-/**
- * @brief Check whether the running title is a disk system title.
- * @return Whether the disk drive is emulated.
- */
-bool isDiskSystem() {
-    return (m_HVCEmu.mTitleType & 0xfff0) == 0xf0f0;
+#include "LuigiBros/Emulator/HVCEmu.hpp"
+namespace Vessel { namespace Emulator { namespace Virtual { namespace PlatformHvc {
+/** @brief Initializes the SPU platform identity. */
+CHvcSpu::CHvcSpu() {
+    _18 = 5;
+    mScale = 1;
+    *reinterpret_cast<unsigned char*>(&_28) = 0;
+    memset(mName, ' ', 15);
+    strncpy(mName, "HVC SPU        ", 15);
 }
-
-/**
- * @brief Check whether the custom parameters select the alternative behavior of a channel.
- * @param pRender The custom parameters.
- * @param index The channel index.
- * @return Whether the option is set.
- */
-u8 getChannelOption(const CPlatformHvcUnit::_SCustomParameter* pRender, u8 index) {
-    return reinterpret_cast<const u8*>(&pRender->mPanMaster)[index];
-}
-
-/**
- * @brief Move an output level towards its target, by the smoothing step of its channel.
- * @param rOutput The output level.
- * @param target The target level.
- * @param pEntity The machine state.
- * @param index The channel index.
- */
-inline void approachOutput(s16& rOutput, s16 target, const CPlatformHvcUnit::_SEntity* pEntity,
-                           u8 index) {
-    s32 step = 1 << pEntity->mTitleRender->mPan[index];
-    s16 output = rOutput;
-    if (output + step < target) {
-        rOutput = output + step;
-    } else if (target + step < output) {
-        rOutput = output - step;
-    } else {
-        rOutput = target;
-    }
-}
-
-/**
- * @brief Compute the clock period of a disk system envelope.
- * @param speed The envelope speed.
- * @param master The master envelope speed.
- * @return The period.
- */
-inline u64 getEnvelopePeriod(u8 speed, u8 master) {
-    return static_cast<u64>(speed + 1) * master * 0x7453fc / 3712;
-}
-
-/**
- * @brief Get the program counter of the CPU of a machine.
- * @param pHvc The machine.
- * @return The program counter.
- */
-inline u16 getProgramCounter(const CHvc* pHvc) {
-    return *reinterpret_cast<const u16*>(&pHvc->mCpu._48[0x1006]);
-}
-
-/**
- * @brief Get the buttons held on the controllers of a machine.
- * @param pHvc The machine.
- * @return The buttons.
- */
-inline u8 getGioButton(const CHvc* pHvc) {
-    return pHvc->mGio._48[0x10];
-}
-
-/**
- * @brief Get the byte written by a bus access.
- * @param pArgument The transfer.
- * @return The byte.
- */
-inline u8 getAccessData(const CPlatformUnit::UArgument* pArgument) {
-    return *static_cast<u8*>(pArgument->mAccess.mData);
-}
-
-/**
- * @brief Clear a register and its shadow.
- * @param pRegister The registers.
- * @param pShadow The shadow registers.
- * @param index The register index.
- */
-inline void clearRegister(u8* pRegister, u8* pShadow, s32 index) {
-    pShadow[index] = 0;
-    pRegister[index] = 0;
-}
-
-/**
- * @brief Pad the data serialized since a position to a multiple of 16 bytes.
- * @param rSerializer The serializer.
- * @param start The offset where the padded block starts.
- */
-inline void alignSerializer(CHvcSpu::Serializer& rSerializer, u64 start) {
-    u32 size = rSerializer.GetOffset() - start;
-    rSerializer.SetOffset(start + ((size + 15) & ~0xfu));
-}
-
-}  // namespace
-
-/**
- * @brief Clock the length counter.
- */
-inline void CHvcSpu::_SWave::clockLength() {
-    if (mIsLengthEnabled && mLength > 0) {
-        mLength--;
-    }
-}
-
-/**
- * @brief Run the timer for one sample.
- * @param rate The number of clocks in the sample.
- * @return The number of timer periods that elapsed.
- */
-inline s64 CHvcSpu::_SWave::stepTimer(s16 rate) {
-    s64 count = 0;
-    if (mIsTimerActive && mPeriod >= 4) {
-        if (mIsTimerReload) {
-            mPhase = mPeriod;
-            mIsTimerReload = false;
-        } else {
-            while (mPhase <= rate) {
-                mPhase += mPeriod;
-                count++;
-            }
-
-            mPhase -= rate;
-        }
-    }
-
-    return count;
-}
-
-/**
- * @brief Move the output towards the target level.
- * @param pEntity The machine state.
- */
-inline void CHvcSpu::_SWave::approachTarget(const _SEntity* pEntity) {
-    approachOutput(mOutput, mTarget, pEntity, mIndex);
-}
-
-/**
- * @brief Save or load the state shared by every channel.
- * @param rSerializer The serializer.
- */
-ALWAYS_INLINE inline void CHvcSpu::_SWave::serializeWave(Serializer& rSerializer) {
-    rSerializer.Entry(mKind);
-    rSerializer.Entry(mIndex);
-    rSerializer.Entry(mIsEnabled);
-    rSerializer.Entry(mStatus);
-    rSerializer.Entry(mOutput);
-    rSerializer.Entry(mTarget);
-    rSerializer.Entry(mLevel);
-    rSerializer.Entry(mIsTimerActive);
-    rSerializer.Entry(mIsTimerReload);
-    rSerializer.Entry(_0c);
-    rSerializer.Entry(mPhase);
-    rSerializer.Entry(mPeriod);
-    rSerializer.Entry(mIsLengthEnabled);
-    rSerializer.Entry(mIsLengthLoaded);
-    rSerializer.Entry(mLength);
-    rSerializer.Entry(mLengthReload);
-}
-
-/**
- * @brief Clock the volume envelope.
- */
-inline void CHvcSpu::_SWaveEnvelope::clockEnvelope() {
-    if (mIsEnvelopeStart) {
-        mEnvelopeCounter = mEnvelopePeriod;
-        mIsEnvelopeStart = false;
-        mEnvelopeVolume = 15;
-    } else {
-        if (mEnvelopeCounter > 0) {
-            mEnvelopeCounter--;
-        }
-
-        if (mEnvelopeCounter == 0) {
-            mEnvelopeCounter = mEnvelopePeriod;
-            if (mEnvelopeVolume > 0) {
-                mEnvelopeVolume--;
-            } else if (mEnvelopeVolume == 0 && mIsEnvelopeLoop) {
-                mEnvelopeVolume = 15;
-            }
-        }
-    }
-}
-
-/**
- * @brief Write the envelope register.
- * @param data The value written.
- */
-inline void CHvcSpu::_SWaveEnvelope::setEnvelope(u8 data) {
-    mIsLengthEnabled = !(data & 0x20);
-    mIsEnvelopeEnabled = !(data & 0x10);
-    mEnvelopePeriod = data & 0xf;
-    mIsEnvelopeLoop = (data >> 5) & 1;
-}
-
-/**
- * @brief Get the current volume, from the envelope or the constant volume.
- * @return The volume, scaled by 256.
- */
-inline s64 CHvcSpu::_SWaveEnvelope::getEnvelopeVolume() const {
-    return (mIsEnvelopeEnabled ? mEnvelopeVolume : mEnvelopePeriod) << 8;
-}
-
-/**
- * @brief Save or load the envelope state.
- * @param rSerializer The serializer.
- */
-ALWAYS_INLINE inline void CHvcSpu::_SWaveEnvelope::serializeEnvelope(Serializer& rSerializer) {
-    rSerializer.Entry(mIsEnvelopeEnabled);
-    rSerializer.Entry(mIsEnvelopeStart);
-    rSerializer.Entry(mEnvelopeVolume);
-    rSerializer.Entry(mIsEnvelopeLoop);
-    rSerializer.Entry(mEnvelopeCounter);
-    rSerializer.Entry(mEnvelopePeriod);
-}
-
-/**
- * @brief Reset the square channel.
- * @param kind The channel kind.
- * @param index The channel index.
- */
-void CHvcSpu::_SWavwR::Reset(u8 kind, u8 index) {
-    mKind = kind;
-    mIndex = index;
-    mIsEnabled = false;
-    mStatus = 0;
-    mOutput = 0;
-    mTarget = 0;
-    mLevel = 0;
-    mIsTimerActive = false;
-    mIsTimerReload = false;
-    _0c = 0;
-    mPhase = 0;
-    mPeriod = 0;
-    mIsLengthEnabled = true;
-    mIsLengthLoaded = false;
-    mLength = 1;
-    mLengthReload = 0;
-    mIsEnvelopeEnabled = false;
-    mIsEnvelopeStart = false;
-    mEnvelopeVolume = 0;
-    mIsEnvelopeLoop = false;
-    mEnvelopeCounter = 0;
-    mEnvelopePeriod = 0;
-    mIsSweepEnabled = false;
-    mIsSweepReload = false;
-    mSweepShift = 0;
-    mSweepDirection = -1;
-    mSweepCounter = 0;
-    mSweepPeriod = 0;
-    mDuty = cDutyTable[2];
-    mDutyPosition = 0;
-}
-
-/**
- * @brief Write a register of the square channel.
- * @param reg The register ($4000-$4003 as 0-3, or cRegister_Enable).
- * @param data The value written.
- * @param pEntity The machine state.
- */
-void CHvcSpu::_SWavwR::Setup(u8 reg, u8 data, _SEntity* pEntity) {
-    switch (reg) {
-    case 0:
-        mIsLengthEnabled = !(data & 0x20);
-        mIsEnvelopeEnabled = !(data & 0x10);
-        mDuty = cDutyTable[data >> 6];
-        mEnvelopePeriod = data & 0xf;
-        mIsEnvelopeLoop = (data >> 5) & 1;
-        break;
-    case 1:
-        mIsSweepEnabled = data >> 7;
-        mSweepShift = data & 7;
-        mSweepPeriod = ((data >> 4) & 7) + 1;
-        mSweepDirection = (data & 8) ? 1 : -1;
-        mIsSweepReload = true;
-        break;
-    case 2:
-        mPeriod = (mPeriod & 0x700) | data;
-        break;
-    case 3:
-        mPeriodHigh = data & 7;
-        mLength = mLengthReload = cLengthTable[data >> 3] * 2;
-        if (mIsEnabled) {
-            mIsTimerActive = true;
-            mIsTimerReload = true;
-        }
-
-        mIsLengthLoaded = true;
-        mIsEnvelopeStart = true;
-        mIsSweepReload = true;
-        mDutyPosition = 0;
-        mStatus = 1 << mIndex;
-        break;
-    case cRegister_Enable:
-        if (data & (1 << mIndex)) {
-            mIsEnabled = true;
-        } else {
-            mIsTimerActive = false;
-            mLength = 0;
-            mLengthReload = 0;
-            mIsEnabled = false;
-            mStatus = 0;
-        }
-
-        break;
-    }
-}
-
-/**
- * @brief Run the square channel for one sample.
- * @param rate The number of clocks in the sample, scaled by 256.
- * @param events The frame counter events that happened.
- * @param pEntity The machine state.
- */
-void CHvcSpu::_SWavwR::Pulse(s16 rate, u64 events, _SEntity* pEntity) {
-    bool isEnabled = mIsEnabled;
-    s16 period = mPeriod;
-    s16 target = period;
-    if (pEntity->mHalfFrameEvents & events) {
-        clockLength();
-        if (mIsSweepEnabled && mSweepPeriod != 0) {
-            if (mIsSweepReload) {
-                mSweepCounter = mSweepPeriod;
-                mIsSweepReload = false;
-            }
-
-            if (mSweepCounter > 0) {
-                mSweepCounter--;
-            }
-
-            if (mSweepCounter == 0) {
-                mSweepCounter = mSweepPeriod;
-                if (mSweepShift != 0) {
-                    s16 delta = period >> mSweepShift;
-                    if (mSweepDirection > 0) {
-                        target = period - delta - (mIndex == 0);
-                    } else if (mSweepDirection < 0) {
-                        target = period + delta;
-                    }
-                }
-            }
-        }
-    }
-
-    if (pEntity->mQuarterFrameEvents & events) {
-        clockEnvelope();
-    }
-
-    const _SCustomParameter* pRender = pEntity->mTitleRender;
-    const s16* pPeriodMax =
-        mSweepDirection <= 0 ? &cSweepPeriodMax[mSweepShift] : &pRender->mSweepPeriodMax;
-    s64 count = 0;
-    if (pRender->mSweepPeriodMin <= target && target <= *pPeriodMax) {
-        if (period >= 4 && mIsTimerActive) {
-            if (mIsTimerReload) {
-                mPhase = period;
-                mIsTimerReload = false;
-            } else {
-                while (mPhase <= rate) {
-                    mPhase += period;
-                    count++;
-                }
-
-                mPhase -= rate;
-            }
-        }
-    }
-
-    if (target != period) {
-        mPeriod = target;
-        mPhase = target;
-    }
-
-    if (mLength == 0) {
-        if (mIsLengthEnabled) {
-            mStatus = 0;
-        }
-
-        if (getChannelOption(pRender, mIndex)) {
-            isEnabled = false;
-        } else {
-            count = 0;
-        }
-    }
-
-    if (count != 0) {
-        s64 volume = getEnvelopeVolume();
-        s64 high = 0;
-        s64 low = 0;
-        for (; count > 0; count--) {
-            mDutyPosition = (mDutyPosition + 1) & 0xf;
-            if (mDuty & (1 << mDutyPosition)) {
-                high++;
-            } else {
-                low++;
-            }
-        }
-
-        mLevel = high * volume / (low + high);
-    }
-
-    mTarget = mLevel * isEnabled;
-    approachTarget(pEntity);
-}
-
-/**
- * @brief Save or load the state of the square channel.
- * @param rSerializer The serializer.
- */
-void CHvcSpu::_SWavwR::Serialize(Serializer& rSerializer) {
-    u64 start = rSerializer.GetOffset();
-    serializeWave(rSerializer);
-    serializeEnvelope(rSerializer);
-    rSerializer.Entry(mIsSweepEnabled);
-    rSerializer.Entry(mIsSweepReload);
-    rSerializer.Entry(mSweepShift);
-    rSerializer.Entry(mSweepDirection);
-    rSerializer.Entry(mSweepCounter);
-    rSerializer.Entry(mSweepPeriod);
-    rSerializer.Entry(mDuty);
-    rSerializer.Entry(mDutyPosition);
-    alignSerializer(rSerializer, start);
-}
-
-/**
- * @brief Reset the triangle channel.
- * @param kind The channel kind.
- * @param index The channel index.
- */
-void CHvcSpu::_SWavwT::Reset(u8 kind, u8 index) {
-    mKind = kind;
-    mIndex = index;
-    mIsEnabled = false;
-    mStatus = 0;
-    mOutput = 0;
-    mTarget = 0;
-    mLevel = 0;
-    mIsTimerActive = false;
-    mIsTimerReload = false;
-    _0c = 0;
-    mPhase = 0;
-    mPeriod = 0;
-    mIsLengthEnabled = false;
-    mIsLengthLoaded = false;
-    mLength = 1;
-    mLengthReload = 0;
-    mIsLinearEnabled = false;
-    mIsLinearReload = false;
-    mLinearCounter = 0;
-    mLinearReload = 0;
-    _20 = 0;
-    mStep = 0;
-}
-
-/**
- * @brief Write a register of the triangle channel.
- * @param reg The register ($4008-$400b as 0-3, or cRegister_Enable).
- * @param data The value written.
- * @param pEntity The machine state.
- */
-void CHvcSpu::_SWavwT::Setup(u8 reg, u8 data, _SEntity* pEntity) {
-    switch (reg) {
-    case 0:
-        mIsLinearEnabled = mIsLengthEnabled = !(data & 0x80);
-        mLinearReload = data & 0x7f;
-        break;
-    case 2:
-        mPeriod = (mPeriod & 0x700) | data;
-        break;
-    case 3:
-        mPeriodHigh = data & 7;
-        mLength = mLengthReload = cLengthTable[data >> 3] * 2;
-        if (mIsEnabled) {
-            mIsTimerActive = true;
-            mIsTimerReload = true;
-        }
-
-        mIsLengthLoaded = true;
-        mIsLinearReload = true;
-        mStatus = 1 << mIndex;
-        break;
-    case cRegister_Enable:
-        if (data & (1 << mIndex)) {
-            mIsEnabled = true;
-        } else {
-            mIsTimerActive = false;
-            mLength = 0;
-            mLengthReload = 0;
-            mLinearCounter = 0;
-            mLinearReload = 0;
-            mIsEnabled = false;
-            mStatus = 0;
-        }
-
-        break;
-    }
-}
-
-/**
- * @brief Run the triangle channel for one sample.
- * @param rate The number of clocks in the sample, scaled by 256.
- * @param events The frame counter events that happened.
- * @param pEntity The machine state.
- */
-void CHvcSpu::_SWavwT::Pulse(s16 rate, u64 events, _SEntity* pEntity) {
-    if (pEntity->mHalfFrameEvents & events) {
-        clockLength();
-    }
-
-    if (pEntity->mQuarterFrameEvents & events) {
-        if (mIsLinearReload) {
-            mLinearCounter = mLinearReload;
-            mIsLinearReload = false;
-        }
-
-        if (mIsLinearEnabled && mLinearCounter > 0) {
-            mLinearCounter--;
-        }
-
-        if (mLinearReload == 0) {
-            mLinearCounter = 0;
-        }
-    }
-
-    s64 count = stepTimer(rate);
-    if (mIsLengthEnabled && mIsLinearEnabled && (mLength == 0 || mLinearCounter == 0)) {
-        mStatus = 0;
-    }
-
-    s16 level;
-    if (mLength != 0 && count != 0 && mLinearCounter != 0) {
-        s64 sum = 0;
-        for (s64 i = 0; i < count; i++) {
-            mStep++;
-            sum += cTriangleTable[mStep & 0x1f];
-        }
-
-        level = sum / count;
-    } else {
-        level = cTriangleTable[mStep & 0x1f];
-    }
-
-    mLevel = level;
-    mTarget = level << 8;
-    approachTarget(pEntity);
-}
-
-/**
- * @brief Save or load the state of the triangle channel.
- * @param rSerializer The serializer.
- */
-void CHvcSpu::_SWavwT::Serialize(Serializer& rSerializer) {
-    u64 start = rSerializer.GetOffset();
-    serializeWave(rSerializer);
-    rSerializer.Entry(mIsLinearEnabled);
-    rSerializer.Entry(mIsLinearReload);
-    rSerializer.Entry(mLinearCounter);
-    rSerializer.Entry(mLinearReload);
-    rSerializer.Entry(_20);
-    rSerializer.Entry(mStep);
-    alignSerializer(rSerializer, start);
-}
-
-/**
- * @brief Reset the noise channel.
- * @param kind The channel kind.
- * @param index The channel index.
- */
-void CHvcSpu::_SNoise::Reset(u8 kind, u8 index) {
-    mKind = kind;
-    mIndex = index;
-    mIsEnabled = false;
-    mStatus = 0;
-    mOutput = 0;
-    mTarget = 0;
-    mLevel = 0;
-    mIsTimerActive = false;
-    mIsTimerReload = false;
-    _0c = 0;
-    mPhase = 0;
-    mPeriod = 0;
-    mIsLengthEnabled = false;
-    mIsLengthLoaded = false;
-    mLength = 1;
-    mLengthReload = 0;
-    mIsEnvelopeEnabled = false;
-    mIsEnvelopeStart = false;
-    mEnvelopeVolume = 0;
-    mIsEnvelopeLoop = false;
-    mEnvelopeCounter = 0;
-    mEnvelopePeriod = 0;
-    _20 = 0;
-    _28 = 0;
-    mShift = 1;
-    mTapA = 0;
-    mTapB = 6;
-}
-
-/**
- * @brief Write a register of the noise channel.
- * @param reg The register ($400c-$400f as 0-3, or cRegister_Enable).
- * @param data The value written.
- * @param pEntity The machine state.
- */
-void CHvcSpu::_SNoise::Setup(u8 reg, u8 data, _SEntity* pEntity) {
-    switch (reg) {
-    case 0:
-        setEnvelope(data);
-        break;
-    case 2: {
-        u8 option = getChannelOption(pEntity->mTitleRender, mIndex);
-        mPeriod = cNoisePeriodTable[data & 0xf];
-        if (option) {
-            if (!(data & 0x80)) {
-                if (mTapB == 6) {
-                    mShift = 1;
-                }
-
-                mTapA = 0;
-                mTapB = 1;
-            } else {
-                if (mTapB == 1) {
-                    mShift = 1;
-                }
-
-                mTapA = 0;
-                mTapB = 6;
-            }
-        } else {
-            mTapA = 0;
-            if (!(data & 0x80)) {
-                mTapB = 3;
-            } else {
-                mTapB = 6;
-            }
-        }
-
-        break;
-    }
-    case 3:
-        mLength = mLengthReload = cLengthTable[data >> 3] * 2;
-        if (mIsEnabled) {
-            mIsTimerActive = true;
-            mIsTimerReload = true;
-            mStatus = 1 << mIndex;
-        }
-
-        mIsLengthLoaded = true;
-        mIsEnvelopeStart = true;
-        _28 = 0;
-        break;
-    case cRegister_Enable:
-        if (data & (1 << mIndex)) {
-            mIsEnabled = true;
-        } else {
-            mIsTimerActive = false;
-            mLength = 0;
-            mLengthReload = 0;
-            mIsEnabled = false;
-            mStatus = 0;
-        }
-
-        break;
-    }
-}
-
-/**
- * @brief Run the noise channel for one sample.
- * @param rate The number of clocks in the sample, scaled by 256.
- * @param events The frame counter events that happened.
- * @param pEntity The machine state.
- */
-void CHvcSpu::_SNoise::Pulse(s16 rate, u64 events, _SEntity* pEntity) {
-    bool isEnabled = mIsEnabled;
-    if (pEntity->mHalfFrameEvents & events) {
-        clockLength();
-    }
-
-    if (pEntity->mQuarterFrameEvents & events) {
-        clockEnvelope();
-    }
-
-    s64 count = stepTimer(rate);
-    if (mLength == 0) {
-        u8 status = 0;
-        if (mIsEnabled && !mIsLengthEnabled) {
-            status = 1 << mIndex;
-        }
-
-        mStatus = status;
-        isEnabled = false;
-    }
-
-    if (count != 0) {
-        s64 volume = getEnvelopeVolume();
-        s64 high = 0;
-        s64 low = 0;
-        u64 shift = mShift;
-        if (getChannelOption(pEntity->mTitleRender, mIndex)) {
-            do {
-                shift >>= 1;
-                if (shift == 0) {
-                    shift = 1;
-                }
-
-                shift |= (((shift >> mTapB) ^ (shift >> mTapA)) & 1) << 14;
-                high += shift & 1;
-                low += !(shift & 1);
-            } while (--count != 0);
-        } else {
-            s32 width = mTapB == 6 ? 15 : 17;
-            do {
-                shift |= (((shift >> mTapA) ^ (shift >> mTapB)) & 1) << width;
-                shift >>= 1;
-                if (shift == 0) {
-                    shift = 1;
-                }
-
-                high += shift & 1;
-                low += !(shift & 1);
-            } while (--count != 0);
-        }
-
-        mShift = shift;
-        mLevel = low * volume / (high + low);
-    }
-
-    mTarget = mLevel * isEnabled;
-    approachTarget(pEntity);
-}
-
-/**
- * @brief Save or load the state of the noise channel.
- * @param rSerializer The serializer.
- */
-void CHvcSpu::_SNoise::Serialize(Serializer& rSerializer) {
-    u64 start = rSerializer.GetOffset();
-    serializeWave(rSerializer);
-    serializeEnvelope(rSerializer);
-    rSerializer.Entry(_20);
-    rSerializer.Entry(_28);
-    rSerializer.Entry(mShift);
-    rSerializer.Entry(mTapA);
-    rSerializer.Entry(mTapB);
-    alignSerializer(rSerializer, start);
-}
-
-/**
- * @brief Reset the delta modulation channel.
- * @param kind The channel kind.
- * @param index The channel index.
- */
-void CHvcSpu::_SDelta::Reset(u8 kind, u8 index) {
-    mKind = kind;
-    mIndex = index;
-    mIsEnabled = false;
-    mStatus = 0;
-    mOutput = 0;
-    mTarget = 0;
-    mLevel = 0;
-    mIsTimerActive = false;
-    mIsTimerReload = false;
-    _0c = 0;
-    mPhase = 0;
-    mPeriod = 0;
-    mIsLengthEnabled = false;
-    mIsLengthLoaded = false;
-    mLength = 0;
-    mLengthReload = 0;
-    mCounter = 0;
-    mCounterReload = 0;
-    mAddress = 0xc000;
-    mAddressReload = 0xc000;
-    mBuffer = 0xaa;
-    mBit = 0;
-    mIsLoop = false;
-    mIsIrqEnabled = false;
-    mIsIrq = false;
-    _25 = 0;
-    mFetchCount = 0;
-}
-
-/**
- * @brief Write a register of the delta modulation channel.
- * @param reg The register ($4010-$4013 as 0-3, or cRegister_Enable).
- * @param data The value written.
- * @param pEntity The machine state.
- */
-void CHvcSpu::_SDelta::Setup(u8 reg, u8 data, _SEntity* pEntity) {
-    switch (reg) {
-    case 0:
-        mIsIrqEnabled = data >> 7;
-        mIsLoop = (data >> 6) & 1;
-        mIsTimerActive = true;
-        mIsTimerReload = true;
-        mPeriod = cDeltaPeriodTable[data & 0xf];
-        if (!mIsIrqEnabled) {
-            mIsIrq = false;
-        }
-
-        break;
-    case 1:
-        mCounter = mCounterReload = data & 0x7f;
-        break;
-    case 2:
-        mAddress = mAddressReload = 0xc000 | (data << 6);
-        break;
-    case 3:
-        mIsLengthEnabled = true;
-        mIsLengthLoaded = true;
-        mLength = mLengthReload = (data << 7) | 8;
-        break;
-    case cRegister_Enable:
-        if (data & (1 << mIndex)) {
-            mStatus = 1 << mIndex;
-            mIsEnabled = true;
-        } else {
-            mIsIrq = false;
-            mIsEnabled = false;
-        }
-
-        break;
-    }
-}
-
-/**
- * @brief Run the delta modulation channel for one sample.
- * @param rate The number of clocks in the sample, scaled by 256.
- * @param events The frame counter events that happened.
- * @param pEntity The machine state.
- */
-void CHvcSpu::_SDelta::Pulse(s16 rate, u64 events, _SEntity* pEntity) {
-    s64 count = stepTimer(rate);
-    if (mIsLengthLoaded && mIsLengthEnabled) {
-        mBit = 0;
-        mIsLengthLoaded = false;
-    }
-
-    s16 level;
-    if (count != 0) {
-        s64 sum = 0;
-        for (s64 i = 0; i < count; i++) {
-            if (mBit >= 8) {
-                u16 address = mAddress + 1;
-                if (static_cast<s16>(address) >= 0) {
-                    address -= 0x8000;
-                }
-
-                mBit = 0;
-                mAddress = address;
-            }
-
-            if (mBit == 0) {
-                u64 address = mAddress;
-                mBuffer = (pEntity->mMemory + pEntity->mCpuPages[address >> 12].mOffset)
-                    [address & 0xfff];
-                mFetchCount++;
-            }
-
-            if (mLength > 0 && mIsEnabled) {
-                if (mBuffer & (1 << mBit)) {
-                    if (mCounter <= 0x7d) {
-                        mCounter += 2;
-                    }
-                } else if (mCounter >= 2) {
-                    mCounter -= 2;
-                }
-
-                mBit++;
-                mLength--;
-            }
-
-            if (mLength == 0 && mIsLengthEnabled) {
-                if (mIsLoop) {
-                    mLength = mLengthReload;
-                    mIsLengthEnabled = true;
-                    mIsLengthLoaded = true;
-                    mAddress = mAddressReload;
-                    mCounter = mCounterReload;
-                } else {
-                    mIsLengthEnabled = false;
-                    mIsLengthLoaded = false;
-                    mIsIrq = true;
-                    mStatus = 0;
-                }
-            }
-
-            sum += mCounter;
-        }
-
-        level = sum / count;
-    } else {
-        level = mCounter;
-    }
-
-    mLevel = level;
-    mTarget = level << 8;
-    approachTarget(pEntity);
-}
-
-/**
- * @brief Save or load the state of the delta modulation channel.
- * @param rSerializer The serializer.
- */
-void CHvcSpu::_SDelta::Serialize(Serializer& rSerializer) {
-    u64 start = rSerializer.GetOffset();
-    serializeWave(rSerializer);
-    rSerializer.Entry(mCounter);
-    rSerializer.Entry(mCounterReload);
-    rSerializer.Entry(mAddress);
-    rSerializer.Entry(mAddressReload);
-    rSerializer.Entry(mBuffer);
-    rSerializer.Entry(mBit);
-    rSerializer.Entry(mIsLoop);
-    rSerializer.Entry(mIsIrqEnabled);
-    rSerializer.Entry(mIsIrq);
-    rSerializer.Entry(_25);
-    rSerializer.Entry(_27);
-    alignSerializer(rSerializer, start);
-}
-
-/**
- * @brief Reset the disk system sound.
- * @param kind The channel kind.
- * @param index The channel index.
- */
-void CHvcSpu::_SQdMfm::Reset(u8 kind, u8 index) {
-    mKind = kind;
-    mIndex = index;
-    mOutput = 0;
-    mIsSoundEnabled = false;
-    mIsEnvelopeDisabled = false;
-    mEnvelopeSpeed = 0xe8;
-    mIsPlaying = false;
-    mIsWaveLocked = false;
-    mFrequency = 0;
-    mWavePhase = 0.0;
-    for (s32 i = 0; i < 64; i++) {
-        mWave[i] = 0;
-    }
-
-    mVolumeGain = 0;
-    mVolume = 0;
-    mVolumeSpeed = 0;
-    mVolumeCounter = 0;
-    mIsVolumeEnvelope = false;
-    mIsVolumeIncrease = false;
-    mVolumePeriod = 0;
-    mMasterVolume = 0;
-    mModFrequency = 0;
-    mModPhase = -1.0;
-    mModCounter = 0;
-    mModWriteIndex = 0;
-    mIsModHalted = false;
-    for (s32 i = 0; i < 64; i++) {
-        mModTable[i] = 0;
-    }
-
-    mModPosition = -1;
-    mModGain = 0;
-    mModSpeed = 0;
-    mModCounterClock = 0;
-    mIsModEnvelope = false;
-    mIsModIncrease = false;
-    mModPeriod = 0;
-}
-
-/**
- * @brief Write a register of the disk system sound.
- * @param reg The low byte of the register address ($4023, $4040-$408a).
- * @param data The value written.
- * @param pEntity The machine state.
- */
-void CHvcSpu::_SQdMfm::Setup(u8 reg, u8 data, _SEntity* pEntity) {
-    switch (reg) {
-    case 0x23:
-        mIsSoundEnabled = (data >> 1) & 1;
-        break;
-    case 0x80:
-        if (data & 0x80) {
-            mIsVolumeEnvelope = false;
-            mVolumeGain = data & 0x3f;
-        } else {
-            mIsVolumeEnvelope = true;
-            mIsVolumeIncrease = (data >> 6) & 1;
-            mVolumeSpeed = data & 0x3f;
-            mVolumePeriod = getEnvelopePeriod(mVolumeSpeed, mEnvelopeSpeed);
-            mVolumeCounter = 0;
-        }
-
-        break;
-    case 0x82:
-        mFrequencyLow = data;
-        break;
-    case 0x83: {
-        mFrequency = (mFrequency & 0xf0ff) | ((data & 0xf) << 8);
-        u8 isPlaying = mIsPlaying;
-        mIsPlaying = !(data & 0x80);
-        if (!isPlaying && mIsSoundEnabled) {
-            mWavePhase = 0.0;
-            mVolume = mVolumeGain;
-        }
-
-        mIsEnvelopeDisabled = (data >> 6) & 1;
-        break;
-    }
-    case 0x84:
-        if (data & 0x80) {
-            mIsModEnvelope = false;
-            mModGain = data & 0x3f;
-        } else {
-            mIsModEnvelope = true;
-            mIsModIncrease = (data >> 6) & 1;
-            mModSpeed = data & 0x3f;
-            mModPeriod = getEnvelopePeriod(mModSpeed, mEnvelopeSpeed);
-            mModCounterClock = 0;
-        }
-
-        break;
-    case 0x85:
-        mModPhase = -1.0;
-        mModCounter = (data & 0x40) ? (data | 0xc0) : (data & 0x3f);
-        mModPosition = -1;
-        break;
-    case 0x86:
-        mModFrequencyLow = data;
-        break;
-    case 0x87:
-        mModFrequency = (mModFrequency & 0xf0ff) | ((data & 0xf) << 8);
-        mIsModHalted = data >> 7;
-        break;
-    case 0x88:
-        if (mIsModHalted) {
-            s8 step = cModStepTable[data & 7];
-            u8 index = mModWriteIndex;
-            mModTable[index] = step;
-            mModTable[static_cast<u8>(index + 1)] = step;
-            mModWriteIndex = (index + 2) & 0x3f;
-        }
-
-        break;
-    case 0x89:
-        mIsWaveLocked = !(data & 0x80);
-        mMasterVolume = data & 3;
-        break;
-    case 0x8a:
-        mVolumePeriod = getEnvelopePeriod(mVolumeSpeed, data);
-        mEnvelopeSpeed = data;
-        mModPeriod = getEnvelopePeriod(mModSpeed, data);
-        break;
-    default:
-        if (reg >= 0x40 && reg < 0x80 && !mIsWaveLocked) {
-            mWave[reg - 0x40] = data & 0x3f;
-        }
-
-        break;
-    }
-}
-
-/**
- * @brief Run the disk system sound for one sample.
- * @param rate The number of clocks in the sample, scaled by 256.
- * @param events The frame counter events that happened.
- * @param pEntity The machine state.
- */
-void CHvcSpu::_SQdMfm::Pulse(s16 rate, u64 events, _SEntity* pEntity) {
-    u8 isOutput = 0;
-    if (mIsSoundEnabled && mIsPlaying) {
-        isOutput = mIsWaveLocked;
-    }
-
-    if (!mIsEnvelopeDisabled) {
-        if (mIsVolumeEnvelope && mEnvelopeSpeed != 0) {
-            u32 period = mVolumePeriod;
-            u64 counter = mVolumeCounter;
-            if (counter >= period) {
-                if (mIsVolumeIncrease) {
-                    do {
-                        if (mVolumeGain < 0x20) {
-                            mVolumeGain++;
-                        }
-
-                        counter -= period;
-                    } while (counter >= period);
-                } else {
-                    do {
-                        if (mVolumeGain != 0) {
-                            mVolumeGain--;
-                        }
-
-                        counter -= period;
-                    } while (counter >= period);
-                }
-
-                mVolumeCounter = counter;
-            }
-
-            mVolumeCounter = counter + (rate << 8);
-        }
-
-        if (mIsModEnvelope && mEnvelopeSpeed != 0) {
-            u32 period = mModPeriod;
-            u64 counter = mModCounterClock;
-            if (counter >= period) {
-                if (mIsModIncrease) {
-                    do {
-                        if (mModGain < 0x20) {
-                            mModGain++;
-                        }
-
-                        counter -= period;
-                    } while (counter >= period);
-                } else {
-                    do {
-                        if (mModGain != 0) {
-                            mModGain--;
-                        }
-
-                        counter -= period;
-                    } while (counter >= period);
-                }
-
-                mModCounterClock = counter;
-            }
-
-            mModCounterClock = counter + (rate << 8);
-        }
-    }
-
-    s64 modGain = mModGain < 0x20 ? mModGain : 0x20;
-    s64 mod;
-    if (!mIsModHalted && mModFrequency != 0) {
-        f64 phase = mModPhase;
-        s64 position = static_cast<s64>(phase);
-        s8 counter = mModCounter;
-        if (position >= 0) {
-            while (mModPosition != position) {
-                s8 next = mModPosition + 1;
-                if (next > 63) {
-                    next = 0;
-                }
-
-                mModPosition = next;
-                s8 step = mModTable[(mModWriteIndex + next) & 0x3f];
-                s8 value = step == 0x7f ? 0 : mModCounter + step;
-                s8 wrapped = value + 64;
-                if (wrapped < 0) {
-                    value = (wrapped & 0x7f) - 64;
-                }
-
-                mModCounter = value;
-            }
-        }
-
-        phase += rate * cModPhaseScale * mModFrequency;
-        if (phase >= 64.0) {
-            phase -= 64.0;
-        }
-
-        mModPhase = phase;
-        mod = counter * modGain;
-    } else {
-        mod = mModCounter * modGain;
-    }
-
-    if (mod < 0) {
-        mod -= 8;
-    } else if (mod > 0) {
-        mod += 8;
-    }
-
-    if (mod >= 0xc00) {
-        mod -= 0x1000;
-    } else if (mod < -0x400) {
-        mod += 0x1000;
-    }
-
-    s64 sample = 0;
-    if (mFrequency != 0) {
-        f64 phase = mWavePhase;
-        s64 pitch = mod + 0x400;
-        s64 volume = mVolume < 0x20 ? mVolume : 0x20;
-        sample = volume * mWave[static_cast<s64>(phase)];
-        phase += rate * cWavePhaseScale * mFrequency * pitch;
-        mWavePhase = phase;
-        if (phase >= 64.0) {
-            mVolume = mVolumeGain;
-            mWavePhase = phase - 64.0;
-        }
-    }
-
-    switch (mMasterVolume) {
-    case 1:
-        sample = sample * 2 / 3;
-        break;
-    case 2:
-        sample = sample >> 1;
-        break;
-    case 3:
-        sample = sample * 2 / 5;
-        break;
-    }
-
-    approachOutput(mOutput, sample * isOutput, pEntity, mIndex);
-}
-
-/**
- * @brief Save or load the state of the disk system sound.
- * @param rSerializer The serializer.
- */
-void CHvcSpu::_SQdMfm::Serialize(Serializer& rSerializer) {
-    u64 start = rSerializer.GetOffset();
-    rSerializer.Entry(mKind);
-    rSerializer.Entry(mIndex);
-    rSerializer.Entry(mOutput);
-    rSerializer.Entry(mIsSoundEnabled);
-    rSerializer.Entry(mIsEnvelopeDisabled);
-    rSerializer.Entry(mEnvelopeSpeed);
-    rSerializer.Entry(mIsPlaying);
-    rSerializer.Entry(mIsWaveLocked);
-    rSerializer.Entry(mFrequency);
-    rSerializer.Entry(mWavePhase);
-    for (s32 i = 0; i < 64; i++) {
-        rSerializer.Entry(mWave[i]);
-    }
-
-    rSerializer.Entry(mVolumeGain);
-    rSerializer.Entry(mVolume);
-    rSerializer.Entry(mVolumeSpeed);
-    rSerializer.Entry(mIsVolumeEnvelope);
-    rSerializer.Entry(mIsVolumeIncrease);
-    rSerializer.Entry(mVolumeCounter);
-    rSerializer.Entry(mVolumePeriod);
-    rSerializer.Entry(mMasterVolume);
-    rSerializer.Entry(mModFrequency);
-    rSerializer.Entry(mModPhase);
-    rSerializer.Entry(mModCounter);
-    rSerializer.Entry(mModWriteIndex);
-    rSerializer.Entry(mIsModHalted);
-    for (s32 i = 0; i < 64; i++) {
-        rSerializer.Entry(mModTable[i]);
-    }
-
-    rSerializer.Entry(mModPosition);
-    rSerializer.Entry(mModGain);
-    rSerializer.Entry(mModSpeed);
-    rSerializer.Entry(mIsModEnvelope);
-    rSerializer.Entry(mIsModIncrease);
-    rSerializer.Entry(mModCounterClock);
-    rSerializer.Entry(mModPeriod);
-    alignSerializer(rSerializer, start);
-}
-
-/**
- * @brief Reset the disk drive.
- * @param pEntity The machine state.
- */
-void CHvcSpu::_SQdDisk::Reset(_SEntity* pEntity) {
-    u8* pRegister = pEntity->mMemory + cMemory_IoRegister;
-    mOffset = 0;
-    mIsOffsetChanged = false;
-    mTimer = 0;
-    mStatusMask = 0x47;
-    mMediaCount = 0x78;
-    mIsTimerActive = false;
-    pRegister[0x32] = 0x47;
-    pRegister[0x33] = 0x80;
-}
-
-/**
- * @brief Run the disk drive for one sample: transfer the current byte and run the timer IRQ.
- * @param rate The number of clocks in the sample.
- * @param events The frame counter events that happened.
- * @param pEntity The machine state.
- */
-void CHvcSpu::_SQdDisk::Pulse(s16 rate, u64 events, _SEntity* pEntity) {
-    u8* pMemory = pEntity->mMemory;
-    u8* pShadow = pMemory + cMemory_IoShadow;
-    u8* pRegister = pMemory + cMemory_IoRegister;
-    u8 timerControl = pShadow[0x22];
-    if (mIsOffsetChanged) {
-        s8 control = pShadow[0x25];
-        if (control & 4) {
-            pRegister[0x31] = pMemory[cMemory_DiskImage + mOffset];
-        }
-
-        if (control < 0) {
-            pEntity->mOrderController._08 |= 1;
-            mIsOffsetChanged = false;
-        }
-    }
-
-    if (mIsTimerActive) {
-        for (s32 i = 0; i < rate; i++) {
-            if (mTimer == 0) {
-                if (!(timerControl & 1)) {
-                    mIsTimerActive = false;
-                    return;
-                }
-
-                SetTimer(pEntity);
-            }
-
-            mTimer--;
-            if (mTimer == 0 && (timerControl & 2)) {
-                pRegister[0x30] |= 1;
-                pEntity->mOrderController._08 |= 1;
-            }
-        }
-    }
-}
-
-/**
- * @brief Reload the timer from its reload registers ($4020-$4021).
- * @param pEntity The machine state.
- */
-void CHvcSpu::_SQdDisk::SetTimer(_SEntity* pEntity) {
-    mTimer = *reinterpret_cast<u16*>(pEntity->mMemory + cMemory_IoShadow + 0x20);
-}
-
-/**
- * @brief Get the position of the disk head.
- * @return The offset in the disk image.
- */
-u64 CHvcSpu::_SQdDisk::GetQdOffset() {
-    return mOffset;
-}
-
-/**
- * @brief Move the disk head.
- * @param offset The offset in the disk image.
- */
-void CHvcSpu::_SQdDisk::SetQdOffset(u64 offset) {
-    mOffset = offset;
-    mIsOffsetChanged = true;
-}
-
-/**
- * @brief Move the disk head inside the current side.
- * @param offset The offset in the side.
- */
-void CHvcSpu::_SQdDisk::SetQdOffsetHalf(u64 offset) {
-    mOffset = (mOffset & 0xffff0000) | (offset & 0xffff);
-    mIsOffsetChanged = true;
-}
-
-/**
- * @brief Advance the disk head by one byte inside the current side.
- */
-void CHvcSpu::_SQdDisk::IncQdOffsetHalf() {
-    mOffset = (mOffset & 0xffff0000) | ((mOffset + 1) & 0xffff);
-    mIsOffsetChanged = true;
-}
-
-/**
- * @brief Start the timer IRQ ($4022).
- * @param pEntity The machine state.
- */
-void CHvcSpu::_SQdDisk::SetTimerStart(_SEntity* pEntity) {
-    SetTimer(pEntity);
-    mIsTimerActive = true;
-}
-
-/**
- * @brief Mark the disk as written.
- * @param isDirty Whether the disk was written.
- */
-void CHvcSpu::_SQdDisk::SetQdDirty(bool isDirty) {
-    mIsDirty = isDirty;
-}
-
-/**
- * @brief Advance the disk insertion counter, holding it while the buttons are pressed.
- */
-void CHvcSpu::_SQdDisk::IncMediaCount() {
-    u8 count = mMediaCount;
-    if (count >= 0xc4) {
-        mMediaCount = count + 1;
-    } else if (count < 0x78) {
-        mMediaCount = count + 1;
-    } else if (getGioButton(GetCHvc()) & 9) {
-        mMediaCount = 0xc4;
-    }
-}
-
-/**
- * @brief Construct the sound processing unit.
- */
-CHvcSpu::CHvcSpu() : CPlatformHvcUnit(0, 5, 1) {
-    std::strncpy(mDescriptor.mName, "HVC SPU        ", sizeof(mDescriptor.mName) - 1);
-}
-
-/**
- * @brief Destroy the sound processing unit.
- */
+/** @brief Releases SPU platform state. */
 CHvcSpu::~CHvcSpu() {}
-
-/**
- * @brief Reset the clocks and every channel.
- */
-inline void CHvcSpu::resetChannels() {
-    mClock = 0;
-    mSampleClock = 0;
-    mEvents = 0;
-    mSample = 0;
-    mLastSample = 0;
-    mSquare[0].Reset(0, 0);
-    mSquare[1].Reset(0, 1);
+/** @brief Resets audio counters and all nine sound channels. */
+unsigned int CHvcSpu::_Prologue() {
+    mPendingCycles = mSampleCycleRemainder = mPendingEvents = 0;
+    mOutputLeft = mOutputRight = 0;
+    mSquare0.Reset(0, 0);
+    mSquare1.Reset(0, 1);
     mTriangle.Reset(0, 2);
     mNoise.Reset(0, 3);
     mDelta.Reset(0, 4);
-    mQdMfm.Reset(0, 5);
-    mExSquare[0].Reset(0, 6);
-    mExSquare[1].Reset(0, 7);
-    mExWave.Reset(0, 8);
+    mDiskAudio.Reset(0, 5);
+    mExtraSquare0.Reset(0, 6);
+    mExtraSquare1.Reset(0, 7);
+    mExtraTriangle.Reset(0, 8);
+    return 0;
 }
-
-/**
- * @brief Reset the channels before running.
- * @return The result (always success).
- */
-int CHvcSpu::_Prologue() {
-    resetChannels();
-    return cResult_Success;
-}
-
-/**
- * @brief Nothing to do after running.
- * @return The result (always success).
- */
-int CHvcSpu::_Epilogue() {
-    return cResult_Success;
-}
-
-/**
- * @brief Read or write a sound register.
- * @param pUnit The calling unit.
- * @param channel The bus channel.
- * @param operation cOperation_Read or cOperation_Write.
- * @param pArgument The transfer.
- * @return cResult_Success, or cResult_Unhandled for an address that is not a sound register.
- */
-int CHvcSpu::Access(CPlatformUnit* pUnit, u64 channel, u64 operation, UArgument* pArgument) {
-    _SEntity* pEntity = mEntity;
-    u8* pMemory = pEntity->mMemory;
-    u64 address = pArgument->mAccess.mAddress;
-    u8* pShadow = pMemory + cMemory_IoShadow;
-    u8* pDiskStatus = pMemory + cMemory_IoRegister + 0x32;
-
-    if (operation == cOperation_Write) {
+/** @brief Completes SPU shutdown. */
+unsigned int CHvcSpu::_Epilogue() { return 0; }
+/** @brief Identifies SPU serialization content. */
+unsigned char CHvcSpu::_SerializeTagContent() { return 5; }
+/** @brief Identifies SPU serialization species. */
+unsigned char CHvcSpu::_SerializeTagSpecies() { return 0; }
+/** @brief Reports the SPU state version. */
+unsigned short CHvcSpu::_SerializeTagVersion() { return 0x100; }
+/** @brief Labels serialized SPU state. */
+const unsigned char* CHvcSpu::_SerializeTagComment() { return reinterpret_cast<const unsigned char*>("SPU    "); }
+/** @brief Dispatches standard, disk, MMC5, and VRC6 audio register accesses. */
+unsigned int CHvcSpu::Access(CPlatformUnit*, unsigned long, unsigned long operation, UArgument* arguments) {
+    unsigned char* memory = mpEntity->pMemory;
+    unsigned long address = arguments->values[2];
+    unsigned char* registers = memory + 0x303a10;
+    if (operation == 1) {
         switch (address) {
-        case 0x4000:
-        case 0x4001:
-        case 0x4002:
-        case 0x4003: {
-            u8 data = getAccessData(pArgument);
-            pShadow[address & 0xff] = data;
-            mSquare[0].Setup(address, data, mEntity);
-            return cResult_Success;
+        case 0x4000: case 0x4001: case 0x4002: case 0x4003: {
+            unsigned char value = *static_cast<unsigned char*>(arguments->pointers[4]);
+            registers[address & 255] = value;
+            mSquare0.Setup(address, value, mpEntity);
+            return 0;
         }
-        case 0x4004:
-        case 0x4005:
-        case 0x4006:
-        case 0x4007: {
-            u8 data = getAccessData(pArgument);
-            pShadow[address & 0xff] = data;
-            mSquare[1].Setup(address - 4, data, mEntity);
-            return cResult_Success;
+        case 0x4004: case 0x4005: case 0x4006: case 0x4007: {
+            unsigned char value = *static_cast<unsigned char*>(arguments->pointers[4]);
+            registers[address & 255] = value;
+            mSquare1.Setup(address - 4, value, mpEntity);
+            return 0;
         }
-        case 0x4008:
-        case 0x4009:
-        case 0x400a:
-        case 0x400b: {
-            u8 data = getAccessData(pArgument);
-            pShadow[address & 0xff] = data;
-            mTriangle.Setup(address - 8, data, mEntity);
-            return cResult_Success;
+        case 0x4008: case 0x4009: case 0x400a: case 0x400b: {
+            unsigned char value = *static_cast<unsigned char*>(arguments->pointers[4]);
+            registers[address & 255] = value;
+            mTriangle.Setup(address - 8, value, mpEntity);
+            return 0;
         }
-        case 0x400c:
-        case 0x400d:
-        case 0x400e:
-        case 0x400f: {
-            u8 data = getAccessData(pArgument);
-            pShadow[address & 0xff] = data;
-            mNoise.Setup(address - 0xc, data, mEntity);
-            return cResult_Success;
+        case 0x400c: case 0x400d: case 0x400e: case 0x400f: {
+            unsigned char value = *static_cast<unsigned char*>(arguments->pointers[4]);
+            registers[address & 255] = value;
+            mNoise.Setup(address - 12, value, mpEntity);
+            return 0;
         }
-        case 0x4010:
-        case 0x4011:
-        case 0x4012:
-        case 0x4013: {
-            u8 data = getAccessData(pArgument);
-            pShadow[address & 0xff] = data;
-            mDelta.Setup(address - 0x10, data, mEntity);
-            return cResult_Success;
+        case 0x4010: case 0x4011: case 0x4012: case 0x4013: {
+            unsigned char value = *static_cast<unsigned char*>(arguments->pointers[4]);
+            registers[address & 255] = value;
+            mDelta.Setup(address - 16, value, mpEntity);
+            return 0;
         }
-        case 0x4015:
-            pShadow[0x15] = getAccessData(pArgument);
-            mSquare[0].Setup(cRegister_Enable, pShadow[0x15], mEntity);
-            mSquare[1].Setup(cRegister_Enable, pShadow[0x15], mEntity);
-            mTriangle.Setup(cRegister_Enable, pShadow[0x15], mEntity);
-            mNoise.Setup(cRegister_Enable, pShadow[0x15], mEntity);
-            mDelta.Setup(cRegister_Enable, pShadow[0x15], mEntity);
-            mChannelFlags |= ~pShadow[0x15] & 0xf;
-            mChannelFlags |= 0x10;
-            return cResult_Success;
+        case 0x4015: {
+            memory[0x303a25] = *static_cast<unsigned char*>(arguments->pointers[4]);
+            mSquare0.Setup(16, memory[0x303a25], mpEntity);
+            mSquare1.Setup(16, memory[0x303a25], mpEntity);
+            mTriangle.Setup(16, memory[0x303a25], mpEntity);
+            mNoise.Setup(16, memory[0x303a25], mpEntity);
+            mDelta.Setup(16, memory[0x303a25], mpEntity);
+            mState48 |= ((~memory[0x303a25]) & 15) | 16;
+            return 0;
         }
-    } else if (address == 0x4015) {
-        *static_cast<u8*>(pArgument->mAccess.mData) = pMemory[cMemory_IoRegister + 0x15];
-        return cResult_Success;
+        }
     } else {
-        *static_cast<u8*>(pArgument->mAccess.mData) = 0x40;
-        pEntity = mEntity;
+        if (address == 0x4015) { *static_cast<unsigned char*>(arguments->pointers[4]) = memory[0x303825]; return 0; }
+        *static_cast<unsigned char*>(arguments->pointers[4]) = 0x40;
     }
-
-    switch (pEntity->mMapper) {
-    case cMapper_Mmc5: {
-        u8* pMemory = pEntity->mMemory;
-        u64 address = pArgument->mAccess.mAddress;
-        if (operation == cOperation_Write) {
-            u8* pExShadow = pMemory + cMemory_ExShadow;
+    if (mpEntity->mapper == 0xff) {
+        address = arguments->values[2];
+        unsigned char* data = static_cast<unsigned char*>(arguments->pointers[4]);
+        if (operation == 1) {
+            int value = *reinterpret_cast<signed char*>(data);
             switch (address) {
-            case 0x5000:
-            case 0x5002:
-            case 0x5003: {
-                u8 data = getAccessData(pArgument);
-                pExShadow[address & 0xff] = data;
-                mExSquare[0].Setup(address, data, mEntity);
-                return cResult_Success;
-            }
-            case 0x5004:
-            case 0x5006:
-            case 0x5007: {
-                u8 data = getAccessData(pArgument);
-                pExShadow[address & 0xff] = data;
-                mExSquare[1].Setup(address - 4, data, mEntity);
-                return cResult_Success;
-            }
-            case 0x5010:
-                pExShadow[0x10] = getAccessData(pArgument);
-                return cResult_Success;
-            case 0x5011:
-                pExShadow[0x11] = getAccessData(pArgument);
-                return cResult_Success;
-            case 0x5015: {
-                u8 data = getAccessData(pArgument);
-                pExShadow[0x15] = data;
-                mChannelFlags |= ~data & 3;
-                return cResult_Success;
-            }
-            default:
-                return cResult_Unhandled;
-            }
-        }
-
-        if (address == 0x5015) {
-            *static_cast<u8*>(pArgument->mAccess.mData) = pMemory[cMemory_ExRegister + 0x15];
-            return cResult_Success;
-        }
-
-        return cResult_Unhandled;
-    }
-    case cMapper_Vrc6: {
-        int result = cResult_Success;
-        if (operation == cOperation_Write) {
-            u64 address = pArgument->mAccess.mAddress;
-            if (((address - 0x9000) >> 12) <= 2) {
-                u64 page = ((address & 0x3000) - 0x1000) >> 10;
-                u64 reg = (address & 3) == 0 ? page : page | ((address + 1) & 3);
-                reg |= 0x5000;
-
-                u8* pMemory = pEntity->mMemory;
-                u8* pExShadow = pMemory + cMemory_ExShadow;
-                switch (reg) {
-                case 0x5000: {
-                    u8 data = getAccessData(pArgument);
-                    u8 control = ((data >> 3) & 0x10) | (data & 0xf) | 0x20;
-                    pExShadow[reg & 0xff] = control;
-                    mExSquare[0].Setup(reg, control, mEntity);
-                    u8 sweep = (getAccessData(pArgument) >> 4) & 7;
-                    pExShadow[0x01] = sweep;
-                    mExSquare[0].Setup(reg + 1, sweep, mEntity);
-                    return cResult_Success;
-                }
-                case 0x5002:
-                case 0x5003: {
-                    u8 data = getAccessData(pArgument);
-                    pExShadow[reg & 0xff] = data;
-                    mExSquare[0].Setup(reg, data, mEntity);
-                    pExShadow[0x15] |= pExShadow[0x03] >> 7;
-                    mChannelFlags = pExShadow[0x15];
-                    return cResult_Success;
-                }
-                case 0x5004: {
-                    u8 data = getAccessData(pArgument);
-                    u8 control = ((data >> 3) & 0x10) | (data & 0xf) | 0x20;
-                    pExShadow[reg & 0xff] = control;
-                    mExSquare[1].Setup(reg - 4, control, mEntity);
-                    u8 sweep = (getAccessData(pArgument) >> 4) & 7;
-                    pExShadow[0x05] = sweep;
-                    mExSquare[1].Setup(reg - 3, sweep, mEntity);
-                    return cResult_Success;
-                }
-                case 0x5006:
-                case 0x5007: {
-                    u8 data = getAccessData(pArgument);
-                    pExShadow[reg & 0xff] = data;
-                    mExSquare[1].Setup(reg - 4, data, mEntity);
-                    pExShadow[0x15] |= (pExShadow[0x15] >> 6) & 2;
-                    mChannelFlags = pExShadow[0x15];
-                    return cResult_Success;
-                }
-                case 0x5008:
-                case 0x500a:
-                case 0x500b: {
-                    u8 data = getAccessData(pArgument);
-                    pExShadow[reg & 0xff] = data;
-                    mExWave.Setup(reg - 8, data, mEntity);
-                    pExShadow[0x15] = ((pExShadow[0x0b] >> 5) & 4) | pExShadow[0x15];
-                    mChannelFlags = pExShadow[0x15];
-                    return cResult_Success;
-                }
-                default:
-                    result = cResult_Unhandled;
-                    break;
-                }
-            }
-        }
-
-        return result;
-    }
-    case cMapper_Disk: {
-        u64 address = pArgument->mAccess.mAddress;
-        s8* pData = static_cast<s8*>(pArgument->mAccess.mData);
-        if (operation == cOperation_Write) {
-            s8 data = *pData;
-            switch (address) {
-            case 0x4020:
-            case 0x4021:
-                pShadow[address & 0xff] = data;
-                return cResult_Success;
-            case 0x4022:
-                pShadow[0x22] = data;
-                mQdDisk.SetTimerStart(mEntity);
-                return cResult_Success;
+            case 0x4020: case 0x4021: registers[address & 255] = value; return 0;
+            case 0x4022: memory[0x303a32] = value; mDisk.SetTimerStart(mpEntity); return 0;
+            case 0x4023: memory[0x303a33] = value; mDiskAudio.Setup(address, value, mpEntity); return 0;
             case 0x4024:
-                pShadow[0x24] = data;
-                if ((pShadow[0x25] & 0x87) == 0x81) {
-                    mEntity->mMemory[cMemory_DiskImage + mQdDisk.GetQdOffset()] = data;
-                    mQdDisk.SetQdDirty(true);
+                memory[0x303a34] = value;
+                if ((memory[0x303a35] & 0x87) == 0x81) {
+                    mpEntity->pMemory[mDisk.GetQdOffset() + 0x100000] = value;
+                    mDisk.SetQdDirty(true);
                 }
-
-                return cResult_Success;
+                return 0;
             case 0x4025:
-                pShadow[0x25] = data;
-                if (data < 0) {
-                    mEntity->mOrderController._08 |= 1;
-                } else if (pShadow[0x22] & 2) {
-                    pShadow[0x32] &= ~4;
-                    mQdDisk.SetQdOffset(mQdDisk.GetQdOffset() & 0xffff0000);
+                memory[0x303a35] = value;
+                if (value < 0) mpEntity->order.words[4] |= 1;
+                else if (memory[0x303a32] & 2) {
+                    memory[0x303a42] &= ~4;
+                    mDisk.SetQdOffsetHalf(0);
                 }
-
-                if (pShadow[0x25] & 8) {
-                    BusMapSwitchVRAM(mEntity, 1);
-                } else {
-                    BusMapSwitchVRAM(mEntity, 0);
-                }
-
-                return cResult_Success;
-            case 0x4026:
-                pShadow[0x26] = data;
-                return cResult_Success;
-            case 0x4023:
-                pShadow[0x23] = data;
-                // fallthrough
-            case 0x4080:
-            case 0x4082:
-            case 0x4083:
-            case 0x4084:
-            case 0x4085:
-            case 0x4086:
-            case 0x4087:
-            case 0x4088:
-            case 0x4089:
-            case 0x408a:
-                mQdMfm.Setup(address, data, mEntity);
-                return cResult_Success;
+                BusMapSwitchVRAM(mpEntity, (memory[0x303a35] & 8) ? 1 : 0);
+                return 0;
+            case 0x4026: memory[0x303a36] = value; return 0;
+            case 0x4080: case 0x4082: case 0x4083: case 0x4084: case 0x4085:
+            case 0x4086: case 0x4087: case 0x4088: case 0x4089: case 0x408a:
+                mDiskAudio.Setup(address, value, mpEntity); return 0;
             default:
-                if ((address >> 6) == 0x101) {
-                    mQdMfm.Setup(address, data, mEntity);
-                    return cResult_Success;
-                }
-
-                return cResult_Unhandled;
+                if ((address >> 6) == 0x101) { mDiskAudio.Setup(address, value, mpEntity); return 0; }
+                return 4;
             }
         }
-
-        u8* pRegister = pMemory + cMemory_IoRegister;
         switch (address) {
-        case 0x4030:
-            *pData = pRegister[0x30];
-            pRegister[0x30] = 0;
-            return cResult_Success;
-        case 0x4031:
-            *pData = pRegister[0x31];
-            mQdDisk.IncQdOffsetHalf();
-            return cResult_Success;
+        case 0x4030: *data = memory[0x303840]; memory[0x303840] = 0; return 0;
+        case 0x4031: *data = memory[0x303841]; mDisk.IncQdOffsetHalf(); return 0;
         case 0x4032: {
-            u16 programCounter = getProgramCounter(GetCHvc());
-            u8 status = *pDiskStatus;
-            *pData = status;
-            if (programCounter >= 0xe000) {
-                if (programCounter == 0xef36 || programCounter == 0xeee2) {
-                    status &= mQdDisk.mStatusMask;
-                } else {
-                    status = 0x40;
-                }
-
-                *pData = status;
-            } else {
-                status |= 0x47;
-                *pData = status;
-                if (mQdDisk.mMediaCount <= 0xc2) {
-                    status = (status & 0xf8) | (pShadow[0x4025] & 2);
-                    *pData = status;
-                }
-            }
-
-            *pDiskStatus = status;
-            return cResult_Success;
+            unsigned short pc = *reinterpret_cast<unsigned short*>(reinterpret_cast<unsigned char*>(GetCHvc()) + 0x3d623e);
+            *data = memory[0x303842];
+            if (pc < 0xe000) {
+                *data |= 0x47;
+                if (mDisk.mediaCount <= 194) *data = (*data & 0xf8) | (memory[0x307a35] & 2);
+            } else if (pc == 0xef36 || pc == 0xeee2) *data &= mDisk.status;
+            else *data = 0x40;
+            memory[0x303842] = *data;
+            return 0;
         }
-        case 0x4033:
-            *pData = pRegister[0x33];
-            return cResult_Success;
-        case 0x4090:
-            *pData = mQdMfm.mVolumeGain | 0x40;
-            return cResult_Success;
-        case 0x4091:
-            *pData = mQdMfm.mFrequencyHigh;
-            return cResult_Success;
-        case 0x4092:
-            *pData = mQdMfm.mModGain | 0x40;
-            return cResult_Success;
-        case 0x4093:
-            *pData = mQdMfm.mModFrequencyHigh;
-            return cResult_Success;
-        case 0x4094:
-        case 0x4095:
-        case 0x4096:
-        case 0x4097:
-            return cResult_Success;
+        case 0x4033: *data = memory[0x303843]; return 0;
+        case 0x4090: *data = mDiskAudio.mState60 | 0x40; return 0;
+        case 0x4091: *data = reinterpret_cast<unsigned char*>(&mDiskAudio.mState10)[1]; return 0;
+        case 0x4092: *data = mDiskAudio.mStatee0 | 0x40; return 0;
+        case 0x4093: *data = reinterpret_cast<unsigned char*>(&mDiskAudio.mState88)[1]; return 0;
+        case 0x4094: case 0x4095: case 0x4096: case 0x4097: return 0;
         default:
-            if ((address >> 6) == 0x101) {
-                if (mQdMfm.mIsWaveLocked) {
-                    *pData = 0;
-                } else {
-                    *pData = mQdMfm.mWave[address - 0x4040] | 0x40;
-                }
-
-                return cResult_Success;
-            }
-
-            return cResult_Unhandled;
+            if ((address >> 6) != 0x101) return 4;
+            *data = mDiskAudio.mState09 ? 0 : mDiskAudio.mWave[address - 0x4040] | 0x40;
+            return 0;
         }
     }
-    default:
-        return cResult_Success;
-    }
-}
-
-/**
- * @brief Run the sound for a slice of CPU time, mixing one sample per sample clock.
- * @param pUnit The calling unit.
- * @param channel The bus channel.
- * @param operation The operation.
- * @param pArgument The events and the clock of the slice.
- * @return The result (always success).
- */
-int CHvcSpu::Process(CPlatformUnit* pUnit, u64 channel, u64 operation, UArgument* pArgument) {
-    _SEntity* pEntity = mEntity;
-    u8* pMemory = pEntity->mMemory;
-    bool isDisk;
-    if (pEntity->mResetRequest & (1 << mDescriptor.mIndex)) {
-        u8* pRegister = pMemory + cMemory_IoRegister;
-        u8* pShadow = pMemory + cMemory_IoShadow;
-        clearRegister(pRegister, pShadow, 0x15);
-        clearRegister(pRegister, pShadow, 0x20);
-        clearRegister(pRegister, pShadow, 0x21);
-        clearRegister(pRegister, pShadow, 0x22);
-        std::memset(pRegister, 0, 0x14);
-        std::memset(pShadow, 0, 0x14);
-
-        u8 mapper = mEntity->mMapper;
-        if (mapper == cMapper_Vrc6 || mapper == cMapper_Mmc5) {
-            u8* pExRegister = pMemory + cMemory_ExRegister;
-            u8* pExShadow = pMemory + cMemory_ExShadow;
-            clearRegister(pExRegister, pExShadow, 0x00);
-            clearRegister(pExRegister, pExShadow, 0x02);
-            clearRegister(pExRegister, pExShadow, 0x03);
-            clearRegister(pExRegister, pExShadow, 0x04);
-            clearRegister(pExRegister, pExShadow, 0x06);
-            clearRegister(pExRegister, pExShadow, 0x07);
-            clearRegister(pExRegister, pExShadow, 0x08);
-            clearRegister(pExRegister, pExShadow, 0x10);
-            clearRegister(pExRegister, pExShadow, 0x11);
-            clearRegister(pExRegister, pExShadow, 0x15);
+    if (mpEntity->mapper == 5) {
+        memory = mpEntity->pMemory;
+        address = arguments->values[2];
+        if (operation != 1) {
+            if (address != 0x5015) return 4;
+            *static_cast<unsigned char*>(arguments->pointers[4]) = memory[0x303c25];
+            return 0;
         }
-
-        resetChannels();
-        isDisk = isDiskSystem();
-        if (isDisk) {
-            mQdDisk.Reset(mEntity);
+        unsigned char value = *static_cast<unsigned char*>(arguments->pointers[4]);
+        switch (address) {
+        case 0x5000: case 0x5002: case 0x5003:
+            memory[0x304010 + (address & 255)] = value;
+            mExtraSquare0.Setup(address, value, mpEntity); return 0;
+        case 0x5004: case 0x5006: case 0x5007:
+            memory[0x304010 + (address & 255)] = value;
+            mExtraSquare1.Setup(address - 4, value, mpEntity); return 0;
+        case 0x5010: memory[0x304020] = value; return 0;
+        case 0x5011: memory[0x304021] = value; return 0;
+        case 0x5015: memory[0x304025] = value; mState48 |= (~value) & 3; return 0;
+        default: return 4;
         }
-
-        mEntity->mResetRequest &= ~(1 << mDescriptor.mIndex);
-    } else {
-        isDisk = isDiskSystem();
     }
-
-    if (isDisk && (pArgument->mProcess.mEvents & 0x10) &&
-        (mEntity->mScanlineClock & ~0xffull) == 0xf000) {
-        mQdDisk.IncMediaCount();
-    }
-
-    mEvents |= pArgument->mProcess.mEvents;
-    if (isDiskSystem()) {
-        mQdDisk.Pulse(pArgument->mProcess.mClock >> 8, mEvents, mEntity);
-    }
-
-    mDelta.mFetchCount = 0;
-    mClock += pArgument->mProcess.mClock;
-    while (true) {
-        u64 clock = mSampleClock + mEntity->mSampleClock;
-        if (clock > mClock) {
+    if (mpEntity->mapper == 24) {
+        if (operation != 1) return 0;
+        address = arguments->values[2];
+        if (((address - 0x9000) >> 12) > 2) return 0;
+        unsigned long index = ((address & 0x3000) - 0x1000) >> 10;
+        if (address & 3) index |= (address + 1) & 3;
+        memory = mpEntity->pMemory;
+        switch (index | 0x5000) {
+        case 0x5000: case 0x5004: {
+            _SWavwR& channel = index == 0 ? mExtraSquare0 : mExtraSquare1;
+            unsigned char value = ((*static_cast<unsigned char*>(arguments->pointers[4]) >> 3) & 16) | (*static_cast<unsigned char*>(arguments->pointers[4]) & 15) | 32;
+            memory[0x304010 + index] = value;
+            channel.Setup(0, value, mpEntity);
+            value = (*static_cast<unsigned char*>(arguments->pointers[4]) >> 4) & 7;
+            memory[0x304011 + index] = value;
+            channel.Setup(1, value, mpEntity);
+            return 0;
+        }
+        case 0x5002: case 0x5003: {
+            unsigned char value = *static_cast<unsigned char*>(arguments->pointers[4]);
+            memory[0x304010 + (index & 255)] = value;
+            mExtraSquare0.Setup(index, value, mpEntity);
+            memory[0x304025] |= memory[0x304013] >> 7;
             break;
         }
-
-        s16 rate = clock >> 8;
-        u8* pStatus = pMemory + cMemory_IoRegister + 0x15;
-        *pStatus = (*pStatus & 0xe0) | mSquare[0].mStatus | mSquare[1].mStatus |
-                   mTriangle.mStatus | mNoise.mStatus | mDelta.mStatus;
-        mSquare[0].Pulse(rate, mEvents, mEntity);
-        mSquare[1].Pulse(rate, mEvents, mEntity);
-        mTriangle.Pulse(rate, mEvents, mEntity);
-        mNoise.Pulse(rate, mEvents, mEntity);
-        mDelta.Pulse(rate, mEvents, mEntity);
-        mQdMfm.Pulse(rate, mEvents, mEntity);
-
-        s64 consumed = rate << 8;
-        mClock -= consumed;
-        mSampleClock += mEntity->mSampleClock - consumed;
-
-        const _SCustomParameter* pRender = mEntity->mTitleRender;
-        s32 square0 = mSquare[0].mOutput * pRender->mVolume[0];
-        s64 sample;
-        if (pRender->_00[5] & 1) {
-            s32 square1 = mSquare[1].mOutput * pRender->mVolume[1];
-            s32 triangle = mTriangle.mOutput * pRender->mVolume[2];
-            s32 noise = mNoise.mOutput * pRender->mVolume[3];
-            s32 delta = mDelta.mOutput * pRender->mVolume[4];
-            s32 mix = square0 / 4 + square1 / 4 - triangle / 4 - noise / 4 + delta / 32;
-            sample = static_cast<s64>(mix) * 85 / 256;
+        case 0x5006: case 0x5007: {
+            unsigned char value = *static_cast<unsigned char*>(arguments->pointers[4]);
+            memory[0x304010 + (index & 255)] = value;
+            mExtraSquare1.Setup(index - 4, value, mpEntity);
+            memory[0x304025] |= (memory[0x304025] >> 6) & 2;
+            break;
+        }
+        case 0x5008: case 0x500a: case 0x500b: {
+            unsigned char value = *static_cast<unsigned char*>(arguments->pointers[4]);
+            memory[0x304010 + (index & 255)] = value;
+            mExtraTriangle.Setup(index - 8, value, mpEntity);
+            memory[0x304025] |= (memory[0x30401b] >> 5) & 4;
+            break;
+        }
+        default: return 4;
+        }
+        mState48 = memory[0x304025];
+    }
+    return 0;
+}
+/** @brief Resets audio state, advances channels, and writes mixed samples to the output buffer. */
+unsigned int CHvcSpu::Process(CPlatformUnit*, unsigned long, unsigned long, UArgument* arguments) {
+    unsigned char* memory = mpEntity->pMemory;
+    if ((1U << _18) & mpEntity->order.words[0]) {
+        memory[0x303a25] = 0;
+        memory[0x303825] = 0;
+        memory[0x303a30] = 0;
+        memory[0x303830] = 0;
+        *reinterpret_cast<unsigned short*>(memory + 0x303a31) = 0;
+        *reinterpret_cast<unsigned short*>(memory + 0x303831) = 0;
+        memset(memory + 0x303810, 0, 20);
+        memset(memory + 0x303a10, 0, 20);
+        if (mpEntity->mapper == 24 || mpEntity->mapper == 5) {
+            unsigned char* expansionRead = memory + 0x303c10;
+            unsigned char* expansionWrite = memory + 0x304010;
+            expansionWrite[0] = 0;
+            expansionRead[0] = 0;
+            *reinterpret_cast<unsigned short*>(memory + 0x304012) = 0;
+            memory[0x303c12] = 0;
+            *reinterpret_cast<unsigned short*>(memory + 0x303c13) = 0;
+            memory[0x304014] = 0;
+            memory[0x304016] = 0;
+            memory[0x303c16] = 0;
+            *reinterpret_cast<unsigned short*>(memory + 0x304017) = 0;
+            *reinterpret_cast<unsigned short*>(memory + 0x303c17) = 0;
+            *reinterpret_cast<unsigned short*>(memory + 0x304020) = 0;
+            *reinterpret_cast<unsigned short*>(memory + 0x303c20) = 0;
+            memory[0x304025] = 0;
+            memory[0x303c25] = 0;
+        }
+        mPendingCycles = mSampleCycleRemainder = mPendingEvents = 0;
+        mOutputLeft = mOutputRight = 0;
+        mSquare0.Reset(0, 0);
+        mSquare1.Reset(0, 1);
+        mTriangle.Reset(0, 2);
+        mNoise.Reset(0, 3);
+        mDelta.Reset(0, 4);
+        mDiskAudio.Reset(0, 5);
+        mExtraSquare0.Reset(0, 6);
+        mExtraSquare1.Reset(0, 7);
+        mExtraTriangle.Reset(0, 8);
+        if ((m_HVCEmu.mState7a & 0xfff0) == 0xf0f0) mDisk.Reset(mpEntity);
+        _SEntity* entity = mpEntity;
+        unsigned int mask = 1U << _18;
+        entity->order.words[0] &= ~mask;
+    }
+    if ((m_HVCEmu.mState7a & 0xfff0) == 0xf0f0 && (arguments->values[0] & 16)) {
+        if ((mpEntity->cycle.line & ~255UL) == 0xf000) mDisk.IncMediaCount();
+    }
+    mPendingEvents |= arguments->values[0];
+    if ((m_HVCEmu.mState7a & 0xfff0) == 0xf0f0) mDisk.Pulse(arguments->values[1] >> 8, mPendingEvents, mpEntity);
+    mDelta.mState26 = 0;
+    mPendingCycles += arguments->values[1];
+    while (mSampleCycleRemainder + mpEntity->cycle._a48 <= mPendingCycles) {
+        short cycles = (mSampleCycleRemainder + mpEntity->cycle._a48) >> 8;
+        memory[0x303825] = (memory[0x303825] & 0xe0) | mSquare0.mChannelMask | mSquare1.mChannelMask |
+            mTriangle.mChannelMask | mNoise.mChannelMask | mDelta.mChannelMask;
+        mSquare0.Pulse(cycles, mPendingEvents, mpEntity);
+        mSquare1.Pulse(cycles, mPendingEvents, mpEntity);
+        mTriangle.Pulse(cycles, mPendingEvents, mpEntity);
+        mNoise.Pulse(cycles, mPendingEvents, mpEntity);
+        mDelta.Pulse(cycles, mPendingEvents, mpEntity);
+        mDiskAudio.Pulse(cycles, mPendingEvents, mpEntity);
+        mPendingCycles -= cycles << 8;
+        mSampleCycleRemainder += mpEntity->cycle._a48 - (cycles << 8);
+        const signed char* custom = reinterpret_cast<const signed char*>(mpEntity->pCustom);
+        int square0Product = custom[0x530] * mSquare0.mState04;
+        long sample;
+        if (custom[0x28] & 1) {
+            int square0 = square0Product / 4;
+            int square1 = custom[0x531] * mSquare1.mState04 / 4;
+            int triangle = custom[0x532] * mTriangle.mState04 / 4;
+            int noise = custom[0x533] * mNoise.mState04 / 4;
+            int delta = custom[0x534] * mDelta.mState04 / 32;
+            int mix = square0 + square1 - triangle - noise + delta;
+            sample = static_cast<long>(mix) * 85 / 256;
         } else {
-            s32 square1 = mSquare[1].mOutput * pRender->mVolume[1] / 32;
-            s32 triangle = mTriangle.mOutput * pRender->mVolume[2] / 32;
-            s32 noise = mNoise.mOutput * pRender->mVolume[3] / 32;
-            s32 delta = mDelta.mOutput * pRender->mVolume[4] / 32;
-            s32 disk = mQdMfm.mOutput * pRender->mVolume[5] / 32;
-            s32 mix = square0 / 32 * 0x3f8 / 1024 + square1 * 0x3f8 / 1024 +
-                      triangle * 0x477 / 1024 + noise * 0x27b / 1024 + delta * 0x1fc / 1024 +
-                      disk * 4;
-            sample = -mix;
+            int square0 = square0Product / 32;
+            int square1 = custom[0x531] * mSquare1.mState04 / 32;
+            int triangle = custom[0x532] * mTriangle.mState04 / 32;
+            int noise = custom[0x533] * mNoise.mState04 / 32;
+            int delta = custom[0x534] * mDelta.mState04 / 32;
+            int disk = custom[0x535] * mDiskAudio.mState02 / 32;
+            sample = -(square0 * 1016 / 1024 + square1 * 1016 / 1024 + triangle * 1143 / 1024
+                + noise * 635 / 1024 + delta * 508 / 1024 + disk * 4);
         }
-
-        mSample = sample;
-        mLastSample = sample;
-        mEntity->mAudioBuffer[mEntity->mAudioSampleNum] = sample;
-        mEntity->mAudioSampleNum++;
-        mEvents = 0;
+        mOutputLeft = mOutputRight = sample;
+        mpEntity->pAudio[mpEntity->_1750] = sample;
+        ++mpEntity->_1750;
+        mPendingEvents = 0;
     }
-
-    if (pArgument->mProcess.mCycles != nullptr) {
-        *pArgument->mProcess.mCycles = 0;
-    }
-
-    mDelta.mFetchCount = 0;
-    return cResult_Success;
+    if (arguments->pointers[2]) *static_cast<unsigned long*>(arguments->pointers[2]) = 0;
+    mDelta.mState26 = 0;
+    return 0;
 }
-
-/**
- * @brief Save or load the state of the sound.
- * @param pBuffer The buffer, or nullptr to only get the size.
- * @param isImport Whether to load the state from the buffer.
- * @return The size of the state.
- */
-u64 CHvcSpu::_SerializeCore(void* pBuffer, bool isImport) {
-    Serializer serializer(pBuffer, isImport);
-    serializer.Entry(mChannelFlags);
-    serializer.Entry(mClock);
-    serializer.Entry(mSampleClock);
-    serializer.Entry(mEvents);
-    serializer.Entry(mSample);
-    serializer.Entry(mLastSample);
-    if (isDiskSystem()) {
-        u64 offset = serializer.GetOffset();
-        u64 diskOffset = mQdDisk.GetQdOffset();
-        serializer.Entry(diskOffset);
-        if (isImport) {
-            mQdDisk.SetQdOffset(diskOffset);
+/** @brief Transfers SPU counters, optional disk state, and all sound channels. */
+unsigned long CHvcSpu::_SerializeCore(void* buffer, bool reading) {
+    Common::Serialize::LittleEndian stream(static_cast<unsigned char*>(buffer), reading);
+    stream.Entry(mState48);
+    stream.Entry(mPendingCycles);
+    stream.Entry(mSampleCycleRemainder);
+    stream.Entry(mPendingEvents);
+    stream.Entry(mOutputLeft);
+    stream.Entry(mOutputRight);
+    if ((m_HVCEmu.mState7a & 0xfff0) == 0xf0f0) {
+        unsigned long start = stream.GetSize();
+        unsigned long offset = mDisk.GetQdOffset();
+        if (reading) {
+            stream.Entry(offset);
+            mDisk.SetQdOffset(offset);
+        } else {
+            offset = mDisk.GetQdOffset();
+            stream.Entry(offset);
         }
-
-        serializer.Entry(mQdDisk.mTimer);
-        serializer.Entry(mQdDisk.mStatusMask);
-        serializer.Entry(mQdDisk.mIsDirty);
-        serializer.Entry(mQdDisk.mIsTimerActive);
-        serializer.SetOffset(offset + cSerializeDiskSize);
+        stream.Entry(mDisk.timer);
+        stream.Entry(mDisk.status);
+        stream.Entry(mDisk.dirty);
+        stream.Entry(mDisk.timerStarted);
+        stream.SetSize(start + 64);
     }
-
-    mSquare[0].Serialize(serializer);
-    mSquare[1].Serialize(serializer);
-    mTriangle.Serialize(serializer);
-    mNoise.Serialize(serializer);
-    mDelta.Serialize(serializer);
-    mQdMfm.Serialize(serializer);
-    mExSquare[0].Serialize(serializer);
-    mExSquare[1].Serialize(serializer);
-    mExWave.Serialize(serializer);
-    return serializer.GetOffset();
+    mSquare0.Serialize(stream);
+    mSquare1.Serialize(stream);
+    mTriangle.Serialize(stream);
+    mNoise.Serialize(stream);
+    mDelta.Serialize(stream);
+    mDiskAudio.Serialize(stream);
+    mExtraSquare0.Serialize(stream);
+    mExtraSquare1.Serialize(stream);
+    mExtraTriangle.Serialize(stream);
+    return stream.GetSize();
 }
-
-/**
- * @brief Save the state of the sound.
- * @param pBuffer The buffer.
- */
-void CHvcSpu::_SerializeCoreExport(void* pBuffer) {
-    _SerializeCore(pBuffer, false);
+/** @brief Exports the SPU state. */
+void CHvcSpu::_SerializeCoreExport(void* buffer) { _SerializeCore(buffer, false); }
+/** @brief Imports the SPU state. */
+void CHvcSpu::_SerializeCoreImport(const void* buffer) { _SerializeCore(const_cast<void*>(buffer), true); }
+/** @brief Computes the aligned SPU state record size. */
+unsigned long CHvcSpu::_SerializeCoreInferSize() {
+    return (static_cast<unsigned int>(_SerializeCore(nullptr, false)) + 0x4f) & ~15U;
 }
-
-/**
- * @brief Load the state of the sound.
- * @param pBuffer The buffer.
- */
-void CHvcSpu::_SerializeCoreImport(const void* pBuffer) {
-    _SerializeCore(const_cast<void*>(pBuffer), true);
+/** @brief Resets the square-wave channel counters and duty pattern. */
+void CHvcSpu::_SWavwR::Reset(unsigned char type, unsigned char channel) {
+    mType = type;
+    mChannel = channel;
+    mEnabled = 0;
+    mChannelMask = 0;
+    mState04 = 0;
+    mState06 = 0;
+    mState08 = 0;
+    mState0a = 0;
+    mState0b = 0;
+    mState0c = 0;
+    mState0e = 0;
+    mPeriod = 0;
+    mState12 = 1;
+    mState13 = 0;
+    mState14 = 1;
+    mState16 = 0;
+    mState18 = 0;
+    mState19 = 0;
+    mState1a = 0;
+    mState1b = 0;
+    mState1c = 0;
+    mState1e = 0;
+    mState20 = 0;
+    mState21 = 0;
+    mState22 = 0;
+    mState23 = -1;
+    mState24 = 0;
+    mState26 = 0;
+    mState28 = 0x3fc;
+    mState30 = 0;
 }
-
-/**
- * @brief Get the size of the serialized state, including its tag.
- * @return The size.
- */
-u64 CHvcSpu::_SerializeCoreInferSize() {
-    return static_cast<u32>(_SerializeCore(nullptr, false) + cSerializeTagSize + 0x3f) & ~0xfu;
+/** @brief Decodes square-wave envelope, sweep, timer, and enable writes. */
+void CHvcSpu::_SWavwR::Setup(unsigned char index, unsigned char value, CPlatformHvcUnit::_SEntity*) {
+    static const unsigned char lengthTable[32] = {
+        5, 127, 10, 1, 20, 2, 40, 3, 80, 4, 30, 5, 7, 6, 13, 7,
+        6, 8, 12, 9, 24, 10, 48, 11, 96, 12, 36, 13, 8, 14, 16, 15
+    };
+    static const unsigned short dutyTable[4] = { 12, 60, 1020, 65475 };
+    switch (index) {
+    case 0: {
+        unsigned int duty = (value >> 6) & 3;
+        unsigned long pattern = dutyTable[duty];
+        unsigned int loop = (value >> 5) & 1;
+        mState12 = loop ^ 1;
+        mState18 = 1 & ~(value >> 4);
+        mState28 = pattern;
+        mState1e = value & 0xf;
+        mState1b = loop;
+        break;
+    }
+    case 1:
+        mState20 = value >> 7;
+        mState26 = ((value >> 4) & 7) + 1;
+        mState22 = value & 7;
+        mState23 = (value & 8) ? 1 : -1;
+        mState21 = 1;
+        break;
+    case 2:
+        mPeriod = (mPeriod & 0x700) | value;
+        break;
+    case 3:
+        reinterpret_cast<unsigned char*>(&mPeriod)[1] = value & 7;
+        mState16 = lengthTable[value >> 3] << 1;
+        mState14 = mState16;
+        if (mEnabled) {
+            mState0a = 1;
+            mState0b = 1;
+        }
+        mState13 = 1;
+        mState19 = 1;
+        mState21 = 1;
+        mState30 = 0;
+        mChannelMask = 1 << mChannel;
+        break;
+    case 0x10:
+        if (static_cast<unsigned char>((1 << mChannel) & value)) {
+            mEnabled = 1;
+        } else {
+            mState0a = 0;
+            mState14 = mState16 = 0;
+            mEnabled = mChannelMask = 0;
+        }
+        break;
+    }
 }
-
-}  // namespace Vessel::Emulator::Virtual::PlatformHvc
+/** @brief Transfers square-wave channel state in its original field order. */
+void CHvcSpu::_SWavwR::Serialize(Common::Serialize::LittleEndian& stream) {
+    unsigned long start = stream.GetSize();
+    stream.Entry(mType);
+    stream.Entry(mChannel);
+    stream.Entry(mEnabled);
+    stream.Entry(mChannelMask);
+    stream.Entry(mState04);
+    stream.Entry(mState06);
+    stream.Entry(mState08);
+    stream.Entry(mState0a);
+    stream.Entry(mState0b);
+    stream.Entry(mState0c);
+    stream.Entry(mState0e);
+    stream.Entry(mPeriod);
+    stream.Entry(mState12);
+    stream.Entry(mState13);
+    stream.Entry(mState14);
+    stream.Entry(mState16);
+    stream.Entry(mState18);
+    stream.Entry(mState19);
+    stream.Entry(reinterpret_cast<unsigned char&>(mState1a));
+    stream.Entry(mState1b);
+    stream.Entry(mState1c);
+    stream.Entry(mState1e);
+    stream.Entry(mState20);
+    stream.Entry(mState21);
+    stream.Entry(reinterpret_cast<unsigned char&>(mState22));
+    stream.Entry(reinterpret_cast<unsigned char&>(mState23));
+    stream.Entry(mState24);
+    stream.Entry(mState26);
+    stream.Entry(mState28);
+    stream.Entry(mState30);
+    stream.AlignBlock(start);
+}
+/** @brief Advances square-wave sweep, envelope, duty phase, and smoothed output. */
+void CHvcSpu::_SWavwR::Pulse(short cycles, unsigned long events, CPlatformHvcUnit::_SEntity* entity) {
+    static const short sweepLimits[8] = { 1023, 1365, 1638, 1820, 1927, 1985, 2016, 2032 };
+    long enabled = mEnabled != 0;
+    short period = mPeriod;
+    short nextPeriod = period;
+    if (entity->cycle._a58 & events) {
+        if (mState12 && mState14 - 1 >= 0) --mState14;
+        if (mState20 && mState26) {
+            if (mState21) {
+                mState24 = mState26;
+                mState21 = 0;
+            }
+            if (mState24 > 0) --mState24;
+            if (!mState24) {
+                mState24 = mState26;
+                if (mState22) {
+                    if (mState23 > 0) nextPeriod = period - (period >> mState22) - (mChannel == 0);
+                    else if (mState23 < 0) nextPeriod = period + (period >> mState22);
+                }
+            }
+        }
+    }
+    if (entity->cycle._a60 & events) {
+        if (mState19) {
+            mState1c = mState1e;
+            mState19 = 0;
+            mState1a = 15;
+        } else {
+            if (mState1c - 1 >= 0) --mState1c;
+            if (!mState1c) {
+                mState1c = mState1e;
+                if (mState1a - 1 >= 0) --mState1a;
+                else if (!mState1a && mState1b) mState1a = 15;
+            }
+        }
+    }
+    const unsigned char* custom = reinterpret_cast<const unsigned char*>(entity->pCustom);
+    short lower = *reinterpret_cast<const short*>(custom + 0x51e);
+    const short* upper = mState23 > 0 ? reinterpret_cast<const short*>(custom + 0x520) : sweepLimits + mState22;
+    long steps = 0;
+    if (nextPeriod >= lower && nextPeriod <= *upper && period >= 4 && mState0a) {
+        if (mState0b) {
+            mState0e = period;
+            mState0b = 0;
+        } else {
+            while (mState0e <= cycles) {
+                mState0e += period;
+                ++steps;
+            }
+            mState0e -= cycles;
+        }
+    }
+    if (nextPeriod != period) {
+        mPeriod = nextPeriod;
+        mState0e = nextPeriod;
+    }
+    if (!mState14) {
+        if (mState12) mChannelMask = 0;
+        if (reinterpret_cast<const unsigned char*>(entity->pCustom)[0x54b + mChannel]) enabled = 0;
+    }
+    if (steps) {
+        long volume = (mState18 ? mState1a : mState1e) << 8;
+        long high = 0;
+        long low = 0;
+        while (steps > 0) {
+            mState30 = (mState30 + 1) & 15;
+            if (mState28 & (1U << mState30)) ++high;
+            else ++low;
+            --steps;
+        }
+        mState08 = high * volume / (low + high);
+    }
+    mState06 = mState08 * enabled;
+    int shift = reinterpret_cast<signed char*>(entity->pCustom)[0x542 + mChannel];
+    short current = mState04;
+    int step = 1 << shift;
+    if (current + step < mState06) mState04 += step;
+    else if (mState06 + step < current) mState04 -= step;
+    else mState04 = mState06;
+}
+/** @brief Resets the delta-sample channel and its sample address. */
+void CHvcSpu::_SDelta::Reset(unsigned char type, unsigned char channel) {
+    mType = type;
+    mChannel = channel;
+    mEnabled = 0;
+    mChannelMask = 0;
+    mState04 = 0;
+    mState06 = 0;
+    mState08 = 0;
+    mState0a = 0;
+    mState0b = 0;
+    mState0c = 0;
+    mState0e = 0;
+    mPeriod = 0;
+    mState12 = 0;
+    mState13 = 0;
+    mState14 = 0;
+    mState16 = 0;
+    mState18 = 0;
+    mState1a = 0;
+    mState1c = 0xc000;
+    mState1e = 0xc000;
+    mState20 = 0xaa;
+    mState21 = 0;
+    mState22 = 0;
+    mState23 = 0;
+    mState24 = 0;
+    mState25 = 0;
+    mState26 = 0;
+}
+/** @brief Transfers delta-sample state in the original field order. */
+void CHvcSpu::_SDelta::Serialize(Common::Serialize::LittleEndian& stream) {
+    unsigned long start = stream.GetSize();
+    stream.Entry(mType);
+    stream.Entry(mChannel);
+    stream.Entry(mEnabled);
+    stream.Entry(mChannelMask);
+    stream.Entry(mState04);
+    stream.Entry(mState06);
+    stream.Entry(mState08);
+    stream.Entry(mState0a);
+    stream.Entry(mState0b);
+    stream.Entry(mState0c);
+    stream.Entry(mState0e);
+    stream.Entry(mPeriod);
+    stream.Entry(mState12);
+    stream.Entry(mState13);
+    stream.Entry(mState14);
+    stream.Entry(mState16);
+    stream.Entry(mState18);
+    stream.Entry(mState1a);
+    stream.Entry(mState1c);
+    stream.Entry(mState1e);
+    stream.Entry(mState20);
+    stream.Entry(mState21);
+    stream.Entry(mState22);
+    stream.Entry(mState23);
+    stream.Entry(mState24);
+    stream.Entry(mState25);
+    stream.Entry(mState27);
+    stream.AlignBlock(start);
+}
+/** @brief Decodes delta-sample rate, output level, address, length, and enable writes. */
+void CHvcSpu::_SDelta::Setup(unsigned char index, unsigned char value, CPlatformHvcUnit::_SEntity*) {
+    static const unsigned short periodTable[16] = { 428, 380, 340, 320, 286, 254, 226, 214, 190, 160, 142, 128, 106, 84, 72, 54 };
+    switch (index) {
+    case 0:
+        mState23 = value >> 7;
+        mState22 = (value >> 6) & 1;
+        mState0a = mState0b = 1;
+        mPeriod = periodTable[value & 15];
+        if (!mState23) mState24 = 0;
+        break;
+    case 1:
+        mState1a = value & 0x7f;
+        mState18 = mState1a;
+        break;
+    case 2:
+        mState1e = (value << 6) | 0xc000;
+        mState1c = mState1e;
+        break;
+    case 3: {
+        short length = (value << 7) | 8;
+        mState16 = length;
+        mState14 = length;
+        mState12 = mState13 = 1;
+        break;
+    }
+    case 0x10:
+        if (static_cast<unsigned char>((1 << mChannel) & value)) {
+            mChannelMask = 1 << mChannel;
+            mEnabled = 1;
+        } else {
+            mState24 = 0;
+            mEnabled = 0;
+        }
+        break;
+    }
+}
+/** @brief Fetches and decodes delta samples, handles looping, and smooths the output. */
+void CHvcSpu::_SDelta::Pulse(short cycles, unsigned long, CPlatformHvcUnit::_SEntity* entity) {
+    long steps = 0;
+    if (mState0a && mPeriod >= 4) {
+        if (mState0b) {
+            mState0e = mPeriod;
+            mState0b = 0;
+        } else {
+            while (mState0e <= cycles) {
+                mState0e += mPeriod;
+                ++steps;
+            }
+            mState0e -= cycles;
+        }
+    }
+    if (mState13 && mState12) {
+        mState21 = 0;
+        mState13 = 0;
+    }
+    int sample;
+    if (steps) {
+        long sum = 0;
+        long count = 0;
+        for (long i = steps; i > 0; --i) {
+            unsigned char bit = mState21;
+            if (bit < 8) {
+                if (bit) goto decodeSample;
+            } else {
+                ++mState1c;
+                if (mState1c >= 0) mState1c += 0x8000;
+                mState21 = bit = 0;
+            }
+            {
+                unsigned char nextFetchCount = mState26 + 1;
+                unsigned long address = static_cast<unsigned short>(mState1c);
+                unsigned char* source = entity->pMemory + entity->cpuBanks[address >> 12].readOffset;
+                unsigned char sampleByte = source[address & 0xfff];
+                mState26 = nextFetchCount;
+                mState20 = sampleByte;
+            }
+        decodeSample:
+            short remaining = mState14;
+            if (remaining - 1 >= 0) {
+                if (mEnabled) {
+                    if (mState20 & (1 << bit)) {
+                        if (mState18 <= 125) mState18 += 2;
+                    } else {
+                        if (mState18 - 2 >= 0) mState18 -= 2;
+                    }
+                    mState21 = bit + 1;
+                    mState14 = --remaining;
+                }
+            }
+            if (!remaining && mState12) {
+                if (mState22) {
+                    mState14 = mState16;
+                    mState1c = mState1e;
+                    mState12 = mState13 = 1;
+                    mState18 = mState1a;
+                } else {
+                    mState12 = mState13 = 0;
+                    mState24 = 1;
+                    mChannelMask = 0;
+                }
+            }
+            sum += mState18;
+            ++count;
+        }
+        sample = sum / count;
+    } else {
+        sample = mState18;
+    }
+    mState08 = sample;
+    mState06 = sample << 8;
+    int shift = reinterpret_cast<signed char*>(entity->pCustom)[0x542 + mChannel];
+    short current = mState04;
+    int step = 1 << shift;
+    if (current + step < mState06) mState04 += step;
+    else if (mState06 + step < current) mState04 -= step;
+    else mState04 = mState06;
+}
+/** @brief Resets noise-channel counters and feedback shift register. */
+void CHvcSpu::_SNoise::Reset(unsigned char type, unsigned char channel) {
+    mType = type;
+    mChannel = channel;
+    mEnabled = 0;
+    mChannelMask = 0;
+    mState04 = 0;
+    mState06 = 0;
+    mState08 = 0;
+    mState0a = 0;
+    mState0b = 0;
+    mState0c = 0;
+    mState0e = 0;
+    mPeriod = 0;
+    mState12 = 0;
+    mState13 = 0;
+    mState14 = 1;
+    mState16 = 0;
+    mState18 = 0;
+    mState19 = 0;
+    mState1a = 0;
+    mState1b = 0;
+    mState1c = 0;
+    mState1e = 0;
+    mState20 = 0;
+    mState28 = 0;
+    mState30 = 1;
+    mState38 = 0;
+    mState39 = 6;
+}
+/** @brief Decodes noise envelope, frequency, feedback mode, and enable writes. */
+void CHvcSpu::_SNoise::Setup(unsigned char index, unsigned char value, CPlatformHvcUnit::_SEntity* entity) {
+    static const unsigned char lengthTable[32] = {
+        5, 127, 10, 1, 20, 2, 40, 3, 80, 4, 30, 5, 7, 6, 13, 7,
+        6, 8, 12, 9, 24, 10, 48, 11, 96, 12, 36, 13, 8, 14, 16, 15
+    };
+    static const unsigned short periodTable[16] = { 4, 8, 16, 32, 64, 96, 128, 160, 202, 254, 380, 508, 762, 1016, 2034, 4068 };
+    switch (index) {
+    case 0: {
+        unsigned int loop = (value >> 5) & 1;
+        mState12 = loop ^ 1;
+        mState18 = 1 & ~(value >> 4);
+        mState1e = value & 0xf;
+        mState1b = loop;
+        break;
+    }
+    case 2: {
+        unsigned char compatibility = reinterpret_cast<const unsigned char*>(entity->pCustom)[0x54b + mChannel];
+        mPeriod = periodTable[value & 15];
+        if (compatibility) {
+            if (value & 0x80) {
+                if (mState39 == 1) mState30 = 1;
+                mState38 = 0;
+                mState39 = 6;
+            } else {
+                if (mState39 == 6) mState30 = 1;
+                mState38 = 0;
+                mState39 = 1;
+            }
+        } else {
+            mState38 = 0;
+            mState39 = (value & 0x80) ? 6 : 3;
+        }
+        break;
+    }
+    case 3:
+        mState16 = lengthTable[value >> 3] << 1;
+        mState14 = mState16;
+        if (mEnabled) {
+            mState0a = 1;
+            mState0b = 1;
+            mChannelMask = 1 << mChannel;
+        }
+        mState13 = 1;
+        mState19 = 1;
+        mState28 = 0;
+        break;
+    case 0x10:
+        if (static_cast<unsigned char>((1 << mChannel) & value)) {
+            mEnabled = 1;
+        } else {
+            mState0a = 0;
+            mState14 = mState16 = 0;
+            mEnabled = mChannelMask = 0;
+        }
+        break;
+    }
+}
+/** @brief Transfers noise-channel state in its original field order. */
+void CHvcSpu::_SNoise::Serialize(Common::Serialize::LittleEndian& stream) {
+    unsigned long start = stream.GetSize();
+    stream.Entry(mType);
+    stream.Entry(mChannel);
+    stream.Entry(mEnabled);
+    stream.Entry(mChannelMask);
+    stream.Entry(mState04);
+    stream.Entry(mState06);
+    stream.Entry(mState08);
+    stream.Entry(mState0a);
+    stream.Entry(mState0b);
+    stream.Entry(mState0c);
+    stream.Entry(mState0e);
+    stream.Entry(mPeriod);
+    stream.Entry(mState12);
+    stream.Entry(mState13);
+    stream.Entry(mState14);
+    stream.Entry(mState16);
+    stream.Entry(mState18);
+    stream.Entry(mState19);
+    stream.Entry(reinterpret_cast<unsigned char&>(mState1a));
+    stream.Entry(mState1b);
+    stream.Entry(mState1c);
+    stream.Entry(mState1e);
+    stream.Entry(mState20);
+    stream.Entry(mState28);
+    stream.Entry(mState30);
+    stream.Entry(mState38);
+    stream.Entry(mState39);
+    stream.AlignBlock(start);
+}
+/** @brief Advances the noise envelope and feedback generator, then smooths its output. */
+void CHvcSpu::_SNoise::Pulse(short cycles, unsigned long events, CPlatformHvcUnit::_SEntity* entity) {
+    int enabled = mEnabled != 0;
+    if ((entity->cycle._a58 & events) && mState12) {
+        if (mState14 - 1 >= 0) --mState14;
+    }
+    if (entity->cycle._a60 & events) {
+        if (mState19) {
+            mState1c = mState1e;
+            mState19 = 0;
+            mState1a = 15;
+        } else {
+            if (mState1c - 1 >= 0) --mState1c;
+            if (!mState1c) {
+                mState1c = mState1e;
+                if (mState1a - 1 >= 0) --mState1a;
+                else if (!mState1a && mState1b) mState1a = 15;
+            }
+        }
+    }
+    long steps = 0;
+    if (mState0a && mPeriod >= 4) {
+        if (mState0b) {
+            mState0e = mPeriod;
+            mState0b = 0;
+        } else {
+            while (mState0e <= cycles) {
+                mState0e += mPeriod;
+                ++steps;
+            }
+            mState0e -= cycles;
+        }
+    }
+    if (!mState14) {
+        mChannelMask = (mEnabled && !mState12) ? 1 << mChannel : 0;
+        enabled = 0;
+    }
+    if (steps) {
+        long volume = (mState18 ? mState1a : mState1e) << 8;
+        long high = 0;
+        long low = 0;
+        if (reinterpret_cast<const unsigned char*>(entity->pCustom)[0x54b + mChannel]) {
+            do {
+                mState30 >>= 1;
+                if (!mState30) mState30 = 1;
+                unsigned int feedback = ((mState30 >> mState38) ^ (mState30 >> mState39));
+                mState30 |= (feedback << 14) & 0x4000;
+                high += mState30 & 1;
+                low += (mState30 & 1) ^ 1;
+            } while (--steps);
+        } else {
+            unsigned long shift = mState39 == 6 ? 15 : 17;
+            do {
+                unsigned int feedback = ((mState30 >> mState38) ^ (mState30 >> mState39));
+                mState30 |= static_cast<unsigned long>(feedback & 1) << shift;
+                mState30 >>= 1;
+                if (!mState30) mState30 = 1;
+                high += mState30 & 1;
+                low += (mState30 & 1) ^ 1;
+            } while (--steps);
+        }
+        mState08 = low * volume / (high + low);
+    }
+    mState06 = mState08 * enabled;
+    int shift = reinterpret_cast<signed char*>(entity->pCustom)[0x542 + mChannel];
+    short current = mState04;
+    int step = 1 << shift;
+    if (current + step < mState06) mState04 += step;
+    else if (mState06 + step < current) mState04 -= step;
+    else mState04 = mState06;
+}
+/** @brief Advances triangle counters and smooths the averaged waveform output. */
+void CHvcSpu::_SWavwT::Pulse(short cycles, unsigned long events, CPlatformHvcUnit::_SEntity* entity) {
+    const signed char* waveform = reinterpret_cast<const signed char*>("\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f\x0f\x0e\x0d\x0c\x0b\x0a\x09\x08\x07\x06\x05\x04\x03\x02\x01\x00");
+    if ((entity->cycle._a58 & events) && mState12) {
+        if (mState14 - 1 >= 0) --mState14;
+    }
+    if (entity->cycle._a60 & events) {
+        if (mState19) {
+            mState1a = mState1c;
+            mState19 = 0;
+        }
+        if (mState18 && mState1a - 1 >= 0) --mState1a;
+        if (!mState1c) mState1a = 0;
+    }
+    long steps = 0;
+    if (mState0a && mPeriod >= 4) {
+        if (mState0b) {
+            mState0e = mPeriod;
+            mState0b = 0;
+        } else {
+            while (mState0e <= cycles) {
+                mState0e += mPeriod;
+                ++steps;
+            }
+            mState0e -= cycles;
+        }
+    }
+    if (mState12 && mState18) {
+        if (!mState14 || !mState1a) {
+            mChannelMask = 0;
+            steps = 0;
+        }
+    } else if (!mState14 || !mState1a) {
+        steps = 0;
+    }
+    int sample;
+    if (steps) {
+        long sum = 0;
+        for (long i = 0; i < steps; ++i) {
+            mState28 = (mState28 + 1) & 0x1f;
+            sum += waveform[mState28];
+        }
+        sample = sum / steps;
+    } else {
+        sample = waveform[mState28 & 0x1f];
+    }
+    mState08 = sample;
+    mState06 = sample << 8;
+    int shift = reinterpret_cast<signed char*>(entity->pCustom)[0x542 + mChannel];
+    short current = mState04;
+    int step = 1 << shift;
+    if (current + step < mState06)
+        mState04 += step;
+    else if (mState06 + step < current)
+        mState04 -= step;
+    else
+        mState04 = mState06;
+}
+/** @brief Decodes triangle-channel control, timer, and enable writes. */
+void CHvcSpu::_SWavwT::Setup(unsigned char index, unsigned char value, CPlatformHvcUnit::_SEntity*) {
+    static const unsigned char lengthTable[32] = {
+        5, 127, 10, 1, 20, 2, 40, 3, 80, 4, 30, 5, 7, 6, 13, 7,
+        6, 8, 12, 9, 24, 10, 48, 11, 96, 12, 36, 13, 8, 14, 16, 15
+    };
+    switch (index) {
+    case 0:
+        mState18 = (~value >> 7) & 1;
+        mState12 = mState18;
+        mState1c = value & 0x7f;
+        break;
+    case 2:
+        mPeriod = (mPeriod & 0x700) | value;
+        break;
+    case 3:
+        reinterpret_cast<unsigned char*>(&mPeriod)[1] = value & 7;
+        mState16 = lengthTable[value >> 3] << 1;
+        mState14 = mState16;
+        if (mEnabled) {
+            mState0a = 1;
+            mState0b = 1;
+        }
+        mState13 = 1;
+        mState19 = 1;
+        mChannelMask = 1 << mChannel;
+        break;
+    case 0x10:
+        if (static_cast<unsigned char>((1 << mChannel) & value)) {
+            mEnabled = 1;
+        } else {
+            mState0a = 0;
+            mState14 = mState16 = 0;
+            mState1a = mState1c = 0;
+            mEnabled = mChannelMask = 0;
+        }
+        break;
+    }
+}
+/** @brief Resets triangle-channel state and identifies its output channel. */
+void CHvcSpu::_SWavwT::Reset(unsigned char type, unsigned char channel) {
+    mType = type;
+    mChannel = channel;
+    mEnabled = 0;
+    mChannelMask = 0;
+    mState04 = 0;
+    mState06 = 0;
+    mState08 = 0;
+    mState0a = 0;
+    mState0b = 0;
+    mState0c = 0;
+    mState0e = 0;
+    mPeriod = 0;
+    mState12 = 0;
+    mState13 = 0;
+    mState14 = 1;
+    mState16 = 0;
+    mState18 = 0;
+    mState19 = 0;
+    mState1a = 0;
+    mState1c = 0;
+    mState20 = 0;
+    mState28 = 0;
+}
+/** @brief Transfers triangle-channel state in its original field order. */
+void CHvcSpu::_SWavwT::Serialize(Common::Serialize::LittleEndian& stream) {
+    unsigned long start = stream.GetSize();
+    stream.Entry(mType);
+    stream.Entry(mChannel);
+    stream.Entry(mEnabled);
+    stream.Entry(mChannelMask);
+    stream.Entry(mState04);
+    stream.Entry(mState06);
+    stream.Entry(mState08);
+    stream.Entry(mState0a);
+    stream.Entry(mState0b);
+    stream.Entry(mState0c);
+    stream.Entry(mState0e);
+    stream.Entry(mPeriod);
+    stream.Entry(mState12);
+    stream.Entry(mState13);
+    stream.Entry(mState14);
+    stream.Entry(mState16);
+    stream.Entry(mState18);
+    stream.Entry(mState19);
+    stream.Entry(mState1a);
+    stream.Entry(mState1c);
+    stream.Entry(mState20);
+    stream.Entry(mState28);
+    stream.AlignBlock(start);
+}
+/** @brief Resets disk audio waveform, modulation, and envelope state. */
+void CHvcSpu::_SQdMfm::Reset(unsigned char type, unsigned char channel) {
+    mType = type;
+    mChannel = channel;
+    mState02 = 0;
+    mState04 = 0;
+    mState05 = 0;
+    mState06 = 0xe8;
+    mState08 = 0;
+    mState09 = 0;
+    mState10 = 0;
+    mState18 = 0;
+    for (unsigned long i = 0; i < 64; ++i) mWave[i] = 0;
+    mState60 = 0;
+    mState61 = 0;
+    mState62 = 0;
+    mState68 = 0;
+    mState70 = 0;
+    mState71 = 0;
+    mState78 = 0;
+    mState80 = 0;
+    mState88 = 0;
+    mState90 = -1.0;
+    mState98 = 0;
+    mState99 = 0;
+    mState9a = 0;
+    for (unsigned long i = 0; i < 64; ++i) mModulation[i] = 0;
+    mStatedb = 0xff;
+    mStatee0 = 0;
+    mStatee1 = 0;
+    mStatee8 = 0;
+    mStatef0 = 0;
+    mStatef1 = 0;
+    mStatef8 = 0;
+}
+/** @brief Decodes disk waveform, modulation, and envelope control writes. */
+void CHvcSpu::_SQdMfm::Setup(unsigned char index, unsigned char value, CPlatformHvcUnit::_SEntity*) {
+    static const unsigned char modulation[8] = { 0, 1, 2, 4, 127, 252, 254, 255 };
+    switch (index) {
+    case 0x23:
+        mState04 = (value >> 1) & 1;
+        break;
+    case 0x80:
+        if (value & 0x80) {
+            mState70 = 0;
+            mState60 = value & 0x3f;
+        } else {
+            mState70 = 1;
+            mState71 = (value >> 6) & 1;
+            mState62 = value & 0x3f;
+            mState78 = (mState62 + 1UL) * mState06 * 7623676UL / 3712;
+            mState68 = 0;
+        }
+        break;
+    case 0x82:
+        reinterpret_cast<unsigned char*>(&mState10)[0] = value;
+        break;
+    case 0x83: {
+        mState10 = (mState10 & 0xf0ff) | ((value & 15) << 8);
+        unsigned char previous = mState08;
+        mState08 = (~value >> 7) & 1;
+        if (!previous && mState04) {
+            mState18 = 0.0;
+            mState61 = mState60;
+        }
+        mState05 = (value >> 6) & 1;
+        break;
+    }
+    case 0x84:
+        if (value & 0x80) {
+            mStatef0 = 0;
+            mStatee0 = value & 0x3f;
+        } else {
+            mStatef0 = 1;
+            mStatef1 = (value >> 6) & 1;
+            mStatee1 = value & 0x3f;
+            mStatef8 = (mStatee1 + 1UL) * mState06 * 7623676UL / 3712;
+            mStatee8 = 0;
+        }
+        break;
+    case 0x85:
+        mState98 = (value & 0x40) ? value | 0xc0 : value & 0x3f;
+        mState90 = -1.0;
+        mStatedb = 0xff;
+        break;
+    case 0x86:
+        reinterpret_cast<unsigned char*>(&mState88)[0] = value;
+        break;
+    case 0x87:
+        mState88 = (mState88 & 0xf0ff) | ((value & 15) << 8);
+        mState9a = value >> 7;
+        break;
+    case 0x88:
+        if (mState9a) {
+            unsigned char sample = modulation[value & 7];
+            mModulation[mState99] = sample;
+            mModulation[static_cast<unsigned char>(mState99 + 1)] = sample;
+            mState99 = (mState99 + 2) & 0x3f;
+        }
+        break;
+    case 0x89:
+        mState09 = (~value >> 7) & 1;
+        mState80 = value & 3;
+        break;
+    case 0x8a:
+        mState78 = (mState62 + 1UL) * value * 7623676UL / 3712;
+        mStatef8 = (mStatee1 + 1UL) * value * 7623676UL / 3712;
+        mState06 = value;
+        break;
+    default:
+        if (index >= 0x40 && index < 0x80 && !mState09) mWave[index - 0x40] = value & 0x3f;
+        break;
+    }
+}
+/** @brief Advances disk audio envelopes and modulation, then produces a smoothed waveform sample. */
+void CHvcSpu::_SQdMfm::Pulse(short cycles, unsigned long, CPlatformHvcUnit::_SEntity* entity) {
+    unsigned long enabled = (mState04 && mState08) ? mState09 : 0;
+    if (!mState05) {
+        if (mState70 && mState06) {
+            unsigned long period = static_cast<unsigned int>(mState78);
+            while (mState68 >= period) {
+                if (mState71) {
+                    if (mState60 < 32) ++mState60;
+                } else if (mState60) {
+                    --mState60;
+                }
+                mState68 -= period;
+            }
+            mState68 += cycles << 8;
+        }
+        if (mStatef0 && mState06) {
+            unsigned long period = static_cast<unsigned int>(mStatef8);
+            while (mStatee8 >= period) {
+                if (mStatef1) {
+                    if (mStatee0 < 32) ++mStatee0;
+                } else if (mStatee0) {
+                    --mStatee0;
+                }
+                mStatee8 -= period;
+            }
+            mStatee8 += cycles << 8;
+        }
+    }
+    long depth = mStatee0 < 32 ? mStatee0 : 32;
+    unsigned char modulation;
+    if (!mState9a && mState88) {
+        long phase = static_cast<long>(mState90);
+        modulation = mState98;
+        if (phase >= 0) {
+            int result = modulation;
+            while (static_cast<signed char>(mStatedb) != phase) {
+                signed char next = mStatedb + 1;
+                if (next > 63) next = 0;
+                mStatedb = next;
+                unsigned char value = mModulation[(mState99 + mStatedb) & 63];
+                result += value;
+                if (value == 127) result = 0;
+                if (static_cast<signed char>(result + 64) < 0) result = ((result + 64) & 127) - 64;
+                mState98 = result;
+            }
+        }
+        mState90 += cycles * 1.5284183990330473e-05 * static_cast<unsigned short>(mState88);
+        if (mState90 >= 64.0) mState90 -= 64.0;
+    } else {
+        modulation = mState98;
+    }
+    long adjustment = static_cast<signed char>(modulation) * depth;
+    if (adjustment < 0) adjustment -= 8;
+    else if (adjustment > 0) adjustment += 8;
+    if (adjustment >= 3072) adjustment -= 4096;
+    else if (adjustment < -1024) adjustment += 4096;
+    long sample = 0;
+    if (mState10) {
+        double phase = mState18;
+        long pitch = adjustment + 1024;
+        long waveformIndex = static_cast<long>(phase);
+        long volume = mState61 < 32 ? mState61 : 32;
+        sample = static_cast<signed char>(mWave[waveformIndex]) * volume;
+        mState18 += cycles * 1.4925960928057103e-08 * static_cast<unsigned short>(mState10) * pitch;
+        if (mState18 >= 64.0) {
+            mState61 = mState60;
+            mState18 -= 64.0;
+        }
+    }
+    switch (mState80) {
+    case 1: sample = sample * 2 / 3; break;
+    case 2: sample >>= 1; break;
+    case 3: sample = sample * 2 / 5; break;
+    }
+    int shift = reinterpret_cast<signed char*>(entity->pCustom)[0x542 + mChannel];
+    short target = sample * (enabled & 1);
+    short current = mState02;
+    int step = 1 << shift;
+    if (current + step < target) mState02 += step;
+    else if (target + step < current) mState02 -= step;
+    else mState02 = target;
+}
+/** @brief Transfers disk audio state and both waveform tables. */
+void CHvcSpu::_SQdMfm::Serialize(Common::Serialize::LittleEndian& stream) {
+    unsigned long start = stream.GetSize();
+    stream.Entry(mType);
+    stream.Entry(mChannel);
+    stream.Entry(mState02);
+    stream.Entry(mState04);
+    stream.Entry(mState05);
+    stream.Entry(mState06);
+    stream.Entry(mState08);
+    stream.Entry(mState09);
+    stream.Entry(mState10);
+    stream.Entry(mState18);
+    for (unsigned long i = 0; i < 64; ++i) stream.Entry(mWave[i]);
+    stream.Entry(mState60);
+    stream.Entry(mState61);
+    stream.Entry(mState62);
+    stream.Entry(mState70);
+    stream.Entry(mState71);
+    stream.Entry(mState68);
+    stream.Entry(mState78);
+    stream.Entry(mState80);
+    stream.Entry(mState88);
+    stream.Entry(mState90);
+    stream.Entry(mState98);
+    stream.Entry(mState99);
+    stream.Entry(mState9a);
+    for (unsigned long i = 0; i < 64; ++i) stream.Entry(mModulation[i]);
+    stream.Entry(mStatedb);
+    stream.Entry(mStatee0);
+    stream.Entry(mStatee1);
+    stream.Entry(mStatef0);
+    stream.Entry(mStatef1);
+    stream.Entry(mStatee8);
+    stream.Entry(mStatef8);
+    stream.AlignBlock(start);
+}
+/** @brief Resets disk position, timer, and mapped drive status. */
+void CHvcSpu::_SQdDisk::Reset(CPlatformHvcUnit::_SEntity* entity) {
+    unsigned char* memory = entity->pMemory;
+    offset = 0;
+    changed = 0;
+    timer = 0;
+    status = 0x47;
+    mediaCount = 120;
+    timerStarted = 0;
+    *reinterpret_cast<unsigned short*>(memory + 0x303842) = 0x8047;
+}
+/** @brief Updates disk data reads and advances the programmable interrupt timer. */
+void CHvcSpu::_SQdDisk::Pulse(short cycles, unsigned long, CPlatformHvcUnit::_SEntity* entity) {
+    unsigned char* memory = entity->pMemory;
+    unsigned char control = memory[0x303a32];
+    if (changed) {
+        signed char diskControl = memory[0x303a35];
+        if (diskControl & 4) memory[0x303841] = memory[offset + 0x100000];
+        if (diskControl < 0) {
+            entity->order.words[4] |= 1;
+            changed = 0;
+        }
+    }
+    if (!timerStarted) return;
+    for (int i = 0; i < cycles; ++i) {
+        if (!timer) {
+            if (control & 1) SetTimer(entity);
+            else {
+                timerStarted = 0;
+                break;
+            }
+        }
+        --timer;
+        if (!timer && (control & 2)) {
+            memory[0x303840] |= 1;
+            entity->order.words[4] |= 1;
+        }
+    }
+}
+/** @brief Copies the disk timer reload value from mapped registers. */
+void CHvcSpu::_SQdDisk::SetTimer(CPlatformHvcUnit::_SEntity* entity) {
+    timer = *reinterpret_cast<unsigned short*>(entity->pMemory + 0x303a30);
+}
+/** @brief Returns the current disk-image offset. */
+unsigned long CHvcSpu::_SQdDisk::GetQdOffset() { return offset; }
+/** @brief Updates the disk-image offset and records the change. */
+void CHvcSpu::_SQdDisk::SetQdOffset(unsigned long value) {
+    offset = value;
+    changed = 1;
+}
+/** @brief Replaces the low half of the disk-image offset. */
+void CHvcSpu::_SQdDisk::SetQdOffsetHalf(unsigned long value) {
+    unsigned long next = (offset & 0xffff0000) | (value & 0xffff);
+    changed = 1;
+    offset = next;
+}
+/** @brief Advances the low half of the disk-image offset with wrapping. */
+void CHvcSpu::_SQdDisk::IncQdOffsetHalf() {
+    unsigned long next = (offset & 0xffff0000) | ((offset + 1) & 0xffff);
+    changed = 1;
+    offset = next;
+}
+/** @brief Reloads and starts the disk timer. */
+void CHvcSpu::_SQdDisk::SetTimerStart(CPlatformHvcUnit::_SEntity* entity) {
+    timer = *reinterpret_cast<unsigned short*>(entity->pMemory + 0x303a30);
+    timerStarted = 1;
+}
+/** @brief Records whether the disk image has been modified. */
+void CHvcSpu::_SQdDisk::SetQdDirty(bool value) { dirty = value; }
+/** @brief Advances the media transition counter when platform state permits. */
+void CHvcSpu::_SQdDisk::IncMediaCount() {
+    if (mediaCount >= 120 && mediaCount < 196) {
+        if (reinterpret_cast<unsigned char*>(GetCHvc())[0x3d8ad8] & 9)
+            mediaCount = 196;
+    } else {
+        ++mediaCount;
+    }
+}
+} } } }

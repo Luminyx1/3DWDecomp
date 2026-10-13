@@ -1,33 +1,13 @@
 #pragma once
-
 #include <nn/types.h>
+#include <attributes.h>
 
-namespace Vessel::Emulator::Virtual {
+namespace Vessel { namespace Emulator { namespace Virtual {
 
-/**
- * @brief A component of an emulated platform (CPU, PPU, sound unit, ...).
- *
- * Units talk to each other through System, Access and Process calls that carry a UArgument.
- */
 class CPlatformUnit {
 public:
-    /// Operations passed to Access.
-    enum Operation {
-        cOperation_Read = 0,
-        cOperation_Write = 1,
-    };
-
-    /// Results returned by System, Access and Process.
-    enum Result {
-        cResult_Success = 0,
-        cResult_Unhandled = 4,
-        cResult_Unsupported = 6,
-    };
-
-    /**
-     * @brief Payload of a System, Access or Process call; which view is valid depends on the call.
-     */
     union UArgument {
+
         /// Access: a bus transfer.
         struct {
             u64 mSize;
@@ -55,83 +35,73 @@ public:
         } mSystem;
 
         u64 mRaw[8];
+
+        unsigned long values[8];
+        void* pointers[8];
     };
 
+    /** @brief Initializes identity, timing, and status fields. */
+    CPlatformUnit() : _08(0), _10(0), _18(0), mScale(0), _28(0) {
+    }
+
+    /** @brief Clears the base platform state. */
+    virtual ~CPlatformUnit() {
+        _08 = _10 = _18 = mScale = _28 = 0;
+    }
+    virtual unsigned int Initialize(CPlatformUnit* pParent) = 0;
+    virtual unsigned int Finalize() = 0;
+    virtual unsigned int Notify(CPlatformUnit* pSender, unsigned long category,
+        unsigned long operation, void* pArguments) = 0;
+    virtual unsigned int SystemAttach(CPlatformUnit* pSender, unsigned long category,
+        unsigned long operation, UArgument* pArguments) = 0;
+    virtual unsigned int SystemDetach(CPlatformUnit* pSender, unsigned long category,
+        unsigned long operation, UArgument* pArguments) = 0;
+    virtual unsigned int System(CPlatformUnit* pSender, unsigned long category,
+        unsigned long operation, UArgument* pArguments) = 0;
+    virtual unsigned int Access(CPlatformUnit* pSender, unsigned long category,
+        unsigned long operation, UArgument* pArguments) = 0;
+    virtual unsigned int Process(CPlatformUnit* pSender, unsigned long category,
+        unsigned long operation, UArgument* pArguments) = 0;
     /**
-     * @brief Identification data of a unit.
+     * @brief Reports unsupported content serialization for the base platform.
+     * @param pBuffer Unused content buffer.
+     * @param size Unused buffer size.
+     * @param rSize Receives zero bytes processed.
+     * @return Unsupported-operation code six.
      */
-    struct SDescriptor {
+    virtual unsigned int ExportContent(void* pBuffer, unsigned long size, unsigned long& rSize) {
+        rSize = 0;
+        return 6;
+    }
+    /**
+     * @brief Reports unsupported content serialization for the base platform.
+     * @param pBuffer Unused content buffer.
+     * @param size Unused buffer size.
+     * @param rSize Receives zero bytes processed.
+     * @return Unsupported-operation code six.
+     */
+    virtual unsigned int ImportContent(const void* pBuffer, unsigned long size, unsigned long& rSize) {
+        rSize = 0;
+        return 6;
+    }
+    /**
+     * @brief Reports unsupported content sizing for the base platform.
+     * @param rSize Receives zero bytes.
+     * @return Unsupported-operation code six.
+     */
+    virtual unsigned int InferContentSize(unsigned long& rSize) {
+        rSize = 0;
+        return 6;
+    }
+
+    union {
         char mName[16];
-        u64 mIndex;
-        u64 mFlags;
-        u8 mKind;
+        struct { unsigned long _08; unsigned long _10; };
     };
-
-    /**
-     * @brief Construct a unit with a cleared descriptor.
-     * @param index The unit index.
-     * @param flags The unit flags.
-     */
-    CPlatformUnit(u64 index, u64 flags) {
-        mDescriptor = {};
-        mDescriptor.mIndex = index;
-        mDescriptor.mFlags = flags;
-    }
-
-    /// Destroy the unit, clearing its descriptor.
-    virtual ~CPlatformUnit() { mDescriptor = {}; }
-
-    virtual int Initialize(CPlatformUnit* pParent) = 0;
-    virtual int Finalize() = 0;
-    virtual int Notify(CPlatformUnit* pUnit, u64 channel, u64 operation, void* pArgument) = 0;
-    virtual int SystemAttach(CPlatformUnit* pUnit, u64 channel, u64 operation,
-                             UArgument* pArgument) = 0;
-    virtual int SystemDetach(CPlatformUnit* pUnit, u64 channel, u64 operation,
-                             UArgument* pArgument) = 0;
-    virtual int System(CPlatformUnit* pUnit, u64 channel, u64 operation,
-                       UArgument* pArgument) = 0;
-    virtual int Access(CPlatformUnit* pUnit, u64 channel, u64 operation,
-                       UArgument* pArgument) = 0;
-    virtual int Process(CPlatformUnit* pUnit, u64 channel, u64 operation,
-                        UArgument* pArgument) = 0;
-
-    /**
-     * @brief Export the state of the unit (not supported by default).
-     * @param pBuffer The destination buffer.
-     * @param bufferSize The size of the destination buffer.
-     * @param rSize Receives the number of bytes written.
-     * @return cResult_Unsupported.
-     */
-    virtual int ExportContent(void* pBuffer, u64 bufferSize, u64& rSize) {
-        rSize = 0;
-        return cResult_Unsupported;
-    }
-
-    /**
-     * @brief Import the state of the unit (not supported by default).
-     * @param pBuffer The source buffer.
-     * @param bufferSize The size of the source buffer.
-     * @param rSize Receives the number of bytes read.
-     * @return cResult_Unsupported.
-     */
-    virtual int ImportContent(const void* pBuffer, u64 bufferSize, u64& rSize) {
-        rSize = 0;
-        return cResult_Unsupported;
-    }
-
-    /**
-     * @brief Compute the size of the exported state (not supported by default).
-     * @param rSize Receives the size.
-     * @return cResult_Unsupported.
-     */
-    virtual int InferContentSize(u64& rSize) {
-        rSize = 0;
-        return cResult_Unsupported;
-    }
-
-    SDescriptor mDescriptor;
+    unsigned long _18;
+    unsigned long mScale;
+    unsigned long _28;
 };
+static_assert(sizeof(CPlatformUnit) == 0x30, "Platform base layout");
 
-static_assert(sizeof(CPlatformUnit) == 0x30, "CPlatformUnit size");
-
-}  // namespace Vessel::Emulator::Virtual
+} } }

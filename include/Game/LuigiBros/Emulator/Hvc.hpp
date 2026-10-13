@@ -104,11 +104,11 @@ public:
     u64 ContentLoad(u64 mask, const u8* pBuffer, u64 bufferSize);
     void AdjustCustomParameter();
     void Debug(u64 flags);
-    int _Prologue() override;
-    int _Epilogue() override;
-    int System(CPlatformUnit* pUnit, u64 channel, u64 operation, UArgument* pArgument) override;
-    int Access(CPlatformUnit* pUnit, u64 channel, u64 operation, UArgument* pArgument) override;
-    int Process(CPlatformUnit* pUnit, u64 channel, u64 operation, UArgument* pArgument) override;
+    unsigned int _Prologue() override;
+    unsigned int _Epilogue() override;
+    unsigned int System(CPlatformUnit* pUnit, u64 channel, u64 operation, UArgument* pArgument) override;
+    unsigned int Access(CPlatformUnit* pUnit, u64 channel, u64 operation, UArgument* pArgument) override;
+    unsigned int Process(CPlatformUnit* pUnit, u64 channel, u64 operation, UArgument* pArgument) override;
     u64 _SerializeCore(void* pBuffer, bool isImport);
     void _SerializeCoreExport(void* pBuffer) override;
     void _SerializeCoreImport(const void* pBuffer) override;
@@ -124,7 +124,7 @@ public:
     u16 _SerializeTagVersion() override { return 0x100; }
 
     /// Comment stored with the serialized state.
-    const char* _SerializeTagComment() override { return "Hvc    "; }
+    const unsigned char* _SerializeTagComment() override { return reinterpret_cast<const unsigned char*>("Hvc    "); }
 
     /// The blocks of a saved state, indexed by content number.
     static SSerializeInformation c_aSerializeInformationTable[cContent_Num];
@@ -184,6 +184,10 @@ static_assert(__builtin_offsetof(CHvc, mMachine) == 0x82188, "CHvc::mMachine");
 static_assert(__builtin_offsetof(CHvc, mGrayPalette) == 0x3d2fb8, "CHvc::mGrayPalette");
 static_assert(__builtin_offsetof(CHvc, mBackup) == 0x3d31e8, "CHvc::mBackup");
 static_assert(__builtin_offsetof(CHvc, mCpu) == 0x3d51f0, "CHvc::mCpu");
+static_assert(__builtin_offsetof(CHvc, mPpu) == 0x3d8288, "CHvc::mPpu");
+static_assert(__builtin_offsetof(CHvc, mSpu) == 0x3d8750, "CHvc::mSpu");
+static_assert(__builtin_offsetof(CHvc, mGio) == 0x3d8a80, "CHvc::mGio");
+static_assert(sizeof(CHvc) == 0x3d93b0, "CHvc size");
 static_assert(__builtin_offsetof(CHvc, mMmc) == 0x3d8b40, "CHvc::mMmc");
 static_assert(__builtin_offsetof(CHvc, mDisk) == 0x3d9358, "CHvc::mDisk");
 
@@ -201,3 +205,5 @@ CHvc* GetCHvc();
 void BusMapSwitchVRAM(CPlatformHvcUnit::_SEntity* pEntity, int isVertical);
 
 }  // namespace Vessel::Emulator::Virtual::PlatformHvc
+
+extern Vessel::Emulator::Virtual::PlatformHvc::CHvc g_cHvc;
