@@ -53,7 +53,7 @@ class GateKeeperStateDemo : public al::ActorStateBase {
      * @brief Sets the offset added to the demo camera's look-at position.
      * @param rOffset Look-at offset.
      */
-    void setLookAtOffset(const sead::Vector3f &rOffset) { mLookAtOffset.e = rOffset.e; }
+    void setLookAtOffset(const sead::Vector3f &rOffset) { mLookAtOffset = sead::Vector3f(rOffset); }
 
     /** @brief Marks the demo camera as an RS camera ticket (single mode). */
     void setIsCameraTicket() { mIsCameraTicket = true; }
