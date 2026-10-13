@@ -32,6 +32,7 @@ public:
     void retirePlayer(s32 userId);
     PlayerEntryPlayer* getPlayerModel(s32 userId, s32 characterType, s32 index);
 
+    static s32 getEntryPartsNumMax();
     static bool isUse3dPlayer();
 
     GameDataHolder* getGameDataHolder() const { return mGameDataHolder; }

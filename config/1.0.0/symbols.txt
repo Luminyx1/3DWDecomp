@@ -6226,3 +6226,9 @@
 # src/Game/Layout/CounterWarpCube
 0x71019D5EE0 8 object _ZN12_GLOBAL__N_122NrvCounterWarpCubeWaitE
 0x71019D5FA0 8 object _ZN12_GLOBAL__N_121NrvCounterWarpCubeEndE
+
+0x710140AB78 12 object _ZN12_GLOBAL__N_118sEntryBasePositionE
+
+# src/Game/Layout/PlayerEntryPlayer
+0x71019E13B0 8 object _ZN12_GLOBAL__N_128NrvPlayerEntryPlayerDecisionE
+0x71019E1328 8 object _ZN12_GLOBAL__N_127NrvPlayerEntryPlayerJumpOutE

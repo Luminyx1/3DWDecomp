@@ -10,6 +10,7 @@ class PlayerRetargettingSelector;
 class PlayerEntryPlayerHolder : public al::IUseSceneObjHolder, public al::IUseHioNode {
 public:
     explicit PlayerEntryPlayerHolder(const al::ActorInitInfo& rInfo);
+    PlayerRetargettingSelector* getSelector() const { return mSelector; }
     void hidePlayerAll();
     PlayerEntryPlayer* getPlayerApplyedCharacterModel(int playerIndex, int characterType, int figure);
     PlayerModelHolder* getModelHolder(int characterType) const;

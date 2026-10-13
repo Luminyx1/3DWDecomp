@@ -12583,8 +12583,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001E5400			FALSE	_ZN17PlayerEntryPlayerD1Ev	PlayerEntryPlayer::~PlayerEntryPlayer()	
 0x71001E5410			FALSE	_ZN17PlayerEntryPlayerD0Ev	PlayerEntryPlayer::~PlayerEntryPlayer()	
 0x71001E5440			FALSE	_ZNK12_GLOBAL__N_124PlayerEntryPlayerNrvFall7executeEPN2al11NerveKeeperE	(anonymous namespace)::PlayerEntryPlayerNrvFall::execute(al::NerveKeeper*) const	
-0x71001E5450			FALSE	sub_71001E5450	sub_71001E5450	
-0x71001E54A0			FALSE	sub_71001E54A0	sub_71001E54A0	
+0x71001E5450			FALSE	_ZNK12_GLOBAL__N_128PlayerEntryPlayerNrvDecision7executeEPN2al11NerveKeeperE	(anonymous namespace)::PlayerEntryPlayerNrvDecision::execute(al::NerveKeeper*) const	
+0x71001E54A0			FALSE	_ZNK12_GLOBAL__N_127PlayerEntryPlayerNrvJumpOut7executeEPN2al11NerveKeeperE	(anonymous namespace)::PlayerEntryPlayerNrvJumpOut::execute(al::NerveKeeper*) const	
 0x71001E5530			FALSE	_ZNK12_GLOBAL__N_124PlayerEntryPlayerNrvLand7executeEPN2al11NerveKeeperE	(anonymous namespace)::PlayerEntryPlayerNrvLand::execute(al::NerveKeeper*) const	
 0x71001E5540			FALSE	_ZNK12_GLOBAL__N_124PlayerEntryPlayerNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::PlayerEntryPlayerNrvWait::execute(al::NerveKeeper*) const	
 0x71001E5550			FALSE	_ZNK12_GLOBAL__N_124PlayerEntryPlayerNrvTurn7executeEPN2al11NerveKeeperE	(anonymous namespace)::PlayerEntryPlayerNrvTurn::execute(al::NerveKeeper*) const	
