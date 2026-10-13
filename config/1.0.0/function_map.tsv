@@ -9596,13 +9596,13 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710016F7E0			FALSE	_ZN15TuccondorAround16exeSupportFreezeEv	TuccondorAround::exeSupportFreeze()	
 0x710016F820			FALSE	_ZN15TuccondorAroundD1Ev	TuccondorAround::~TuccondorAround()	
 0x710016F830			FALSE	_ZN15TuccondorAroundD0Ev	TuccondorAround::~TuccondorAround()	
-0x710016F860			FALSE	sub_710016F860	sub_710016F860	
-0x710016F8C0			FALSE	sub_710016F8C0	sub_710016F8C0	
-0x710016F900			FALSE	sub_710016F900	sub_710016F900	
-0x710016F990			FALSE	sub_710016F990	sub_710016F990	
-0x710016F9F0			FALSE	sub_710016F9F0	sub_710016F9F0	
-0x710016FA50			FALSE	sub_710016FA50	sub_710016FA50	
-0x710016FAA0			FALSE	sub_710016FAA0	sub_710016FAA0	
+0x710016F860			FALSE	_ZNK12_GLOBAL__N_122TuccondorAroundNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::TuccondorAroundNrvWait::execute(al::NerveKeeper*) const	
+0x710016F8C0			FALSE	_ZNK12_GLOBAL__N_131TuccondorAroundNrvSupportFreeze7executeEPN2al11NerveKeeperE	(anonymous namespace)::TuccondorAroundNrvSupportFreeze::execute(al::NerveKeeper*) const	
+0x710016F900			FALSE	_ZNK12_GLOBAL__N_124TuccondorAroundNrvAttack7executeEPN2al11NerveKeeperE	(anonymous namespace)::TuccondorAroundNrvAttack::execute(al::NerveKeeper*) const	
+0x710016F990			FALSE	_ZNK12_GLOBAL__N_128TuccondorAroundNrvAttackWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::TuccondorAroundNrvAttackWait::execute(al::NerveKeeper*) const	
+0x710016F9F0			FALSE	_ZNK12_GLOBAL__N_127TuccondorAroundNrvAttackEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::TuccondorAroundNrvAttackEnd::execute(al::NerveKeeper*) const	
+0x710016FA50			FALSE	_ZNK12_GLOBAL__N_128TuccondorAroundNrvAttackSign7executeEPN2al11NerveKeeperE	(anonymous namespace)::TuccondorAroundNrvAttackSign::execute(al::NerveKeeper*) const	
+0x710016FAA0			FALSE	_GLOBAL__sub_I_TuccondorAround.cpp	_GLOBAL__sub_I_TuccondorAround.cpp	
 0x710016FAF0		TuccondorBase.o	FALSE	_ZN13TuccondorBaseC2EPKc	TuccondorBase::TuccondorBase(char const*)	
 0x710016FB80			FALSE	_ZN13TuccondorBaseC1EPKc	TuccondorBase::TuccondorBase(char const*)	
 0x710016FC10			FALSE	_ZN13TuccondorBase14initNerveStateEv	TuccondorBase::initNerveState()	

@@ -879,7 +879,7 @@ src/Game/Enemy/Togezo.cpp:
     .text   start:0x0016C5E0 end:0x0016D7C8
 src/Game/Enemy/Tuccondor.cpp:
     .text   start:0x0016D7D0 end:0x0016EDE8
-src/Game/Enemy/TuccondorAround.cpp:
+src/Game/Enemy/TuccondorAround.cpp: done
     .text   start:0x0016EDF0 end:0x0016FAE8
 src/Game/Enemy/TuccondorBase.cpp:
     .text   start:0x0016FAF0 end:0x00170344
