@@ -97,6 +97,21 @@ inline bool CourseSelectRocket::isOpenWorld() const {
     return false;
 }
 
+/** @brief Checks whether the destination world has just become available. */
+static bool isNewOpenRocket(CourseSelectRocket::RocketType type, const al::LiveActor* actor) {
+    if (type == CourseSelectRocket::cRocketType_SpecialWorld) {
+        return GameDataFunction::isEnableSpecialWorld(GameDataHolderAccessor(actor)) &&
+               !GameDataFlagFunction::isAlreadyOpenCourseSelectRocket(GameDataHolderAccessor(actor));
+    }
+    if (type == CourseSelectRocket::cRocketType_ChampionshipWorld) {
+        return GameDataFlagFunction::isNewOpenChampionshipWorld(GameDataHolderAccessor(actor));
+    }
+    if (type == CourseSelectRocket::cRocketType_ArrangeWorld) {
+        return GameDataFlagFunction::isNewOpenArrangeWorld(GameDataHolderAccessor(actor));
+    }
+    return false;
+}
+
 /**
  * @brief Initializes the rocket and its landing rocket. The rocket of the special worlds also
  * creates the fairy princesses and their tools shown when its rock breaks, the demo cameras and
@@ -191,24 +206,10 @@ void CourseSelectRocket::init(const al::ActorInitInfo& rInfo) {
         mWaveRock->makeActorDead();
     }
 
-    bool isNewOpen = false;
-    switch (mRocketType) {
-    case cRocketType_SpecialWorld:
-        isNewOpen = GameDataFunction::isEnableSpecialWorld(GameDataHolderAccessor(this)) &&
-                    !GameDataFlagFunction::isAlreadyOpenCourseSelectRocket(
-                        GameDataHolderAccessor(this));
-        break;
-    case cRocketType_ChampionshipWorld:
-        isNewOpen = GameDataFlagFunction::isNewOpenChampionshipWorld(GameDataHolderAccessor(this));
-        break;
-    case cRocketType_ArrangeWorld:
-        isNewOpen = GameDataFlagFunction::isNewOpenArrangeWorld(GameDataHolderAccessor(this));
-        break;
-    default:
-        break;
-    }
+    const RocketType rocketType = mRocketType;
+    bool isNewOpen = isNewOpenRocket(rocketType, this);
 
-    if (mRocketType == cRocketType_SpecialWorld) {
+    if (rocketType == cRocketType_SpecialWorld) {
         if (isNewOpen) {
             al::validateHitSensor(this, "OpenDemo");
             al::invalidateHitSensor(this, "Region");
@@ -235,7 +236,7 @@ void CourseSelectRocket::init(const al::ActorInitInfo& rInfo) {
     } else {
         al::hideModel(this);
         mRock->appear();
-        if (mRocketType == cRocketType_ArrangeWorld) {
+        if (mRocketType == cRocketType_ChampionshipWorld) {
             al::startAction(mRock, "ChampionshipSign");
             if (!GameDataFlagFunction::isEnableShowCourseSelectRocketRock(
                     GameDataHolderAccessor(this))) {

@@ -62,6 +62,9 @@ public:
      */
     void setIsCoinItem(bool isCoinItem) { mIsCoinItem = isCoinItem; }
 
+    /** @brief Enables contact during launch. @param enabled Whether contact is enabled. */
+    void setEnableHitInLaunch(bool enabled) { mIsEnableHitInLaunch = enabled; }
+
 private:
     bool mIsLauncher = false;
     bool mIsNeedle = false;
