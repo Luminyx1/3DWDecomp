@@ -19687,7 +19687,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710030F2C0			FALSE	_ZN7Lantern13tryStartSwingEiRKN4sead7Vector3IfEE	Lantern::tryStartSwing(int, sead::Vector3<float> const&)	
 0x710030F470			FALSE	_ZN7Lantern12attackSensorEPN2al9HitSensorES2_	Lantern::attackSensor(al::HitSensor*, al::HitSensor*)	
 0x710030F510			FALSE	_ZN7Lantern10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_	Lantern::receiveMsg(al::SensorMsg const*, al::HitSensor*, al::HitSensor*)	
-0x710030F6B0			FALSE	sub_710030F6B0	sub_710030F6B0	
+0x710030F6B0			FALSE	_ZN12_GLOBAL__N_114isSwingMessageEPKN2al9SensorMsgE	(anonymous namespace)::isSwingMessage(al::SensorMsg const*)	TRUE
 0x710030F740			FALSE	_ZN7Lantern21receiveMsgScreenPointEPKN2al9SensorMsgEPNS0_13ScreenPointerEPNS0_17ScreenPointTargetE	Lantern::receiveMsgScreenPoint(al::SensorMsg const*, al::ScreenPointer*, al::ScreenPointTarget*)	
 0x710030F840			FALSE	_ZN7Lantern7exeWaitEv	Lantern::exeWait()	
 0x710030F850			FALSE	_ZN7Lantern8exeSwingEv	Lantern::exeSwing()	
@@ -19695,7 +19695,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710030FBC0			FALSE	_ZN7Lantern12exeSwingLerpEv	Lantern::exeSwingLerp()	
 0x710030FE20			FALSE	_ZN7LanternD1Ev	Lantern::~Lantern()	
 0x710030FE30			FALSE	_ZN7LanternD0Ev	Lantern::~Lantern()	
-0x710030FE60			FALSE	nullsub_202	nullsub_202	
+0x710030FE60			FALSE	_ZNK12_GLOBAL__N_114LanternNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::LanternNrvWait::execute(al::NerveKeeper*) const	TRUE
 0x710030FE70			FALSE	_ZNK12_GLOBAL__N_115LanternNrvSwing7executeEPN2al11NerveKeeperE	(anonymous namespace)::LanternNrvSwing::execute(al::NerveKeeper*) const	
 0x710030FE80			FALSE	_ZNK12_GLOBAL__N_119LanternNrvSwingLerp7executeEPN2al11NerveKeeperE	(anonymous namespace)::LanternNrvSwingLerp::execute(al::NerveKeeper*) const	
 0x710030FE90		LanternRing.o	FALSE	_ZN11LanternRingC2EPKc	LanternRing::LanternRing(char const*)	

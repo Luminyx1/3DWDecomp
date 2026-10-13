@@ -1808,8 +1808,10 @@ src/Game/MapObj/KouraSurf.cpp:
     .text   start:0x00308A60 end:0x0030DCE4
 src/Game/MapObj/KouraSurfBindPuppeteer.cpp:
     .text   start:0x0030DCF0 end:0x0030EC98
-src/Game/MapObj/Lantern.cpp:
+src/Game/MapObj/Lantern.cpp: done
     .text   start:0x0030ECA0 end:0x0030FE88
+    .rodata start:0x016B586C end:0x016B5884
+    .rodata start:0x01409670 end:0x01409680
 src/Game/MapObj/LanternRing.cpp: done
     .text   start:0x0030FE90 end:0x00310164
 src/Game/MapObj/LanternSwingMovement.cpp: done

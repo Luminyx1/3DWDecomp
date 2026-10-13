@@ -98,6 +98,7 @@
 #include "MapObj/SuperSkateShoes.hpp"
 #include "MapObj/SuperSkateRail.hpp"
 #pragma once
+#include "MapObj/Lantern.hpp"
 
 #include "MapObj/TouchReactionMapParts.hpp"
 #include "MapObj/BoxKiller.hpp"
@@ -1568,14 +1569,7 @@ private:
 };
 static_assert(sizeof(Kyuppon) == 0x270);
 
-class Lantern : public al::LiveActor {
-public:
-    explicit Lantern(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x64];
-};
-static_assert(sizeof(Lantern) == 0x1a8);
 
 
 
