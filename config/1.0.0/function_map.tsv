@@ -8432,11 +8432,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100144690			FALSE	_ZN13SamboSnowBody16exeSupportFreezeEv	SamboSnowBody::exeSupportFreeze()	
 0x71001446D0			FALSE	_ZN13SamboSnowBodyD1Ev	SamboSnowBody::~SamboSnowBody()	
 0x71001446E0			FALSE	_ZN13SamboSnowBodyD0Ev	SamboSnowBody::~SamboSnowBody()	
-0x7100144710			FALSE	nullsub_74	nullsub_74	
-0x7100144720			FALSE	sub_7100144720	sub_7100144720	
+0x7100144710			FALSE	_ZNK12_GLOBAL__N_120SamboSnowBodyNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::SamboSnowBodyNrvWait::execute(al::NerveKeeper*) const	
+0x7100144720			FALSE	_ZNK12_GLOBAL__N_129SamboSnowBodyNrvSupportFreeze7executeEPN2al11NerveKeeperE	(anonymous namespace)::SamboSnowBodyNrvSupportFreeze::execute(al::NerveKeeper*) const	
 0x7100144760			FALSE	_ZNK12_GLOBAL__N_124SamboSnowBodyNrvBlowDown7executeEPN2al11NerveKeeperE	(anonymous namespace)::SamboSnowBodyNrvBlowDown::execute(al::NerveKeeper*) const	
-0x7100144770			FALSE	sub_7100144770	sub_7100144770	
-0x71001447D0			FALSE	sub_71001447D0	sub_71001447D0	
+0x7100144770			FALSE	_ZNK12_GLOBAL__N_124SamboSnowBodyNrvFireDown7executeEPN2al11NerveKeeperE	(anonymous namespace)::SamboSnowBodyNrvFireDown::execute(al::NerveKeeper*) const	
+0x71001447D0			FALSE	_GLOBAL__sub_I_SamboSnowBody.cpp	_GLOBAL__sub_I_SamboSnowBody.cpp	
 0x7100144820		SamboSnowHat.o	FALSE	_ZN12SamboSnowHatC2EPKc	SamboSnowHat::SamboSnowHat(char const*)	
 0x71001448A0			FALSE	_ZN12SamboSnowHatC1EPKc	SamboSnowHat::SamboSnowHat(char const*)	
 0x7100144920			FALSE	_ZN12SamboSnowHat4initERKN2al13ActorInitInfoE	SamboSnowHat::init(al::ActorInitInfo const&)	
