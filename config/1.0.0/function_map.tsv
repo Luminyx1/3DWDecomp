@@ -15537,14 +15537,14 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100261890			FALSE	_ZN4Bush20tryStartRabbitAppearEv	Bush::tryStartRabbitAppear()	
 0x7100261900			FALSE	_ZN4BushD1Ev	Bush::~Bush()	
 0x7100261910			FALSE	_ZN4BushD0Ev	Bush::~Bush()	
-0x7100261940			FALSE	sub_7100261940	sub_7100261940	
-0x7100261990			FALSE	sub_7100261990	sub_7100261990	
-0x71002619D0			FALSE	sub_71002619D0	sub_71002619D0	
+0x7100261940			FALSE	_ZNK12_GLOBAL__N_111BushNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::BushNrvWait::execute	TRUE
+0x7100261990			FALSE	_ZNK12_GLOBAL__N_117BushNrvRabbitWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::BushNrvRabbitWait::execute	TRUE
+0x71002619D0			FALSE	_ZNK12_GLOBAL__N_118BushNrvReactionMic7executeEPN2al11NerveKeeperE	(anonymous namespace)::BushNrvReactionMic::execute	TRUE
 0x7100261A60			FALSE	_ZNK12_GLOBAL__N_119BushNrvReactionFire7executeEPN2al11NerveKeeperE	(anonymous namespace)::BushNrvReactionFire::execute(al::NerveKeeper*) const	
 0x7100261A70			FALSE	_ZNK12_GLOBAL__N_120BushNrvReactionDeath7executeEPN2al11NerveKeeperE	(anonymous namespace)::BushNrvReactionDeath::execute(al::NerveKeeper*) const	
-0x7100261A80			FALSE	sub_7100261A80	sub_7100261A80	
-0x7100261AE0			FALSE	sub_7100261AE0	sub_7100261AE0	
-0x7100261AF0			FALSE	sub_7100261AF0	sub_7100261AF0	
+0x7100261A80			FALSE	_ZNK12_GLOBAL__N_119BushNrvRabbitAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::BushNrvRabbitAppear::execute	TRUE
+0x7100261AE0			FALSE	_ZNK12_GLOBAL__N_121BushNrvReactionNoItem7executeEPN2al11NerveKeeperE	(anonymous namespace)::BushNrvReactionNoItem::execute	TRUE
+0x7100261AF0			FALSE	_ZNK12_GLOBAL__N_115BushNrvReaction7executeEPN2al11NerveKeeperE	(anonymous namespace)::BushNrvReaction::execute	TRUE
 0x7100261B00			FALSE	_ZNK12_GLOBAL__N_121BushNrvReactionAttack7executeEPN2al11NerveKeeperE	(anonymous namespace)::BushNrvReactionAttack::execute(al::NerveKeeper*) const	
 0x7100261B10			FALSE	_ZNK12_GLOBAL__N_120BushNrvReactionTouch7executeEPN2al11NerveKeeperE	(anonymous namespace)::BushNrvReactionTouch::execute(al::NerveKeeper*) const	
 0x7100261B20		CameraInSwitchOnAreaWatcher.o	FALSE	_ZN27CameraInSwitchOnAreaWatcherC2EPKc	CameraInSwitchOnAreaWatcher::CameraInSwitchOnAreaWatcher(char const*)	renamed from CameaInSwitchOnAreaWatcher.o (spelling)
