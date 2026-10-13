@@ -2350,8 +2350,6 @@
 0x71019E9078 8 object _ZN12_GLOBAL__N_119NrvWindowMessageEndE
 0x71019E93B0 32 object _ZTVN12_GLOBAL__N_123WindowMiiSetUpNrvAppearE
 0x71019E93F0 32 object _ZTVN12_GLOBAL__N_121WindowMiiSetUpNrvWaitE
-0x71019E9438 8 object _ZN12_GLOBAL__N_123NrvWindowMiiSetUpAppearE
-0x71019E9448 8 object _ZN12_GLOBAL__N_121NrvWindowMiiSetUpWaitE
 0x71019E9798 32 object _ZTVN12_GLOBAL__N_127WindowMiiverseDetailNrvWaitE
 0x71019E97B8 8 object _ZN12_GLOBAL__N_127NrvWindowMiiverseDetailWaitE
 0x71019E9BB0 32 object _ZTVN12_GLOBAL__N_123WindowProcessingNrvWaitE
@@ -6204,3 +6202,6 @@
 0x71019DE390 8 object _ZN12_GLOBAL__N_127NrvMiiverseBalloonDisappearE
 0x71019DE398 8 object _ZN12_GLOBAL__N_124NrvMiiverseBalloonDecompE
 0x71019DE358 8 object _ZN12_GLOBAL__N_122NrvMiiverseBalloonWaitE
+
+# src/Game/Layout/WindowMiiSetUp
+0x71019E9430 64 object _ZN12_GLOBAL__N_117NrvWindowMiiSetUpE

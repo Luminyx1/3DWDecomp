@@ -13317,9 +13317,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002019A0			FALSE	_ZNK14WindowMiiSetUp5isEndEv	WindowMiiSetUp::isEnd() const	
 0x71002019B0			FALSE	_ZN14WindowMiiSetUp6appearEv	WindowMiiSetUp::appear()	
 0x71002019C0			FALSE	_ZNK12_GLOBAL__N_123WindowMiiSetUpNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::WindowMiiSetUpNrvAppear::execute(al::NerveKeeper*) const	
-0x71002019D0			FALSE	sub_71002019D0	sub_71002019D0	
+0x71002019D0			FALSE	_ZNK12_GLOBAL__N_122WindowMiiSetUpNrvError7executeEPN2al11NerveKeeperE	(anonymous namespace)::WindowMiiSetUpNrvError::execute(al::NerveKeeper*) const	
 0x7100201A40			FALSE	_ZNK12_GLOBAL__N_121WindowMiiSetUpNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::WindowMiiSetUpNrvWait::execute(al::NerveKeeper*) const	
-0x7100201A50			FALSE	sub_7100201A50	sub_7100201A50	
+0x7100201A50			FALSE	_ZNK12_GLOBAL__N_120WindowMiiSetUpNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::WindowMiiSetUpNrvEnd::execute(al::NerveKeeper*) const	
 0x7100201AD0		WindowMiiverseDetail.o	FALSE	_ZN20WindowMiiverseDetailC2ERKN2al14LayoutInitInfoE	WindowMiiverseDetail::WindowMiiverseDetail(al::LayoutInitInfo const&)	
 0x7100201C30			FALSE	_ZN20WindowMiiverseDetail17lineBreakCallbackERKN4sead14SafeStringBaseIDsEEj	WindowMiiverseDetail::lineBreakCallback(sead::SafeStringBase<char16_t> const&, unsigned int)	
 0x7100201C40			FALSE	_ZN20WindowMiiverseDetailC1ERKN2al14LayoutInitInfoE	WindowMiiverseDetail::WindowMiiverseDetail(al::LayoutInitInfo const&)	
