@@ -7481,7 +7481,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710011EDF0			FALSE	_ZNK15KuriboTowerItem10getOffsetYEv	KuriboTowerItem::getOffsetY() const	
 0x710011EE00			FALSE	_ZN15KuriboTowerItemD1Ev	KuriboTowerItem::~KuriboTowerItem()	
 0x710011EE10			FALSE	_ZN15KuriboTowerItemD0Ev	KuriboTowerItem::~KuriboTowerItem()	
-0x710011EE40			FALSE	sub_710011EE40	sub_710011EE40	
+0x710011EE40			FALSE	_ZNK12_GLOBAL__N_125KuriboTowerItemNrvStandBy7executeEPN2al11NerveKeeperE	(anonymous namespace)::KuriboTowerItemNrvStandBy::execute(al::NerveKeeper*) const	
 0x710011EEA0			FALSE	_ZNK12_GLOBAL__N_122KuriboTowerItemNrvFall7executeEPN2al11NerveKeeperE	(anonymous namespace)::KuriboTowerItemNrvFall::execute(al::NerveKeeper*) const	
 0x710011EEB0			FALSE	_ZNK12_GLOBAL__N_130KuriboTowerItemNrvRootOnGround7executeEPN2al11NerveKeeperE	(anonymous namespace)::KuriboTowerItemNrvRootOnGround::execute(al::NerveKeeper*) const	
 0x710011EEC0		KuriboTowerNode.o	FALSE	_ZN15KuriboTowerNodeC2EPKc	KuriboTowerNode::KuriboTowerNode(char const*)	
