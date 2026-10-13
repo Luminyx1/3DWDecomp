@@ -1173,7 +1173,7 @@ src/Game/Layout/MiiverseBalloonParts.cpp: done
     .text   start:0x001D54E0 end:0x001D5E38
 src/Game/Layout/MiiverseStateDetail.cpp: done
     .text   start:0x001D5E40 end:0x001D6360
-src/Game/Layout/MiiverseStateTimeLine.cpp:
+src/Game/Layout/MiiverseStateTimeLine.cpp: done
     .text   start:0x001D6360 end:0x001D6ADC
 src/Game/Layout/PauseMenu.cpp:
     .text   start:0x001D6AE0 end:0x001DA13C
