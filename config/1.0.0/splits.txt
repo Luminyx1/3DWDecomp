@@ -413,7 +413,7 @@ src/Game/CourseSelect/CourseSelectPlayerFunction.cpp: done
     .text   start:0x000A0E70 end:0x000A0F90
 src/Game/CourseSelect/CourseSelectPuppeteer.cpp:
     .text   start:0x000A0F90 end:0x000A5EE8
-src/Game/CourseSelect/CourseSelectPuppeteerGroup.cpp:
+src/Game/CourseSelect/CourseSelectPuppeteerGroup.cpp: done
     .text   start:0x000A5EF0 end:0x000A7514
 src/Game/CourseSelect/CourseSelectRhythmObject.cpp: done
     .text   start:0x000A7520 end:0x000A7994

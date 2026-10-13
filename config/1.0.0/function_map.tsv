@@ -4006,8 +4006,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000A7400			FALSE	_ZN26CourseSelectPuppeteerGroup7exeSaveEv	CourseSelectPuppeteerGroup::exeSave()	
 0x71000A7460			FALSE	_ZN26CourseSelectPuppeteerGroupD1Ev	CourseSelectPuppeteerGroup::~CourseSelectPuppeteerGroup()	
 0x71000A7470			FALSE	_ZN26CourseSelectPuppeteerGroupD0Ev	CourseSelectPuppeteerGroup::~CourseSelectPuppeteerGroup()	
-0x71000A74A0			FALSE	nullsub_31	nullsub_31	
-0x71000A74B0			FALSE	sub_71000A74B0	sub_71000A74B0	
+0x71000A74A0			FALSE	_ZNK12_GLOBAL__N_133CourseSelectPuppeteerGroupNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectPuppeteerGroupNrvWait::execute(al::NerveKeeper*) const	
+0x71000A74B0			FALSE	_ZNK12_GLOBAL__N_133CourseSelectPuppeteerGroupNrvSave7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectPuppeteerGroupNrvSave::execute(al::NerveKeeper*) const	
 0x71000A7520		CourseSelectRhythmObject.o	FALSE	_ZN24CourseSelectRhythmObjectC2EPKc	CourseSelectRhythmObject::CourseSelectRhythmObject(char const*)	
 0x71000A75B0			FALSE	_ZN24CourseSelectRhythmObjectC1EPKc	CourseSelectRhythmObject::CourseSelectRhythmObject(char const*)	
 0x71000A7640			FALSE	_ZN24CourseSelectRhythmObject4initERKN2al13ActorInitInfoE	CourseSelectRhythmObject::init(al::ActorInitInfo const&)	
