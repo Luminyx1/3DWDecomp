@@ -13268,10 +13268,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001FF210			FALSE	_ZN13WindowConfirm6exeEndEv	WindowConfirm::exeEnd()	
 0x71001FF290			FALSE	_ZNK12_GLOBAL__N_120WindowConfirmNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::WindowConfirmNrvWait::execute(al::NerveKeeper*) const	
 0x71001FF2A0			FALSE	_ZNK12_GLOBAL__N_122WindowConfirmNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::WindowConfirmNrvAppear::execute(al::NerveKeeper*) const	
-0x71001FF2B0			FALSE	sub_71001FF2B0	sub_71001FF2B0	
-0x71001FF350			FALSE	sub_71001FF350	sub_71001FF350	
-0x71001FF3D0			FALSE	sub_71001FF3D0	sub_71001FF3D0	
-0x71001FF450			FALSE	sub_71001FF450	sub_71001FF450	
+0x71001FF2B0			FALSE	_ZNK12_GLOBAL__N_127WindowConfirmNrvAppearAIcon7executeEPN2al11NerveKeeperE	(anonymous namespace)::WindowConfirmNrvAppearAIcon::execute(al::NerveKeeper*) const	
+0x71001FF350			FALSE	_ZNK12_GLOBAL__N_119WindowConfirmNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::WindowConfirmNrvEnd::execute(al::NerveKeeper*) const	
+0x71001FF3D0			FALSE	_ZNK12_GLOBAL__N_124WindowConfirmNrvForceEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::WindowConfirmNrvForceEnd::execute(al::NerveKeeper*) const	
+0x71001FF450			FALSE	_ZNK12_GLOBAL__N_125WindowConfirmNrvWaitAIcon7executeEPN2al11NerveKeeperE	(anonymous namespace)::WindowConfirmNrvWaitAIcon::execute(al::NerveKeeper*) const	
 0x71001FF500		WindowControllerChange.o	FALSE	_ZN22WindowControllerChangeC2ERKN2al14LayoutInitInfoEP14GameDataHolderPNS0_12PlayerHolderEP20CourseSelectDirectorPKc	WindowControllerChange::WindowControllerChange(al::LayoutInitInfo const&, GameDataHolder*, al::PlayerHolder*, CourseSelectDirector*, char const*)	
 0x71001FF6B0			FALSE	_ZN22WindowControllerChangeC1ERKN2al14LayoutInitInfoEP14GameDataHolderPNS0_12PlayerHolderEP20CourseSelectDirectorPKc	WindowControllerChange::WindowControllerChange(al::LayoutInitInfo const&, GameDataHolder*, al::PlayerHolder*, CourseSelectDirector*, char const*)	
 0x71001FF860			FALSE	_ZN22WindowControllerChange10exeConfirmEv	WindowControllerChange::exeConfirm()	

@@ -1265,7 +1265,7 @@ src/Game/Layout/Utl.cpp:
     .text   start:0x001FC940 end:0x001FD6EC
 src/Game/Layout/WindowCameraChange.cpp:
     .text   start:0x001FD6F0 end:0x001FE728
-src/Game/Layout/WindowConfirm.cpp:
+src/Game/Layout/WindowConfirm.cpp: done
     .text   start:0x001FE730 end:0x001FF500
 src/Game/Layout/WindowControllerChange.cpp:
     .text   start:0x001FF500 end:0x00200618
