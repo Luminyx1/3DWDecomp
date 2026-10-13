@@ -10778,8 +10778,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001A3160			FALSE	_ZN15FloatingTerrain9startHideEv	FloatingTerrain::startHide()	
 0x71001A31D0			FALSE	_ZN15FloatingTerrainD1Ev	FloatingTerrain::~FloatingTerrain()	
 0x71001A31E0			FALSE	_ZN15FloatingTerrainD0Ev	FloatingTerrain::~FloatingTerrain()	
-0x71001A3210			FALSE	sub_71001A3210	sub_71001A3210	
-0x71001A32B0			FALSE	sub_71001A32B0	sub_71001A32B0	
+0x71001A3210			FALSE	_ZNK12_GLOBAL__N_124FloatingTerrainNrvHidden7executeEPN2al11NerveKeeperE	(anonymous namespace)::FloatingTerrainNrvHidden::execute(al::NerveKeeper*) const	TRUE
+0x71001A32B0			FALSE	_ZNK12_GLOBAL__N_122FloatingTerrainNrvStay7executeEPN2al11NerveKeeperE	(anonymous namespace)::FloatingTerrainNrvStay::execute(al::NerveKeeper*) const	TRUE
 0x71001A3300			FALSE	_ZNK12_GLOBAL__N_122FloatingTerrainNrvHide7executeEPN2al11NerveKeeperE	(anonymous namespace)::FloatingTerrainNrvHide::execute(al::NerveKeeper*) const	
 0x71001A3310			FALSE	_ZNK12_GLOBAL__N_124FloatingTerrainNrvRotate7executeEPN2al11NerveKeeperE	(anonymous namespace)::FloatingTerrainNrvRotate::execute(al::NerveKeeper*) const	
 0x71001A3320			FALSE	_ZNK12_GLOBAL__N_124FloatingTerrainNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::FloatingTerrainNrvAppear::execute(al::NerveKeeper*) const	

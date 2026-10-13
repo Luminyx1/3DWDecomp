@@ -1,3 +1,4 @@
+#include "MapObj/Fury/FloatingTerrain.hpp"
 #include "Demo/DemoCutscene.hpp"
 #include "MapObj/Trampoline.hpp"
 #include "MapObj/KinokoTreasure.hpp"
@@ -960,14 +961,7 @@ private:
 };
 static_assert(sizeof(FlingPole) == 0x248);
 
-class FloatingTerrain : public al::LiveActor {
-public:
-    explicit FloatingTerrain(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x2c];
-};
-static_assert(sizeof(FloatingTerrain) == 0x170);
 
 
 
