@@ -6237,3 +6237,15 @@
 0x71016B56E0 144 object _ZN12_GLOBAL__N_117cFlagSpringParamsE
 0x7101A28318 64 object _ZN12_GLOBAL__N_112cFlagEffectsE
 0x7101A28358 40 object _ZN12_GLOBAL__N_112cFlagActionsE
+
+# Recovered Tico wait state and parameters
+0x7101A7D4A8 32 object _ZTVN12_GLOBAL__N_111TicoNrvWaitE
+0x7101A7D4C8 8 object _ZN12_GLOBAL__N_111NrvTicoWaitE
+0x7101A7D4D0 32 object _ZTVN12_GLOBAL__N_115TicoNrvGoalPoseE
+0x7101A7D4F0 8 object _ZN12_GLOBAL__N_115NrvTicoGoalPoseE
+0x710210F410 20 object _ZN12_GLOBAL__N_116sTicoRumbleParamE
+0x710210F424 24 object _ZN12_GLOBAL__N_114sTicoTurnParamE
+0x710210F440 80 object _ZN12_GLOBAL__N_114sTicoWaitParamE
+0x71003D7640 76 func _ZNK12_GLOBAL__N_111TicoNrvWait7executeEPN2al11NerveKeeperE
+0x71003D7690 88 func _ZNK12_GLOBAL__N_115TicoNrvGoalPose7executeEPN2al11NerveKeeperE
+0x71003D7760 176 func _GLOBAL__sub_I_Tico.cpp

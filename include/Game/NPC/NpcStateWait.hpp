@@ -67,6 +67,8 @@ public:
     bool isInvalidTurn() const { return mIsTurnDisabled; }
     void setWaitAfter();
     void setWait();
+    /** @brief Reports whether searching turns are disabled. @return Whether the actor should face its initial direction. */
+    bool isTurnDisabled() const { return mIsTurnDisabled; }
     void startWait();
     void invalidateTurn();
     void attackSensor(al::HitSensor* pSelf, al::HitSensor* pOther);
