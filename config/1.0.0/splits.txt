@@ -337,7 +337,7 @@ src/Game/Course/MapPlayerTrackerParts.cpp:
     .text   start:0x00089A00 end:0x00089FB8
 src/Game/Course/ScenarioShineCounterParts.cpp:
     .text   start:0x00089FC0 end:0x0008B0E4
-src/Game/CourseSelect/_8B0F0.cpp:
+src/Game/CourseSelect/CatGullHolder.cpp: done
     .text   start:0x0008B0F0 end:0x0008B124
 src/Game/CourseSelect/BgmBeatAnimeController.cpp:
     .text   start:0x0008B130 end:0x0008C308
@@ -413,13 +413,13 @@ src/Game/CourseSelect/CourseSelectPlayerFunction.cpp: done
     .text   start:0x000A0E70 end:0x000A0F90
 src/Game/CourseSelect/CourseSelectPuppeteer.cpp:
     .text   start:0x000A0F90 end:0x000A5EE8
-src/Game/CourseSelect/CourseSelectPuppeteerGroup.cpp:
+src/Game/CourseSelect/CourseSelectPuppeteerGroup.cpp: done
     .text   start:0x000A5EF0 end:0x000A7514
 src/Game/CourseSelect/CourseSelectRhythmObject.cpp: done
     .text   start:0x000A7520 end:0x000A7994
 src/Game/CourseSelect/CourseSelectRoad.cpp: done
     .text   start:0x000A79A0 end:0x000A8208
-src/Game/CourseSelect/CourseSelectRocket.cpp:
+src/Game/CourseSelect/CourseSelectRocket.cpp: done
     .text   start:0x000A8210 end:0x000AA568
 src/Game/CourseSelect/CourseSelectRouteDokan.cpp: done
     .text   start:0x000AA570 end:0x000AA934
@@ -1889,9 +1889,9 @@ src/Game/MapObj/PanelNote.cpp: done
     .text   start:0x00340140 end:0x003409AC
 src/Game/MapObj/PanelNoteGroup.cpp: done
     .text   start:0x003409B0 end:0x00340F18
-src/Game/MapObj/PanelNotePaint.cpp:
+src/Game/MapObj/PanelNotePaint.cpp: done
     .text   start:0x00340F20 end:0x00342248
-src/Game/MapObj/PanelNotePaintGroup.cpp:
+src/Game/MapObj/PanelNotePaintGroup.cpp: done
     .text   start:0x00342250 end:0x003438E8
 src/Game/MapObj/PlayerCrown.cpp:
     .text   start:0x003438F0 end:0x00345638
@@ -2130,7 +2130,7 @@ src/Game/MapObj/TrampleSwitchGoalItem.cpp: done
     .text   start:0x00391B00 end:0x00392324
 src/Game/MapObj/TrampleSwitchGold.cpp: done
     .text   start:0x00392330 end:0x00392470
-src/Game/MapObj/TrampleSwitchTimer.cpp:
+src/Game/MapObj/TrampleSwitchTimer.cpp: done
     .text   start:0x00392470 end:0x00394644
 src/Game/MapObj/TrampleSwitchTogether.cpp: done
     .text   start:0x00394650 end:0x00394CB4
