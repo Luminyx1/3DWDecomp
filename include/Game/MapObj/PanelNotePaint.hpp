@@ -1,5 +1,8 @@
 #pragma once
 #include "Library/LiveActor/LiveActor.hpp"
+namespace al {
+class MtxConnector;
+}
 class PanelNotePaint : public al::LiveActor {
   public:
     explicit PanelNotePaint(const char* name);
@@ -12,6 +15,23 @@ class PanelNotePaint : public al::LiveActor {
     bool receiveMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*) override;
     bool receiveMsgScreenPoint(const al::SensorMsg*, al::ScreenPointer*,
                                al::ScreenPointTarget*) override;
+    bool tryContinuePushing();
+    bool isEnablePush() const;
+    void pushFirstTime(al::HitSensor*, bool, bool);
+    void pushFirstTimeScreenPoint(al::ScreenPointer*, bool, bool);
+    void exeOffWait();
+    void exeReaction();
+    void exeOnWaitBefore();
+    void setNerveToOnWait();
+    void exeOnWait();
+    void exeOnWaitAfterHipDropped();
+    void exeReactionReturn();
+    void exeHipDropped();
+    void setNerveToOnWaitAfterHipDropped();
+    void exeInvincibleTouched();
+    void settingForOnWait();
+    void settingForInvincibleTouched();
+    void setNerveToInvincibleTouched();
     bool isOn() const;
     al::HitSensor* getScoreSensor();
     void setCompleteEffect();
@@ -19,9 +39,14 @@ class PanelNotePaint : public al::LiveActor {
     void setPitch(int pitch) { mPitch = pitch; }
 
   private:
-    alignas(8) unsigned char _148[0x20];
-    bool mInitiallyOn;
-    unsigned char _169[3];
-    int mPitch;
+    int mColor = 0;
+    al::MtxConnector* mConnector = nullptr;
+    float mExplosionRadius = 0.0f;
+    bool mHitReactionStarted = false;
+    int mHitReactionTimer = 0;
+    al::HitSensor* mScoreSensor = nullptr;
+    bool mInitiallyOn = false;
+    bool mOn = false;
+    int mPitch = -1;
 };
 static_assert(sizeof(PanelNotePaint) == 0x170);

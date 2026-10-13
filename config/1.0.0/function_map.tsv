@@ -20690,13 +20690,13 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100341FA0			FALSE	_ZN14PanelNotePaint27setNerveToInvincibleTouchedEv	PanelNotePaint::setNerveToInvincibleTouched()	
 0x7100342000			FALSE	_ZN14PanelNotePaintD1Ev	PanelNotePaint::~PanelNotePaint()	
 0x7100342010			FALSE	_ZN14PanelNotePaintD0Ev	PanelNotePaint::~PanelNotePaint()	
-0x7100342040			FALSE	sub_7100342040	sub_7100342040	
-0x71003420A0			FALSE	sub_71003420A0	sub_71003420A0	
-0x71003420B0			FALSE	sub_71003420B0	sub_71003420B0	
+0x7100342040			FALSE	_ZNK12_GLOBAL__N_124PanelNotePaintNrvOffWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::PanelNotePaintNrvOffWait::execute(al::NerveKeeper*) const	TRUE
+0x71003420A0			FALSE	_ZNK12_GLOBAL__N_129PanelNotePaintNrvOnWaitBefore7executeEPN2al11NerveKeeperE	(anonymous namespace)::PanelNotePaintNrvOnWaitBefore::execute(al::NerveKeeper*) const	TRUE
+0x71003420B0			FALSE	_ZNK12_GLOBAL__N_134PanelNotePaintNrvInvincibleTouched7executeEPN2al11NerveKeeperE	(anonymous namespace)::PanelNotePaintNrvInvincibleTouched::execute(al::NerveKeeper*) const	TRUE
 0x7100342150			FALSE	_ZNK12_GLOBAL__N_127PanelNotePaintNrvHipDropped7executeEPN2al11NerveKeeperE	(anonymous namespace)::PanelNotePaintNrvHipDropped::execute(al::NerveKeeper*) const	
-0x7100342160			FALSE	sub_7100342160	sub_7100342160	
-0x71003421B0			FALSE	sub_71003421B0	sub_71003421B0	
-0x71003421F0			FALSE	sub_71003421F0	sub_71003421F0	
+0x7100342160			FALSE	_ZNK12_GLOBAL__N_123PanelNotePaintNrvOnWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::PanelNotePaintNrvOnWait::execute(al::NerveKeeper*) const	TRUE
+0x71003421B0			FALSE	_ZNK12_GLOBAL__N_131PanelNotePaintNrvReactionReturn7executeEPN2al11NerveKeeperE	(anonymous namespace)::PanelNotePaintNrvReactionReturn::execute(al::NerveKeeper*) const	TRUE
+0x71003421F0			FALSE	_ZNK12_GLOBAL__N_138PanelNotePaintNrvOnWaitAfterHipDropped7executeEPN2al11NerveKeeperE	(anonymous namespace)::PanelNotePaintNrvOnWaitAfterHipDropped::execute(al::NerveKeeper*) const	TRUE
 0x7100342240			FALSE	_ZNK12_GLOBAL__N_125PanelNotePaintNrvReaction7executeEPN2al11NerveKeeperE	(anonymous namespace)::PanelNotePaintNrvReaction::execute(al::NerveKeeper*) const	
 0x7100342250		PanelNotePaintGroup.o	FALSE	_ZN19PanelNotePaintGroupC2EPKc	PanelNotePaintGroup::PanelNotePaintGroup(char const*)	
 0x7100342630			FALSE	_ZN19PanelNotePaintGroupC1EPKc	PanelNotePaintGroup::PanelNotePaintGroup(char const*)	
