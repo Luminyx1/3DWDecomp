@@ -1,3 +1,4 @@
+#include "MapObj/ThrowMapParts.hpp"
 #include "MapObj/BlockSlot.hpp"
 #include "MapObj/GoalBonusGameBlockSlot.hpp"
 #include "MapObj/JumpPanel.hpp"
@@ -2457,14 +2458,6 @@ private:
 };
 static_assert(sizeof(ZigzagBuildingCover) == 0x148);
 
-class ThrowMapParts : public al::LiveActor {
-public:
-    explicit ThrowMapParts(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x9c];
-};
-static_assert(sizeof(ThrowMapParts) == 0x1e0);
 
 class TimeLimitStepSwitch : public al::LiveActor {
 public:

@@ -22399,25 +22399,25 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71003874B0			FALSE	_ZN13ThrowMapParts10exeDestroyEv	ThrowMapParts::exeDestroy()	
 0x7100387550			FALSE	_ZN13ThrowMapPartsD1Ev	ThrowMapParts::~ThrowMapParts()	
 0x7100387560			FALSE	_ZN13ThrowMapPartsD0Ev	ThrowMapParts::~ThrowMapParts()	
-0x7100387590			FALSE	nullsub_239	nullsub_239	
-0x71003875A0			FALSE	sub_71003875A0	sub_71003875A0	
-0x71003875B0			FALSE	sub_71003875B0	sub_71003875B0	
-0x71003875D0			FALSE	sub_71003875D0	sub_71003875D0	
-0x71003875E0			FALSE	sub_71003875E0	sub_71003875E0	
-0x7100387620			FALSE	sub_7100387620	sub_7100387620	
-0x7100387630			FALSE	nullsub_240	nullsub_240	
-0x7100387640			FALSE	sub_7100387640	sub_7100387640	
+0x7100387590			FALSE	_ZNK12_GLOBAL__N_120ThrowMapPartsNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::ThrowMapPartsNrvWait::execute	TRUE
+0x71003875A0			FALSE	_ZNK12_GLOBAL__N_120ThrowMapPartsNrvWait13getActionNameEv	(anonymous namespace)::ThrowMapPartsNrvWait::getActionName	TRUE
+0x71003875B0			FALSE	_ZNK12_GLOBAL__N_130ThrowMapPartsNrvPullOutSuccess7executeEPN2al11NerveKeeperE	(anonymous namespace)::ThrowMapPartsNrvPullOutSuccess::execute	TRUE
+0x71003875D0			FALSE	_ZNK12_GLOBAL__N_130ThrowMapPartsNrvPullOutSuccess13getActionNameEv	(anonymous namespace)::ThrowMapPartsNrvPullOutSuccess::getActionName	TRUE
+0x71003875E0			FALSE	_ZNK12_GLOBAL__N_127ThrowMapPartsNrvPullOutMiss7executeEPN2al11NerveKeeperE	(anonymous namespace)::ThrowMapPartsNrvPullOutMiss::execute	TRUE
+0x7100387620			FALSE	_ZNK12_GLOBAL__N_127ThrowMapPartsNrvPullOutMiss13getActionNameEv	(anonymous namespace)::ThrowMapPartsNrvPullOutMiss::getActionName	TRUE
+0x7100387630			FALSE	_ZNK12_GLOBAL__N_131ThrowMapPartsNrvPullOutMissWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::ThrowMapPartsNrvPullOutMissWait::execute	TRUE
+0x7100387640			FALSE	_ZNK12_GLOBAL__N_131ThrowMapPartsNrvPullOutMissWait13getActionNameEv	(anonymous namespace)::ThrowMapPartsNrvPullOutMissWait::getActionName	TRUE
 0x7100387650			FALSE	_ZNK12_GLOBAL__N_126ThrowMapPartsNrvPlayerHold7executeEPN2al11NerveKeeperE	(anonymous namespace)::ThrowMapPartsNrvPlayerHold::execute(al::NerveKeeper*) const	
-0x7100387660			FALSE	sub_7100387660	sub_7100387660	
-0x7100387670			FALSE	sub_7100387670	sub_7100387670	
-0x7100387700			FALSE	sub_7100387700	sub_7100387700	
-0x7100387710			FALSE	sub_7100387710	sub_7100387710	
-0x7100387750			FALSE	sub_7100387750	sub_7100387750	
-0x7100387760			FALSE	sub_7100387760	sub_7100387760	
-0x71003877A0			FALSE	sub_71003877A0	sub_71003877A0	
-0x71003877B0			FALSE	sub_71003877B0	sub_71003877B0	
-0x7100387850			FALSE	sub_7100387850	sub_7100387850	
-0x7100387860			FALSE	sub_7100387860	sub_7100387860	
+0x7100387660			FALSE	_ZNK12_GLOBAL__N_126ThrowMapPartsNrvPlayerHold13getActionNameEv	(anonymous namespace)::ThrowMapPartsNrvPlayerHold::getActionName	TRUE
+0x7100387670			FALSE	_ZNK12_GLOBAL__N_121ThrowMapPartsNrvThrow7executeEPN2al11NerveKeeperE	(anonymous namespace)::ThrowMapPartsNrvThrow::execute	TRUE
+0x7100387700			FALSE	_ZNK12_GLOBAL__N_121ThrowMapPartsNrvThrow13getActionNameEv	(anonymous namespace)::ThrowMapPartsNrvThrow::getActionName	TRUE
+0x7100387710			FALSE	_ZNK12_GLOBAL__N_120ThrowMapPartsNrvFall7executeEPN2al11NerveKeeperE	(anonymous namespace)::ThrowMapPartsNrvFall::execute	TRUE
+0x7100387750			FALSE	_ZNK12_GLOBAL__N_120ThrowMapPartsNrvFall13getActionNameEv	(anonymous namespace)::ThrowMapPartsNrvFall::getActionName	TRUE
+0x7100387760			FALSE	_ZNK12_GLOBAL__N_121ThrowMapPartsNrvStuck7executeEPN2al11NerveKeeperE	(anonymous namespace)::ThrowMapPartsNrvStuck::execute	TRUE
+0x71003877A0			FALSE	_ZNK12_GLOBAL__N_121ThrowMapPartsNrvStuck13getActionNameEv	(anonymous namespace)::ThrowMapPartsNrvStuck::getActionName	TRUE
+0x71003877B0			FALSE	_ZNK12_GLOBAL__N_123ThrowMapPartsNrvDestroy7executeEPN2al11NerveKeeperE	(anonymous namespace)::ThrowMapPartsNrvDestroy::execute	TRUE
+0x7100387850			FALSE	_ZNK12_GLOBAL__N_123ThrowMapPartsNrvDestroy13getActionNameEv	(anonymous namespace)::ThrowMapPartsNrvDestroy::getActionName	TRUE
+0x7100387860			FALSE	_GLOBAL__sub_I_ThrowMapParts.cpp	_GLOBAL__sub_I_ThrowMapParts.cpp	TRUE
 0x7100387AA0		TimeLimitStepSwitch.o	FALSE	_ZN19TimeLimitStepSwitchC2EPKc	TimeLimitStepSwitch::TimeLimitStepSwitch(char const*)	
 0x7100387B30			FALSE	_ZN19TimeLimitStepSwitchC1EPKc	TimeLimitStepSwitch::TimeLimitStepSwitch(char const*)	
 0x7100387BC0			FALSE	_ZN19TimeLimitStepSwitch4initERKN2al13ActorInitInfoE	TimeLimitStepSwitch::init(al::ActorInitInfo const&)	
