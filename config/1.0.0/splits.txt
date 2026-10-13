@@ -1748,8 +1748,9 @@ src/Game/MapObj/ItemStateLeaf.cpp:
     .text   start:0x002EC680 end:0x002ECDC0
 src/Game/MapObj/ItemStatePlayerHold.cpp:
     .text   start:0x002ECDC0 end:0x002ED810
-src/Game/MapObj/ItemStatePopUpAbove.cpp:
+src/Game/MapObj/ItemStatePopUpAbove.cpp: done
     .text   start:0x002ED810 end:0x002EDAC8
+    .rodata start:0x01409B68 end:0x01409B70
 src/Game/MapObj/ItemStatePopUpFront.cpp:
     .text   start:0x002EDAD0 end:0x002EF228
 src/Game/MapObj/IUseTimer.cpp: done
