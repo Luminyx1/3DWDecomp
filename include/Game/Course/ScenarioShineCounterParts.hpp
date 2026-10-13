@@ -1,32 +1,22 @@
 #pragma once
-
 #include "Layout/Switch/SingleModeCounterBase.hpp"
-
-namespace al {
-class LayoutInitInfo;
-}  // namespace al
-
-/**
- * @brief Bowser's Fury HUD counter of the cat shines collected for the current scenario.
- * @note Only what reconstructed code needs is declared so far.
- */
+#include "Layout/TextBoxTextInfo.hpp"
 class ScenarioShineCounterParts : public SingleModeCounterBase {
 public:
-    ScenarioShineCounterParts(const al::LayoutInitInfo& rInfo, const char* pName,
-                              const char* pPartsName, al::LayoutActor* pParent);
-
+    ScenarioShineCounterParts(const al::LayoutInitInfo&, const char*, const char*, al::LayoutActor*);
     void control() override;
     void show() override;
     void forceHide();
-    void forceEndAppear(s32 islandId);
-    void updateString(s32 count);
+    void forceEndAppear(int);
+    void updateString(int);
     void endDemo();
     void handleIslandWarp();
-    void updateCount(s32 count);
+    void updateCount(int);
     void addShine();
-
 private:
-    u8 _122[0x168 - 0x122];
+    int mIsland = -1;
+    fix::TextBoxTextInfo mShineText;
+    fix::TextBoxTextInfo mBaseText;
 };
 
 static_assert(sizeof(ScenarioShineCounterParts) == 0x168);

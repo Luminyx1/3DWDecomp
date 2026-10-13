@@ -124,6 +124,11 @@ public:
      */
     ButtonCursorParts* getCursorParts() const { return mCursor; }
 
+    /** @brief Returns the first registered button, or nullptr when empty. */
+    CursorTarget* getFirstTarget() const {
+        return mButtons.isEmpty() ? nullptr : mButtons[0];
+    }
+
     /**
      * @brief Read the number of registered buttons.
      * @return The button count.

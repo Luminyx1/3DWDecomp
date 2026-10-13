@@ -64,6 +64,8 @@ public:
   /** @brief Selects the standard entrance state. */
   void setAppear();
 
+  al::SceneCameraInfo* getSceneCameraInfo() const override { return mSceneCameraInfo; }
+
   const sead::Vector3f& getOffset() const { return mOffset; }
 
 private:

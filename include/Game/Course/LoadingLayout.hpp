@@ -1,34 +1,24 @@
 #pragma once
-
-#include <basis/seadTypes.h>
-
+#include "Library/Layout/LayoutActor.hpp"
+namespace al { class LayoutInitInfo; }
 class GameDataHolder;
 
-namespace al {
-class LayoutInitInfo;
-}  // namespace al
-
-/**
- * @brief Loading screen shown while the next scene is created.
- * @note Minimal declaration: only what the reconstructed code uses is declared so far.
- */
-class LoadingLayout {
+class LoadingLayout : public al::LayoutActor {
 public:
-    LoadingLayout(const al::LayoutInitInfo& rInfo, GameDataHolder* pHolder);
-
-    void startDisplay(bool isFadeIn, bool isShowTips);
+    LoadingLayout(const al::LayoutInitInfo& rInfo, GameDataHolder* pGameData);
+    void startDisplay(bool isDefaultIcon, bool isDelayAppear);
+    void selectRandomIcon();
     void requestEnd();
-
-    /**
-     * @brief Check whether the loading screen is displayed.
-     * @return True while displayed.
-     */
-    bool isDisplay() const { return mIsDisplay; }
-
+    void exeAppear();
+    void exeWaitAppear();
+    void exeLoop();
+    void exeEnd();
+    s32 getNumIconsAvailable();
+    bool isDisplay() const { return isAlive(); }
 private:
-    u8 _0[0x120];  ///< Not reconstructed yet.
-    bool mIsDisplay;  // 0x120
-    u8 _121[0x17];  ///< Not reconstructed yet.
+    GameDataHolder* mpGameData;
+    bool mEndRequested;
+    s32 mIcon;
 };
 
 static_assert(sizeof(LoadingLayout) == 0x138);

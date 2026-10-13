@@ -321,21 +321,21 @@ src/Game/Camera/DemoSceneDarkBowser.cpp:
     .text   start:0x000843B0 end:0x00084610
 src/Game/Camera/StageStartPhase0Demo.cpp:
     .text   start:0x00084610 end:0x00085368
-src/Game/Course/CourseSelectLayoutKiosk.cpp:
+src/Game/Course/CourseSelectLayoutKiosk.cpp: done
     .text   start:0x00085370 end:0x000858D4
-src/Game/Course/GuideBalloonBrigade.cpp:
-    .text   start:0x000858E0 end:0x00085F94
-src/Game/Course/GuideFrameOutSingleMode.cpp:
-    .text   start:0x00085FA0 end:0x00086F84
-src/Game/Course/KoopaJrTalkBalloon.cpp:
+src/Game/Course/GuideBalloonBrigade.cpp: done
+    .text   start:0x000858E0 end:0x00085D60
+src/Game/Course/GuideFrameOutSingleMode.cpp: done
+    .text   start:0x00085D60 end:0x00086F84
+src/Game/Course/KoopaJrTalkBalloon.cpp: done
     .text   start:0x00086F90 end:0x00087140
-src/Game/Course/LoadingLayout.cpp:
+src/Game/Course/LoadingLayout.cpp: done
     .text   start:0x00087140 end:0x000877F4
-src/Game/Course/MapOceanShineParts.cpp:
+src/Game/Course/MapOceanShineParts.cpp: done
     .text   start:0x00087800 end:0x00089A00
-src/Game/Course/MapPlayerTrackerParts.cpp:
+src/Game/Course/MapPlayerTrackerParts.cpp: done
     .text   start:0x00089A00 end:0x00089FB8
-src/Game/Course/ScenarioShineCounterParts.cpp:
+src/Game/Course/ScenarioShineCounterParts.cpp: done
     .text   start:0x00089FC0 end:0x0008B0E4
 src/Game/CourseSelect/CatGullHolder.cpp: done
     .text   start:0x0008B0F0 end:0x0008B124

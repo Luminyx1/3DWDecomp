@@ -3050,17 +3050,17 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100085840			FALSE	_ZNK23CourseSelectLayoutKiosk15isCourseDecidedEv	CourseSelectLayoutKiosk::isCourseDecided() const	
 0x7100085850			FALSE	_ZNK12_GLOBAL__N_130CourseSelectLayoutKioskNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectLayoutKioskNrvWait::execute(al::NerveKeeper*) const	
 0x7100085860			FALSE	_ZNK12_GLOBAL__N_132CourseSelectLayoutKioskNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectLayoutKioskNrvAppear::execute(al::NerveKeeper*) const	
-0x7100085870			FALSE	sub_7100085870	sub_7100085870	
-0x71000858D0			FALSE	nullsub_18	nullsub_18	
+0x7100085870			FALSE	_ZNK12_GLOBAL__N_130CourseSelectLayoutKioskNrvBack7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectLayoutKioskNrvBack::execute(al::NerveKeeper*) const	
+0x71000858D0			FALSE	_ZNK12_GLOBAL__N_132CourseSelectLayoutKioskNrvDecide7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectLayoutKioskNrvDecide::execute(al::NerveKeeper*) const	
 0x71000858E0		GuideBalloonBrigade.o	FALSE	_ZN19GuideBalloonBrigadeC2EPKcRKN2al14LayoutInitInfoEPKN4sead7Vector3IfEERS9_PNS2_12DemoDirectorE	GuideBalloonBrigade::GuideBalloonBrigade(char const*, al::LayoutInitInfo const&, sead::Vector3<float> const*, sead::Vector3<float> const&, al::DemoDirector*)	
 0x7100085A80			FALSE	_ZN19GuideBalloonBrigadeC1EPKcRKN2al14LayoutInitInfoEPKN4sead7Vector3IfEERS9_PNS2_12DemoDirectorE	GuideBalloonBrigade::GuideBalloonBrigade(char const*, al::LayoutInitInfo const&, sead::Vector3<float> const*, sead::Vector3<float> const&, al::DemoDirector*)	
 0x7100085C30			FALSE	_ZN19GuideBalloonBrigade16startShowBrigadeEN4sead7BitFlagIhEE	GuideBalloonBrigade::startShowBrigade(sead::BitFlag<unsigned char>)	
 0x7100085D40			FALSE	_ZNK12GuideBalloon18getSceneCameraInfoEv	GuideBalloon::getSceneCameraInfo() const	
 0x7100085D50			FALSE	_ZThn32_NK12GuideBalloon18getSceneCameraInfoEv	non-virtual thunk to GuideBalloon::getSceneCameraInfo() const	
-0x7100085D60			FALSE	_ZN23GuideFrameOutSingleModeC2ERKN2al14LayoutInitInfoEPKNS0_9LiveActorEPKc	GuideFrameOutSingleMode::GuideFrameOutSingleMode(al::LayoutInitInfo const&, al::LiveActor const*, char const*)	
+0x7100085D60		GuideFrameOutSingleMode.o	FALSE	_ZN23GuideFrameOutSingleModeC2ERKN2al14LayoutInitInfoEPKNS0_9LiveActorEPKc	GuideFrameOutSingleMode::GuideFrameOutSingleMode(al::LayoutInitInfo const&, al::LiveActor const*, char const*)	
 0x7100085EC0			FALSE	_ZN4sead22WFormatFixedSafeStringILi6EEC2EPKDsz	sead::WFormatFixedSafeString<6>::WFormatFixedSafeString(char16_t const*, ...)	
 0x7100085F90			TRUE	_ZN4sead14SafeStringBaseIDsED2Ev	sead::SafeStringBase<char16_t>::~SafeStringBase()	
-0x7100085FA0		GuideFrameOutSingleMode.o	FALSE	_ZN23GuideFrameOutSingleModeC1ERKN2al14LayoutInitInfoEPKNS0_9LiveActorEPKc	GuideFrameOutSingleMode::GuideFrameOutSingleMode(al::LayoutInitInfo const&, al::LiveActor const*, char const*)	
+0x7100085FA0			FALSE	_ZN23GuideFrameOutSingleModeC1ERKN2al14LayoutInitInfoEPKNS0_9LiveActorEPKc	GuideFrameOutSingleMode::GuideFrameOutSingleMode(al::LayoutInitInfo const&, al::LiveActor const*, char const*)	
 0x7100086110			FALSE	_ZN23GuideFrameOutSingleMode6appearEv	GuideFrameOutSingleMode::appear()	
 0x7100086150			FALSE	_ZN23GuideFrameOutSingleMode9startDemoEv	GuideFrameOutSingleMode::startDemo()	
 0x7100086170			FALSE	_ZN23GuideFrameOutSingleMode16updateVisibilityEb	GuideFrameOutSingleMode::updateVisibility(bool)	
@@ -3082,10 +3082,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100086BE0			FALSE	_ZN23GuideFrameOutSingleMode9exeAppearEv	GuideFrameOutSingleMode::exeAppear()	
 0x7100086C20			FALSE	_ZN23GuideFrameOutSingleMode17exeStartDisappearEv	GuideFrameOutSingleMode::exeStartDisappear()	
 0x7100086CA0			FALSE	_ZN23GuideFrameOutSingleMode12exeDisappearEv	GuideFrameOutSingleMode::exeDisappear()	
-0x7100086D20			FALSE	sub_7100086D20	sub_7100086D20	
-0x7100086DA0			FALSE	sub_7100086DA0	sub_7100086DA0	
+0x7100086D20			FALSE	_ZNK12_GLOBAL__N_135GuideFrameOutSingleModeNrvDisappear7executeEPN2al11NerveKeeperE	(anonymous namespace)::GuideFrameOutSingleModeNrvDisappear::execute(al::NerveKeeper*) const	
+0x7100086DA0			FALSE	_ZNK12_GLOBAL__N_140GuideFrameOutSingleModeNrvStartDisappear7executeEPN2al11NerveKeeperE	(anonymous namespace)::GuideFrameOutSingleModeNrvStartDisappear::execute(al::NerveKeeper*) const	
 0x7100086E20			FALSE	_ZNK12_GLOBAL__N_137GuideFrameOutSingleModeNrvStartAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::GuideFrameOutSingleModeNrvStartAppear::execute(al::NerveKeeper*) const	
-0x7100086E30			FALSE	sub_7100086E30	sub_7100086E30	
+0x7100086E30			FALSE	_ZNK12_GLOBAL__N_132GuideFrameOutSingleModeNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::GuideFrameOutSingleModeNrvAppear::execute(al::NerveKeeper*) const	
 0x7100086E80			TRUE	_ZN4sead22WFormatFixedSafeStringILi6EED0Ev	sead::WFormatFixedSafeString<6>::~WFormatFixedSafeString()	
 0x7100086E90			TRUE	_ZN4sead16WFixedSafeStringILi6EEaSERKNS_14SafeStringBaseIDsEE	sead::WFixedSafeString<6>::operator=(sead::SafeStringBase<char16_t> const&)	
 0x7100086F80			TRUE	_ZN4sead22BufferedSafeStringBaseIDsED0Ev	sead::BufferedSafeStringBase<char16_t>::~BufferedSafeStringBase()	
@@ -3093,7 +3093,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100087010			FALSE	_ZN18KoopaJrTalkBalloonC1EPKcS1_RKN2al14LayoutInitInfoE	KoopaJrTalkBalloon::KoopaJrTalkBalloon(char const*, char const*, al::LayoutInitInfo const&)	
 0x71000870A0			FALSE	_ZN18KoopaJrTalkBalloon9exeAppearEv	KoopaJrTalkBalloon::exeAppear()	
 0x71000870F0			FALSE	_ZN18KoopaJrTalkBalloon7exeWaitEv	KoopaJrTalkBalloon::exeWait()	
-0x7100087130			FALSE	sub_7100087130	sub_7100087130	
+0x7100087130			FALSE	_ZNK12_GLOBAL__N_125KoopaJrTalkBalloonNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaJrTalkBalloonNrvWait::execute(al::NerveKeeper*) const	
 0x7100087140		LoadingLayout.o	FALSE	_ZN13LoadingLayoutC2ERKN2al14LayoutInitInfoEP14GameDataHolder	LoadingLayout::LoadingLayout(al::LayoutInitInfo const&, GameDataHolder*)	
 0x7100087220			FALSE	_ZN13LoadingLayoutC1ERKN2al14LayoutInitInfoEP14GameDataHolder	LoadingLayout::LoadingLayout(al::LayoutInitInfo const&, GameDataHolder*)	
 0x7100087300			FALSE	_ZN13LoadingLayout12startDisplayEbb	LoadingLayout::startDisplay(bool, bool)	
@@ -3104,10 +3104,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100087540			FALSE	_ZN13LoadingLayout7exeLoopEv	LoadingLayout::exeLoop()	
 0x7100087590			FALSE	_ZN13LoadingLayout6exeEndEv	LoadingLayout::exeEnd()	
 0x71000875F0			FALSE	_ZN13LoadingLayout20getNumIconsAvailableEv	LoadingLayout::getNumIconsAvailable()	
-0x7100087660			FALSE	sub_7100087660	sub_7100087660	
-0x71000876D0			FALSE	sub_71000876D0	sub_71000876D0	
-0x7100087740			FALSE	sub_7100087740	sub_7100087740	
-0x7100087790			FALSE	sub_7100087790	sub_7100087790	
+0x7100087660			FALSE	_ZNK12_GLOBAL__N_122LoadingLayoutNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::LoadingLayoutNrvAppear::execute(al::NerveKeeper*) const	
+0x71000876D0			FALSE	_ZNK12_GLOBAL__N_126LoadingLayoutNrvWaitAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::LoadingLayoutNrvWaitAppear::execute(al::NerveKeeper*) const	
+0x7100087740			FALSE	_ZNK12_GLOBAL__N_120LoadingLayoutNrvLoop7executeEPN2al11NerveKeeperE	(anonymous namespace)::LoadingLayoutNrvLoop::execute(al::NerveKeeper*) const	
+0x7100087790			FALSE	_ZNK12_GLOBAL__N_119LoadingLayoutNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::LoadingLayoutNrvEnd::execute(al::NerveKeeper*) const	
 0x7100087800		MapOceanShineParts.o	FALSE	_ZN18MapOceanShinePartsC2ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorEPK14GameDataHolder	MapOceanShineParts::MapOceanShineParts(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*, GameDataHolder const*)	
 0x7100087D20			FALSE	_ZN18MapOceanShinePartsC1ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorEPK14GameDataHolder	MapOceanShineParts::MapOceanShineParts(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*, GameDataHolder const*)	
 0x7100088240			FALSE	_ZN18MapOceanShinePartsD2Ev	MapOceanShineParts::~MapOceanShineParts()	
