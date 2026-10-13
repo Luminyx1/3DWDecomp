@@ -12215,10 +12215,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001D6260			FALSE	_ZN19MiiverseStateDetail6exeEndEv	MiiverseStateDetail::exeEnd()	
 0x71001D6270			FALSE	_ZN19MiiverseStateDetailD0Ev	MiiverseStateDetail::~MiiverseStateDetail()	
 0x71001D62A0			FALSE	_ZNK12_GLOBAL__N_128MiiverseStateDetailNrvDetail7executeEPN2al11NerveKeeperE	(anonymous namespace)::MiiverseStateDetailNrvDetail::execute(al::NerveKeeper*) const	
-0x71001D62B0			FALSE	sub_71001D62B0	sub_71001D62B0	
-0x71001D62C0			FALSE	sub_71001D62C0	sub_71001D62C0	
+0x71001D62B0			FALSE	_ZNK12_GLOBAL__N_125MiiverseStateDetailNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::MiiverseStateDetailNrvEnd::execute(al::NerveKeeper*) const	
+0x71001D62C0			FALSE	_ZNK12_GLOBAL__N_130MiiverseStateDetailNrvYeahWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::MiiverseStateDetailNrvYeahWait::execute(al::NerveKeeper*) const	
 0x71001D6320			FALSE	_ZNK12_GLOBAL__N_129MiiverseStateDetailNrvComment7executeEPN2al11NerveKeeperE	(anonymous namespace)::MiiverseStateDetailNrvComment::execute(al::NerveKeeper*) const	
-0x71001D6330			FALSE	sub_71001D6330	sub_71001D6330	
+0x71001D6330			FALSE	_ZNK12_GLOBAL__N_127MiiverseStateDetailNrvError7executeEPN2al11NerveKeeperE	(anonymous namespace)::MiiverseStateDetailNrvError::execute(al::NerveKeeper*) const	
 0x71001D6360		MiiverseStateTimeLine.o	FALSE	_ZN21MiiverseStateTimeLineC2EPN2al11LayoutActorERKNS0_14LayoutInitInfoEPNS0_13NetworkSystemEPNS0_11ErrorViewerE	MiiverseStateTimeLine::MiiverseStateTimeLine(al::LayoutActor*, al::LayoutInitInfo const&, al::NetworkSystem*, al::ErrorViewer*)	
 0x71001D6660			FALSE	_ZN21MiiverseStateTimeLine10decompressEv	MiiverseStateTimeLine::decompress()	
 0x71001D6670			FALSE	_ZNK2al10FunctorV0MIP21MiiverseStateTimeLineMS1_FvvEE5cloneEv	al::FunctorV0M<MiiverseStateTimeLine*, void (MiiverseStateTimeLine::*)()>::clone() const	

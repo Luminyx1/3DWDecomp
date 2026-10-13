@@ -6192,3 +6192,8 @@
 0x71019E97E0 8 object _ZN12_GLOBAL__N_129NrvWindowMiiverseDetailAppearE
 0x71019E9808 8 object _ZN12_GLOBAL__N_132NrvWindowMiiverseDetailDisappearE
 0x71019E9830 8 object _ZN12_GLOBAL__N_130NrvWindowMiiverseDetailDecidedE
+
+# src/Game/Layout/MiiverseStateDetail
+0x71019DE7A0 8 object _ZN12_GLOBAL__N_125NrvMiiverseStateDetailEndE
+0x71019DE7A8 8 object _ZN12_GLOBAL__N_130NrvMiiverseStateDetailYeahWaitE
+0x71019DE790 8 object _ZN12_GLOBAL__N_127NrvMiiverseStateDetailErrorE
