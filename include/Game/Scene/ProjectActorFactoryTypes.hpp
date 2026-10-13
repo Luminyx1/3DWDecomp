@@ -105,6 +105,7 @@
 #include "MapObj/SuperSkateShoes.hpp"
 #include "MapObj/SuperSkateRail.hpp"
 #pragma once
+#include "MapObj/LiftMike.hpp"
 #include "MapObj/GateKeeperChecker.hpp"
 #include "MapObj/CheckPoint.hpp"
 #include "MapObj/Lantern.hpp"
@@ -1504,14 +1505,7 @@ static_assert(sizeof(Kyuppon) == 0x270);
 
 
 
-class LiftMike : public al::LiveActor {
-public:
-    explicit LiftMike(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x4c];
-};
-static_assert(sizeof(LiftMike) == 0x190);
 
 
 

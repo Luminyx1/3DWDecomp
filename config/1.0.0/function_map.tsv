@@ -19761,23 +19761,23 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100312210			FALSE	_ZN8LiftMike16exeBottomVibrateEv	LiftMike::exeBottomVibrate()	
 0x7100312420			FALSE	_ZN8LiftMikeD1Ev	LiftMike::~LiftMike()	
 0x7100312430			FALSE	_ZN8LiftMikeD0Ev	LiftMike::~LiftMike()	
-0x7100312460			FALSE	sub_7100312460	sub_7100312460	
-0x71003124B0			FALSE	sub_71003124B0	sub_71003124B0	
+0x7100312460			FALSE	_ZNK12_GLOBAL__N_115LiftMikeNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::LiftMikeNrvWait::execute(al::NerveKeeper*) const	TRUE
+0x71003124B0			FALSE	_ZNK12_GLOBAL__N_115LiftMikeNrvWait13getActionNameEv	(anonymous namespace)::LiftMikeNrvWait::getActionName() const	TRUE
 0x71003124C0			FALSE	_ZNK12_GLOBAL__N_113LiftMikeNrvUp7executeEPN2al11NerveKeeperE	(anonymous namespace)::LiftMikeNrvUp::execute(al::NerveKeeper*) const	
-0x71003124D0			FALSE	sub_71003124D0	sub_71003124D0	
+0x71003124D0			FALSE	_ZNK12_GLOBAL__N_113LiftMikeNrvUp13getActionNameEv	(anonymous namespace)::LiftMikeNrvUp::getActionName() const	TRUE
 0x71003124E0			FALSE	_ZNK12_GLOBAL__N_124LiftMikeNrvUpReleaseHigh7executeEPN2al11NerveKeeperE	(anonymous namespace)::LiftMikeNrvUpReleaseHigh::execute(al::NerveKeeper*) const	
-0x71003124F0			FALSE	sub_71003124F0	sub_71003124F0	
+0x71003124F0			FALSE	_ZNK12_GLOBAL__N_124LiftMikeNrvUpReleaseHigh13getActionNameEv	(anonymous namespace)::LiftMikeNrvUpReleaseHigh::getActionName() const	TRUE
 0x7100312500			FALSE	_ZNK12_GLOBAL__N_123LiftMikeNrvUpReleaseLow7executeEPN2al11NerveKeeperE	(anonymous namespace)::LiftMikeNrvUpReleaseLow::execute(al::NerveKeeper*) const	
-0x7100312510			FALSE	sub_7100312510	sub_7100312510	
+0x7100312510			FALSE	_ZNK12_GLOBAL__N_123LiftMikeNrvUpReleaseLow13getActionNameEv	(anonymous namespace)::LiftMikeNrvUpReleaseLow::getActionName() const	TRUE
 0x7100312520			FALSE	_ZNK12_GLOBAL__N_118LiftMikeNrvHoldTop7executeEPN2al11NerveKeeperE	(anonymous namespace)::LiftMikeNrvHoldTop::execute(al::NerveKeeper*) const	
-0x7100312530			FALSE	sub_7100312530	sub_7100312530	
+0x7100312530			FALSE	_ZNK12_GLOBAL__N_118LiftMikeNrvHoldTop13getActionNameEv	(anonymous namespace)::LiftMikeNrvHoldTop::getActionName() const	TRUE
 0x7100312540			FALSE	_ZNK12_GLOBAL__N_115LiftMikeNrvHold7executeEPN2al11NerveKeeperE	(anonymous namespace)::LiftMikeNrvHold::execute(al::NerveKeeper*) const	
-0x7100312550			FALSE	sub_7100312550	sub_7100312550	
+0x7100312550			FALSE	_ZNK12_GLOBAL__N_115LiftMikeNrvHold13getActionNameEv	(anonymous namespace)::LiftMikeNrvHold::getActionName() const	TRUE
 0x7100312560			FALSE	_ZNK12_GLOBAL__N_115LiftMikeNrvDown7executeEPN2al11NerveKeeperE	(anonymous namespace)::LiftMikeNrvDown::execute(al::NerveKeeper*) const	
-0x7100312570			FALSE	sub_7100312570	sub_7100312570	
+0x7100312570			FALSE	_ZNK12_GLOBAL__N_115LiftMikeNrvDown13getActionNameEv	(anonymous namespace)::LiftMikeNrvDown::getActionName() const	TRUE
 0x7100312580			FALSE	_ZNK12_GLOBAL__N_124LiftMikeNrvBottomVibrate7executeEPN2al11NerveKeeperE	(anonymous namespace)::LiftMikeNrvBottomVibrate::execute(al::NerveKeeper*) const	
-0x7100312590			FALSE	sub_7100312590	sub_7100312590	
-0x71003125A0			FALSE	sub_71003125A0	sub_71003125A0	
+0x7100312590			FALSE	_ZNK12_GLOBAL__N_124LiftMikeNrvBottomVibrate13getActionNameEv	(anonymous namespace)::LiftMikeNrvBottomVibrate::getActionName() const	TRUE
+0x71003125A0			FALSE	_GLOBAL__sub_I_LiftMike.cpp	_GLOBAL__sub_I_LiftMike.cpp	TRUE
 0x7100312670		LiftMikeBlockRail.o	FALSE	_ZN17LiftMikeBlockRailC2EPKc	LiftMikeBlockRail::LiftMikeBlockRail(char const*)	
 0x7100312740			FALSE	_ZN17LiftMikeBlockRailC1EPKc	LiftMikeBlockRail::LiftMikeBlockRail(char const*)	
 0x7100312810			FALSE	_ZN17LiftMikeBlockRail4initERKN2al13ActorInitInfoE	LiftMikeBlockRail::init(al::ActorInitInfo const&)	
