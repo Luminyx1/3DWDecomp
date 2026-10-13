@@ -6295,3 +6295,11 @@
 
 # Ghost action power-up prefixes
 0x7101A728B8 40 object _ZN12_GLOBAL__N_120sGhostActionPrefixesE
+
+# Recovered PlayerNpc animation states
+0x7101A7A390 16 object _ZN12_GLOBAL__N_112NrvPlayerNpcE
+0x71003CFD80 8 func _ZNK12_GLOBAL__N_116PlayerNpcNrvWait7executeEPN2al11NerveKeeperE
+0x7101A7A328 32 object _ZTVN12_GLOBAL__N_116PlayerNpcNrvWaitE
+0x71003CFD90 8 func _ZNK12_GLOBAL__N_120PlayerNpcNrvSurprise7executeEPN2al11NerveKeeperE
+0x7101A7A348 32 object _ZTVN12_GLOBAL__N_120PlayerNpcNrvSurpriseE
+0x71003CFDA0 8 func _ZNK12_GLOBAL__N_117PlayerNpcNrvHappy7executeEPN2al11NerveKeeperE
