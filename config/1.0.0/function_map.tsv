@@ -8205,7 +8205,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710013C010			FALSE	_ZN19PipePackunBodyParts13calcNearCoordEPfRKN4sead7Vector3IfEE	PipePackunBodyParts::calcNearCoord(float*, sead::Vector3<float> const&)	
 0x710013C2D0			FALSE	_ZN19PipePackunBodyPartsD1Ev	PipePackunBodyParts::~PipePackunBodyParts()	
 0x710013C2E0			FALSE	_ZN19PipePackunBodyPartsD0Ev	PipePackunBodyParts::~PipePackunBodyParts()	
-0x710013C310			FALSE	nullsub_69	nullsub_69	
+0x710013C310			FALSE	_ZNK12_GLOBAL__N_126PipePackunBodyPartsNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::PipePackunBodyPartsNrvWait::execute(al::NerveKeeper*) const	
 0x710013C320		PipePackunWaterSurfaceModel.o	FALSE	_ZN27PipePackunWaterSurfaceModelC2EPKc	PipePackunWaterSurfaceModel::PipePackunWaterSurfaceModel(char const*)	
 0x710013C3F0			FALSE	_ZN27PipePackunWaterSurfaceModelC1EPKc	PipePackunWaterSurfaceModel::PipePackunWaterSurfaceModel(char const*)	
 0x710013C4C0			FALSE	_ZN27PipePackunWaterSurfaceModel4initERKN2al13ActorInitInfoE	PipePackunWaterSurfaceModel::init(al::ActorInitInfo const&)	
